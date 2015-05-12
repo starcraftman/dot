@@ -12,4 +12,5 @@ Some Notes:
 * Stores my `vimrc` config & vim folder.
 * See `vimrc` for details, mainly `Bootstrap`.
 * My core bash (.bash_aliases) & zsh (.zshrc) configs, really useful stuff here!
-* Lots of assorted configs for vcs (git, hg, bzr), bash completions & shell mods.
+* Lots of assorted configs for vcs (git, hg, bzr).
+* Some of my own completions for bash & zsh.
