@@ -1,8 +1,7 @@
  My Home Configuration
 =====
 
-All dot files are in the files folder.
+I keep all my config files for Linux in `files`.
 
-For related tools including `SysInstall.py` the script I use for setting up $HOME see: 
-
-https://github.com/starcraftman/.my_scripts
+See [SysInstall.py](https://github.com/starcraftman/.my_scripts/blob/master/SysInstall.py) for help
+setting up, specifically setups up links & shell projects. Can also save/restore existing config.
