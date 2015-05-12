@@ -1,7 +1,8 @@
  My Home Configuration
 =====
 
-All these files are naturally hidden. Show them with `ls -la` as always.
+All dot files are in the files folder.
 
+For related tools including `SysInstall.py` the script I use for setting up $HOME see: 
 
-For additional related tools see https://github.com/starcraftman/dotfiles
+https://github.com/starcraftman/.my_scripts
