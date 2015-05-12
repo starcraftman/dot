@@ -1,0 +1,77 @@
+[alias]
+    ;Simple shortucts
+    br = branch
+    ci = commit
+    co = checkout
+    dc = diff --cached
+    df = diff
+    di = diff
+    dv = "!f() { git difftool --tool=vimdiff --no-prompt $@; }; f"
+    ;Diff the last n commits with HEAD
+    din = "!f() { git diff HEAD~$@ HEAD; }; f"
+    r = reset
+    rh = reset --hard
+    s = status --short
+    st = status
+    unstage = reset HEAD --
+    g = grep --heading --break
+    lt = describe --tags --abbrev=0
+    ;Logging commands
+    last = !git ld -1 HEAD
+    lg = log --graph --pretty=format:'%Cred%h%Creset %Cgreen(%cd)%Creset %C(bold blue)[%an]%Creset %s' --date=relative
+    lgb = log --graph --pretty=format:'%Cred%h%Creset %Cgreen(%cd)%Creset %C(bold blue)[%an]%Creset %s%n%b' --date=local
+    lgfull = log --graph --pretty=format:'%C(bold red)%H%Creset %n%C(bold green)Commiter: %cn <%ce> (%cd)%Creset %n%C(bold blue)Author: %an <%ae> (%ad)%Creset %n%s%n' --date=relative
+    ld = log --graph --pretty=format:'%Cred%h%Creset %Cgreen(%cd)%Creset %C(bold blue)[%an]%Creset %s%n%b' --date=local --numstat
+    ldfull = log --graph --pretty=format:'%C(bold red)%H%Creset %n%C(bold green)Commiter: %cn <%ce> (%cd)%Creset %n%C(bold blue)Author: %an <%ae> (%ad)%Creset %n%s%n%b' --date=local --numstat
+    ldr= log --graph --pretty=format:'%Cred%h%Creset %Cgreen(%cd)%Creset %C(bold blue)[%an]%Creset %s%n%b' --date=relative --numstat
+    ;Based on the excellent post: https://coderwall.com/p/fowimq
+    incoming = !git fetch --quiet && git ldr ..@{u}
+    outgoing = !git fetch --quiet && git ldr @{u}..
+    in = !git incoming
+    out = !git outgoing
+    ;Incoming or outgoing diff
+    ind = !git fetch --quiet && git diff ..@{u}
+    outd = !git fetch --quiet && git diff @{u}..
+    ;Merging stuff
+    ours = "!f() { git co --ours $@ && git add $@; }; f"
+    theirs = "!f() { git co --theirs $@ && git add $@; }; f"
+    ;Restore deleted file, pass path to it
+    restore = "!f() { git checkout $(git rev-list -n 1 HEAD -- $1)^ -- $1; }; f"
+    ;Ignore changes to a file already commited to git, useful for configs
+    ignore = update-index --assume-unchanged
+    noignore = update-index --no-assume-unchanged
+    ;Show all files that have been deleted in the repository
+    deleted = log --graph --pretty=format:'%Cred%h%Creset %Cgreen(%cd)%Creset %C(bold blue)[%an]%Creset %s%n%b' --date=local --numstat --diff-filter=D --summary
+[branch]
+    autosetupmerge = true
+[color]
+    ui = auto
+    diff = auto
+    status = auto
+    branch = auto
+[commit]
+    ;template = ~/.git-commit-template
+[core]
+    editor = vim
+    autocrlf = input
+    excludesfile = ~/.gitignore_global
+[diff "odf"]
+    textconv = odt2txt
+[diff "word"]
+    textconv = catdoc
+[grep]
+    lineNumber = true
+    extendedRegexp = true
+[merge]
+    tool = kdiff3
+[push]
+    default = nothing
+[url "git@github.com:"]
+    insteadOf = gh:
+[url "git://anongit.kde.org/"]
+    insteadOf = kde:
+[url "git@git.kde.org:"]
+    pushInsteadOf = kde:
+[user]
+    name = Jeremy Pallats/starcraft.man
+    email = unknown3000@gmail.com

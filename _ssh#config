@@ -1,0 +1,43 @@
+# System wide at /etc/ssh/ssh_config
+# Local override at ~/.ssh/config
+# ControlMaster section keeps cons alive for reuse.
+
+Host *
+   PasswordAuthentication no
+   Protocol 2
+   ControlMaster auto
+   ControlPath /tmp/ssh_control_%r@%h:%p
+   ControlPersist 600
+   #SendEnv LANG LC_*
+   #HashKnownHosts yes
+   #GSSAPIAuthentication yes
+   #GSSAPIDelegateCredentials no
+#   ForwardAgent no
+#   ForwardX11 no
+#   ForwardX11Trusted yes
+#   RhostsRSAAuthentication no
+#   RSAAuthentication yes
+#   HostbasedAuthentication no
+#   GSSAPIAuthentication no
+#   GSSAPIDelegateCredentials no
+#   GSSAPIKeyExchange no
+#   GSSAPITrustDNS no
+#   BatchMode no
+#   CheckHostIP yes
+#   AddressFamily any
+#   ConnectTimeout 0
+#   StrictHostKeyChecking ask
+#   IdentityFile ~/.ssh/identity
+#   IdentityFile ~/.ssh/id_rsa
+#   IdentityFile ~/.ssh/id_dsa
+#   Port 22
+#   Cipher 3des
+#   Ciphers aes128-ctr,aes192-ctr,aes256-ctr,arcfour256,arcfour128,aes128-cbc,3des-cbc
+#   MACs hmac-md5,hmac-sha1,umac-64@openssh.com,hmac-ripemd160
+#   EscapeChar ~
+#   Tunnel no
+#   TunnelDevice any:any
+#   PermitLocalCommand no
+#   VisualHostKey no
+#   ProxyCommand ssh -q -W %h:%p gateway.example.com
+#   RekeyLimit 1G 1h

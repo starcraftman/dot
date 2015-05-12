@@ -1,0 +1,88 @@
+snippet gcls "GTest Class" b
+	class ${1:ClassFixture} : public ::testing::Test {
+	protected:
+		virtual void SetUp() {
+			${3:/* Setup Fixture */}
+		}
+
+		virtual void TearDown() {
+			${4:/* Clean Up Fixture */}
+		}
+
+	private:
+		${2:/* Data */}
+	};
+
+snippet cls "Basic Class" b
+	class ${1:ClassName} {
+	public:
+		$1(${3:/* constructor args */});
+		$1(const $1 &other);
+		virtual	~$1();
+
+		/* Operators */
+		inline $1 & operator=($1 other) {
+			swap(*this, other);
+			return *this;
+		}
+		void swap($1 &first, $1 &second) {
+			using std::swap;
+		}
+
+		/* Friends */
+
+	private:
+		${2:/* data */}
+	};
+
+snippet clss "Class With Operators" b
+	class ${1:ClassName} {
+	public:
+		$1(${3:/* constructor args */});
+		$1(const $1 &other);
+		virtual ~$1();
+
+		/* Operators */
+		inline $1 & operator=($1 other) {
+			swap(*this, other);
+			return *this;
+		}
+
+		/* Compare */
+		inline bool operator==(const $1 &other) const { /* placeholder */ }
+		inline bool operator!=(const $1 &other) const { return !operator==(other); }
+		inline bool operator<=(const $1 &other) const { return !operator>(other); }
+		inline bool operator>=(const $1 &other) const { return !operator<(other); }
+		inline bool operator<(const $1 &other) const { /* placeholder */ }
+		inline bool operator>(const $1 &other) const { return other.operator<(*this); }
+
+		/* Math ops */
+		$1 operator+(const $1 &other);
+		$1 operator-(const $1 &other);
+		$1 operator+=(const $1 &other);
+		$1 operator-=(const $1 &other);
+
+		/* Friends */
+		friend std::ostream& operator<<(std::ostream &out, const $1 &obj);
+		friend std::istream& operator>>(std::istream &in, $1 &obj);
+		friend void swap($1 &left, $1 &right);
+
+	private:
+		${2:/* data */}
+	};
+
+snippet compf "comparison ops friends" b
+	inline bool operator==(const ${1:Class} &lhs, const $1 &rhs) const { /* placeholder */ }
+	inline bool operator!=(const $1 &lhs, const $1 &rhs) const { return !operator==(lhs, rhs); }
+	inline bool operator<=(const $1 &lhs, const $1 &rhs) const { return !operator> (lhs, rhs); }
+	inline bool operator>=(const $1 &lhs, const $1 &rhs) const { return !operator< (lhs, rhs); }
+	inline bool operator<(const $1 &lhs, const $1 &rhs) const { /* placeholder */ }
+	inline bool operator>(const $1 &lhs, const $1 &rhs) const { return  operator< (rhs, lhs); }
+
+snippet reminder_const "reminder on pointer difference" b
+	/* c code */
+		int const * ptrToConst;
+		int * const constPtr;
+	/* cpp code */
+		const int* ptrToConst;
+		int* const constPtr;

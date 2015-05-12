@@ -1,0 +1,124 @@
+valid_name ack &&
+_ack() {
+    local lngopt shtopt split=false
+    local cur prev
+
+    COMPREPLY=()
+    cur=$(_get_cword "=")
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    _expand || return 0
+
+    lngopt='
+        --ackrc
+        --after-context
+        --before-context
+        --column
+        --context
+        --count
+        --dump
+        --env
+        --files-from
+        --files-with-matches
+        --files-without-matches
+        --flush
+        --follow
+        --group
+        --help
+        --help-types
+        --ignore-case
+        --ignore-dir
+        --ignore-file
+        --invert-match
+        --lines
+        --literal
+        --man
+        --match
+        --max-count
+        --no-filename
+        --no-recurse
+        --nobreak
+        --nocolor
+        --nocolumn
+        --noenv
+        --nogroup
+        --noheading
+        --noignore-dir
+        --nopager
+        --nosmart-case
+        --output
+        --pager
+        --passthru
+        --print0
+        --show-types
+        --smart-case
+        --sort-files
+        --type
+        --version
+        --with-filename
+        --word-regexp
+    '
+    shtopt='
+        -1 -A -B -C -c -f
+        -g -h -H -i -k -l
+        -L -n -m -M -o -r
+        -R -s -v -w -Q -x
+    '
+
+    # these options require an argument
+    if [[ "${prev}" == -@(A|B|C|G|g|m) ]] ; then
+        return 0
+    fi
+
+    _split_longopt && split=true
+
+    local avail_pagers
+    if [ -n "${__PAGERS_CACHE}" ]; then
+        avail_pagers="${__PAGERS_CACHE}"
+    else
+        for pager in "less" "more" "vimpager"; do
+            if valid_name $pager; then
+                avail_pagers+="$pager "
+            fi
+        done
+        export __PAGERS_CACHE="$avail_pagers"
+    fi
+
+    case "${prev}" in
+        # directory completion
+        --ignore-dir)
+            _filedir -d
+            return 0
+            ;;
+        # file completion
+        --ackrc|--files-from)
+            _filedir
+            return 0
+            ;;
+        # pager completion
+        --pager)
+            COMPREPLY=( $(compgen -W "${avail_pagers}" -- "${cur}") )
+            return 0
+            ;;
+        # no completion for these
+        --after-context|--before-context|--context|--color*|--ignore-file|\
+        --lines|--match|--max-count|--output)
+            return 0
+            ;;
+    esac
+
+    $split && return 0
+
+    case "${cur}" in
+        -*)
+            COMPREPLY=( $(compgen -W "${lngopt} ${shtopt}" -- "${cur}") )
+            return 0
+            ;;
+        *)
+            _filedir
+            return 0
+            ;;
+    esac
+} &&
+complete -F _ack ${nospace} ack
+# vim:set ft=sh:

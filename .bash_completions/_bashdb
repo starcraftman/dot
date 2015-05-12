@@ -1,0 +1,74 @@
+valid_name bashdb &&
+_bashdb() {
+    local lngopt shtopt split=false
+    local cur prev
+
+    COMPREPLY=()
+    cur=$(_get_cword "=")
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    _expand || return 0
+
+    lngopt='
+        --annotate
+        --basename
+        --command
+        --eval-command
+        --help
+        --highlight
+        --init-file
+        --library
+        --no-highlight
+        --no-init
+        --quiet
+        -- tempdir
+        --terminal
+        --trace
+        --tempdir
+        --version
+    '
+    shtopt='
+        -A -B -c -h -L -n
+        -q -T -V -X -x
+    '
+
+    # these options require an argument
+    if [[ "${prev}" == -@(A|c) ]] ; then
+        return 0
+    fi
+
+    _split_longopt && split=true
+
+    case "${prev}" in
+        # directory completion
+        --library|--tempdir|-L|-T)
+            _filedir -d
+            return 0
+            ;;
+        # file completion
+        --eval-command|--init-file|-x)
+            _filedir
+            return 0
+            ;;
+        # no completion for these
+        --basename|--help|--highlight|--no-highlight|--no-init|\
+        --quiet|--trace|--version)
+            return 0
+            ;;
+    esac
+
+    $split && return 0
+
+    case "${cur}" in
+        -*)
+            COMPREPLY=( $(compgen -W "${lngopt} ${shtopt}" -- "${cur}") )
+            return 0
+            ;;
+        *)
+            _filedir
+            return 0
+            ;;
+    esac
+} &&
+complete -F _bashdb ${nospace} bashdb
+# vim:set ft=sh:

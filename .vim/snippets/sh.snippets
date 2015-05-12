@@ -1,0 +1,20 @@
+snippet opts "Argument Parsing" b
+	while (( $# > 0 )); do
+		arg="\$1"
+		shift
+		case "$arg" in
+			${1:Option No Value})
+				${2:#Do Something}
+				;;
+			${3:Option With Value}*)
+				${4:OPT}="\$1"
+				shift
+				${5:#Do Something}
+				;;
+			*)
+				usage
+				exit
+				;;
+		esac
+	done
+

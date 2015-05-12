@@ -1,0 +1,20 @@
+snippet opt "CMake Option" b
+	OPTION(${1:OptionName}, "${2:Description}", OFF)
+
+snippet if  "CMake If" b
+	IF(${1:ConditionName})
+		${2:DoSomething}
+	ENDIF($1)
+
+snippet ife "CMake If Else" b
+	IF(${1:ConditionName})
+		${2:DoSomething}
+	ELSE($1)
+		${3:DoSomethingElse}
+	ENDIF($1)
+
+snippet for "CMake For Loop" b
+	FOREACH(${1:LoopVar} ${2:ArrayVar})
+		${3:Body}
+	ENDFOREACH($1)
+

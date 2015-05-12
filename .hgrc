@@ -1,0 +1,38 @@
+[alias]
+blame=annotate -u -n
+rec=record
+
+[defaults]
+email = --diffstat --git
+
+[diff]
+git=True
+
+[email]
+method = smtp
+from = userName <userEmail>
+
+[extdiff]
+cmd.kdiff3 =
+
+[extensions]
+hgext.prompt = ~/.shell/.hg-prompt/prompt.py
+hgext.convert =
+hgext.extdiff =
+hgext.graphlog =
+hgext.patchbomb =
+hgext.record =
+
+[merge-tools]
+kdiff3.args = $base $local $other -o $output
+
+[smtp]
+tls = True
+#host = userEmail
+#username = userEmailName
+#password = userEmailPassword
+
+[ui]
+username = Jeremy Pallats/starcraft.man <unknown3000@gmail.com>
+ignore = ~/.hgignore_global
+ssh = ssh -C
