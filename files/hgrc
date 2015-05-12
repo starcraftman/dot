@@ -16,7 +16,7 @@ from = userName <userEmail>
 cmd.kdiff3 =
 
 [extensions]
-hgext.prompt = ~/.shell/.hg-prompt/prompt.py
+hgext.prompt = ~/.shell/hg-prompt/prompt.py
 hgext.convert =
 hgext.extdiff =
 hgext.graphlog =

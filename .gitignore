@@ -40,13 +40,13 @@ Thumbs.db
 # Mine #
 ########
 workbench.xmi
-files/.vim/autoload/plug.vim
-files/.vim/autoload/plug.vim.old
-files/.vim/plugged/
-files/.vim/eclim/
-files/.vim/undo/
-files/.vim/view/
-files/.vim/.lvimrc_persist
-files/.vim/.netrwhist
-files/.vim/plugin/eclim.vim
+files/vim/autoload/plug.vim
+files/vim/autoload/plug.vim.old
+files/vim/plugged/
+files/vim/eclim/
+files/vim/undo/
+files/vim/view/
+files/vim/.lvimrc_persist
+files/vim/.netrwhist
+files/vim/plugin/eclim.vim
 #!.git*

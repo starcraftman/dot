@@ -35,7 +35,7 @@ export PATH=/usr/lib/ccache:$MYSCRIPTS:$SOFT/bin:$OPTDIR/bin:$JAVA_HOME/bin:$HAS
 export ANT_HOME=/usr/share/ant
 
 # Path to lookup functions
-fpath=(~/.shell/.zsh-completions/src $fpath)
+fpath=(~/.shell/zsh-completions/src $fpath)
 fpath=(~/.zsh_completions $fpath)
 #}}}
 ############################################################################
@@ -430,7 +430,7 @@ function ii() {
 
 # Highlight many terms with different colors
 # Usage: find . | h term1 term2 term3
-source ~/.shell/.hhighlighter/h.sh
+source ~/.shell/hhighlighter/h.sh
 #}}}
 ############################################################################
 # Misc Options
@@ -701,9 +701,9 @@ function save_hooks {
         preexec_functions=
     else
         add-zsh-hook precmd prompt_precmd
-        source ~/.shell/.zsh-git-prompt/zshrc.sh
+        source ~/.shell/zsh-git-prompt/zshrc.sh
         # Shell highlighting
-        source ~/.shell/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+        source ~/.shell/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
     fi
 }
 
