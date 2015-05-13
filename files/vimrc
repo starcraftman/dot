@@ -985,55 +985,6 @@ function! s:FTOpen()
   exec 'sp ' . l:file
 endfunction
 
-" Given a netrw buffer, extract filename on line
-function! s:ExtractFullPath(line)
-  let l:left = 0
-  let l:right = len(a:line) - 1
-
-  let l:char = a:line[l:left]
-  while l:char == ' ' || l:char == '|'
-    let l:left += 1
-    let l:char = a:line[l:left]
-  endwhile
-
-  let char = a:line[l:right]
-  while l:char =~ '[/*|@=]$'
-    let right -= 1
-    let char = a:line[l:right]
-  endwhile
-
-  let l:link = strpart(a:line, l:left, l:right - l:left + 1)
-
-  if exists('s:max_link') && len(l:link) > s:max_link
-    let s:max_link = len(l:link)
-  endif
-
-  return [l:link, resolve(getcwd() . "/" . l:link)]
-endfunction
-
-" Shows in an echo the target of links
-" New netrw >= 153 seems to support it via display
-function! s:ShowSyms()
-  let l:count = 1
-  let l:files = []
-  let s:max_link = 0
-
-  for l:line in getline(1, '$')
-    if l:line =~ '@$'
-      let l:files  += [[l:count] + s:ExtractFullPath(l:line)]
-    endif
-
-    let l:count += 1
-  endfor
-
-  let l:output = ""
-  let l:fmt = "ln: %5d %" . s:max_link . "s -> %s\n"
-  for l:entry in l:files
-    let l:output .= printf(l:fmt, l:entry[0], l:entry[1], l:entry[2])
-  endfor
-  echo l:output
-endfunction
-
 " Make a NERDTree like side buffer
 let g:Vex = {}
 function! Vex.Toggle()
