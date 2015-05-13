@@ -14,6 +14,7 @@ export OPTDIR=~/.opt
 
 # Personal scripts go here to stay outside of root.
 MYSCRIPTS=~/.my_scripts
+DFILES=~/.shell/dot/files
 
 # Dir to locally install cabal for haskell.
 HASKELL_BIN=~/.cabal/bin
