@@ -880,9 +880,6 @@ if has('autocmd')
   augroup netrw_cmds
     autocmd!
     autocmd FileType netrw nmap <buffer> <Leader>x gh
-    autocmd FileType netrw nmap <buffer> <silent> <Leader>z :call <SID>ShowSyms()<CR>
-    autocmd FileType netrw nmap <buffer> <silent> q :call Vex.Close()<CR>
-    autocmd FileType netrw nmap <buffer> <silent> o :call Vex.Action('new')<CR>
     autocmd FileType netrw nunmap <buffer> <C-L>
   augroup END
 endif
@@ -1009,6 +1006,10 @@ function! Vex.Open()
   wincmd H
   execute 'vertical resize ' . g:NERDTreeWinSize
   Explore
+
+  nmap <buffer> <silent> q :call Vex.Close()<CR>
+  nmap <buffer> <silent> o :call Vex.Action('new')<CR>
+  nmap <buffer> <silent> O :call Vex.Action('vnew')<CR>
 
   let t:vex.new_buf = bufnr('%')
 endfunction
