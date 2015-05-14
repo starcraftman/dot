@@ -90,10 +90,10 @@ try
   Plug 'justinmk/vim-syntax-extra'
   " Very large, enable when needed
   "Plug 'LaTeX-Box-Team/LaTeX-Box'
-  Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
+  "Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
   Plug 'tfnico/vim-gradle'
   Plug 'tomswartz07/vim-todo'
-  "Plug 'tpope/vim-markdown'
+  Plug 'tpope/vim-markdown'
   " Linux Kernel style plugin
   "Plug 'vivien/vim-addon-linux-coding-style'
   Plug 'zaiste/tmux.vim'
@@ -855,7 +855,7 @@ if has('autocmd')
     " Prevent undo files in some paths
     autocmd BufWritePre /tmp/* setlocal noundofile
     " All .md files should be markdown
-    autocmd BufRead,BufNewFile *.md set filetype=markdown
+    "autocmd BufRead,BufNewFile *.md set filetype=markdown
     " When change vimrc, reload it on write
     "autocmd BufWritePost $MYVIMRC source $MYVIMRC
     " When leaving window, save state to a file. Restore on return
