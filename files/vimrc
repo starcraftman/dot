@@ -37,7 +37,7 @@ try
   Plug 'mhinz/vim-signify'
   Plug 'rhysd/committia.vim'
   Plug 'scrooloose/syntastic'
-  Plug 'sjl/gundo.vim'
+  Plug 'simnalamburt/vim-mundo'
   Plug 'vim-scripts/taghighlight'
 
   " Movement
@@ -1254,6 +1254,8 @@ endfunction
 "       Graphical tree like explorer for visualizing undo history
 "       Project: https://github.com/sjl/gundo.vim
 "       Usage: http://sjl.bitbucket.org/gundo.vim/#Usage
+"       Seems original maintainer afk.
+"       Fork: https://github.com/simnalamburt/vim-mundo
 "   NERDComment:
 "       Bunch of comment commands. Mainly <Leader>ci to comment line
 "       https://github.com/scrooloose/nerdcommenter
