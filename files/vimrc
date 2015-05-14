@@ -1030,7 +1030,7 @@ function! Vex.Action(action)
   let l:orig_win = winnr()
   wincmd l
   execute a:action
-  let t:vex.orig_buf = winnr()
+  let t:vex.orig_buf = winnr() - 1
   execute l:orig_win . ' wincmd w'
   call feedkeys("\<CR>", 't')
 endfunction
