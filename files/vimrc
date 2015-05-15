@@ -1057,8 +1057,8 @@ function! g:FileFetch(src, dst)
   else
     echoerr 'No supported file download method.'
   endif
-  echomsg 'File ' . fnamemodify(a:src, ':t') . ' written to ' . a:dst . '.'
   redraw!
+  echomsg 'File ' . fnamemodify(a:src, ':t') . ' written to ' . a:dst . '.'
 endfunction
 
 function! s:fetch_python(src, dst)
@@ -1083,13 +1083,14 @@ function! s:bootstrap()
   let plug_src = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   let plug_dst = expand(g:vim_dir . '/autoload/plug.vim')
   call g:FileFetch(plug_src, plug_dst)
-  echo 'Done, please restart and run `PlugInstall`.'
+  echo 'Restart and run `PlugInstall`.'
 endfunction
 
 command! -nargs=0 VimrcUpdate call s:vimrc_update()
 function! s:vimrc_update()
   let src = 'https://raw.githubusercontent.com/starcraftman/dot/master/files/vimrc'
   call g:FileFetch(src, $MYVIMRC)
+  echo "$MYVIMRC is up to date."
 endfunction
 
 " Bundle env variables, vimrc & .vim folders for remote deploy
