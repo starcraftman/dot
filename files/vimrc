@@ -79,6 +79,7 @@ try
   Plug 'tpope/vim-dispatch'
   Plug 'tpope/vim-sleuth'
   Plug 'tyru/open-browser.vim'
+  Plug 'starcraftman/cmdalias.vim'
 
   " Syntax / File Specific
   Plug 'chrisbra/csv.vim'
@@ -439,22 +440,25 @@ vnoremap i  <Esc>
 " Aliasing some commands to make tabs/buffers easy to manage
 " Some of these exist, I put them here to remember
 " Note with hidden set, buffers and tabs are largely the same
-cnoreabbrev bn bnext
-cnoreabbrev bp bprevious
-cnoreabbrev tn tabn
-cnoreabbrev tp tabp
-cnoreabbrev te tabe
-cnoreabbrev td tabclose
+try
+  call cmdalias#alias('bn', 'bnext')
+  call cmdalias#alias('bp', 'bprevious')
+  call cmdalias#alias('tn', 'tabn')
+  call cmdalias#alias('tp', 'tabp')
+  call cmdalias#alias('te', 'tabe')
+  call cmdalias#alias('td', 'tabclose')
 
-" I always forget for explore, make some shortcuts, Ev for v split, Et for tab
-cnoreabbrev E Explore
-cnoreabbrev Et Texplore
-cnoreabbrev Ev Sexplore!
+  " I always forget for explore, make some shortcuts, Ev for v split, Et for tab
+  call cmdalias#alias('E', 'Explore')
+  call cmdalias#alias('Et', 'Texplore')
+  call cmdalias#alias('Ev', 'Sexplore')
 
-" Shortcuts for plugin management
-cnoreabbrev pi PlugInstall
-cnoreabbrev pu PlugUpdate
-cnoreabbrev pc PlugClean
+  " Shortcuts for plugin management
+  call cmdalias#alias('pi', 'PlugInstall')
+  call cmdalias#alias('pu', 'PlugUpdate')
+  call cmdalias#alias('pc', 'PlugClean')
+catch
+endtry
 
 " Arrow keys to move through buffers/tabs
 nnoremap <Right> :bnext<CR>
