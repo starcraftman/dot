@@ -1088,7 +1088,7 @@ endfunction
 
 command! -nargs=0 VimrcUpdate call s:vimrc_update()
 function! s:vimrc_update()
-  let src = 'https://raw.githubusercontent.com/starcraftman/.my_scripts/master/dot_files/.vimrc'
+  let src = 'https://raw.githubusercontent.com/starcraftman/dot/master/files/vimrc'
   call g:FileFetch(src, $MYVIMRC)
 endfunction
 
