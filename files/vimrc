@@ -441,22 +441,22 @@ vnoremap i  <Esc>
 " Some of these exist, I put them here to remember
 " Note with hidden set, buffers and tabs are largely the same
 try
-  call cmdalias#alias('bn', 'bnext')
-  call cmdalias#alias('bp', 'bprevious')
-  call cmdalias#alias('tn', 'tabn')
-  call cmdalias#alias('tp', 'tabp')
-  call cmdalias#alias('te', 'tabe')
-  call cmdalias#alias('td', 'tabclose')
+  call cmdalias#add('bn', 'bnext')
+  call cmdalias#add('bp', 'bprevious')
+  call cmdalias#add('tn', 'tabn')
+  call cmdalias#add('tp', 'tabp')
+  call cmdalias#add('te', 'tabe')
+  call cmdalias#add('td', 'tabclose')
 
   " I always forget for explore, make some shortcuts, Ev for v split, Et for tab
-  call cmdalias#alias('E', 'Explore')
-  call cmdalias#alias('Et', 'Texplore')
-  call cmdalias#alias('Ev', 'Sexplore')
+  call cmdalias#add('E', 'Explore')
+  call cmdalias#add('Et', 'Texplore')
+  call cmdalias#add('Ev', 'Sexplore')
 
   " Shortcuts for plugin management
-  call cmdalias#alias('pi', 'PlugInstall')
-  call cmdalias#alias('pu', 'PlugUpdate')
-  call cmdalias#alias('pc', 'PlugClean')
+  call cmdalias#add('pi', 'PlugInstall')
+  call cmdalias#add('pu', 'PlugUpdate')
+  call cmdalias#add('pc', 'PlugClean')
 catch
 endtry
 
