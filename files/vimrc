@@ -1,5 +1,5 @@
 " If you are confused by not seeing a lot of text, push zi
-" For more info, see :help folding. Read General Notes section to learn.
+" For more info, see :help folding. Read General Notes section to learn
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -283,7 +283,7 @@ let g:tagbar_compact = 1
 
 " Gundo
 """""""
-" Seems to take too long.
+" Seems to take too long
 let g:gundo_inline_undo = 0
 
 " Compacts the graph
@@ -852,7 +852,7 @@ let g:NERDTreeSortOrder = split(g:netrw_sort_sequence, ',')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " {{{
 
-" Protection against older Vim versions. Gvim reports falsely augroup = 0 sometimes.
+" Protection against older Vim versions. Gvim reports falsely augroup = 0 sometimes
 if has('autocmd')
   if has('gui')
     augroup gui_cmds
@@ -1201,7 +1201,7 @@ endfunction
 "       YouCompleteMe   : Requires cpp compilation, done on hook for *nix
 "       vim-airline     : Powerline fonts optional, see SysInstall.py home
 "       TagBar          : Requires exhuberant tags, see BuildSrc.py ctags
-"       taghighlight    : Same as above.
+"       taghighlight    : Same as above
 "       vim-ags/ack.vim : Ag/Ack on system, see BuildSrc.py dev
 "       eclim           : See manual steps from site
 
@@ -1272,7 +1272,7 @@ endfunction
 "       Graphical tree like explorer for visualizing undo history
 "       Project: https://github.com/sjl/gundo.vim
 "       Usage: http://sjl.bitbucket.org/gundo.vim/#Usage
-"       Seems original maintainer afk.
+"       Seems original maintainer afk
 "       Fork: https://github.com/simnalamburt/vim-mundo
 "   NERDComment:
 "       Bunch of comment commands. Mainly <Leader>ci to comment line
@@ -1511,7 +1511,7 @@ endfunction
 " * To see conflicting maps:
 "       :verbose map <Leader>jd
 "
-" * To repeat last command (colon): `@:`, to repeat last register `@@`.
+" * To repeat last command (colon): `@:`, to repeat last register `@@`
 "
 " * To fix tabs, see `retab`. By default, %retab!
 "
