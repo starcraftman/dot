@@ -879,6 +879,9 @@ if has('autocmd')
     autocmd!
     " missing keywords for bash statement syntax
     autocmd FileType sh exec 'syntax keyword shStatement source shopt'
+    " s is sort in tagbar, use alternate
+    autocmd FileType tagbar nmap <Leader>s <Plug>Sneak_s
+    autocmd FileType tagbar nmap <Leader>S <Plug>Sneak_S
   augroup END
 
   augroup netrw_cmds
@@ -1102,6 +1105,7 @@ function! s:bundle_vim()
   execute '!bash ' . dst
   call delete(dst)
 endfunction
+
 " }}}
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General Notes
