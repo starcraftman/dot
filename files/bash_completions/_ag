@@ -113,3 +113,4 @@ _ag() {
   esac
 } &&
 complete -F _ag ${nospace} ag
+# vim:set ft=sh:

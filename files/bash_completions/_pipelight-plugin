@@ -69,3 +69,4 @@ _pipelight-plugin() {
   esac
 } &&
 complete -F _pipelight-plugin ${nospace} pipelight-plugin
+# vim:set ft=sh:

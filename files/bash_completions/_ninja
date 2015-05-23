@@ -56,3 +56,4 @@ _ninja_target() {
     return
 }
 complete -F _ninja_target ninja
+# vim:set ft=sh:
