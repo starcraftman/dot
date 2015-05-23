@@ -91,7 +91,7 @@ try
   Plug 'justinmk/vim-syntax-extra'
   " Very large, enable when needed
   "Plug 'LaTeX-Box-Team/LaTeX-Box'
-  "Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
+  "Plug 'plasticboy/vim-markdown' | Plug 'godlygeek/tabular'
   Plug 'tfnico/vim-gradle'
   Plug 'tomswartz07/vim-todo'
   Plug 'tpope/vim-markdown'
