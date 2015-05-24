@@ -10,7 +10,7 @@ _pipelight-plugin() {
   if [ "${__COMP_CACHE_PIPELIGHT}x" = "x" ]; then
     lngopt="$(pipelight-plugin --help | command grep -o '\-\-[a-z-]\+')"
     plugs="$(pipelight-plugin --help | command grep -v '^$\|.*:\|MOZ.*\|--\w\+')"
-  __COMP_CACHE_PIPELIGHT=( "$lngopt" "$plugs" )
+    __COMP_CACHE_PIPELIGHT=( "$lngopt" "$plugs" )
     export __COMP_CACHE_PIPELIGHT
   else
     lngopt="${__COMP_CACHE_PIPELIGHT[0]}"
