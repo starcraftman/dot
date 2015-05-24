@@ -7,8 +7,15 @@ _bashdb() {
 
   _expand || return 0
 
-  lngopt="$(bashdb --help | command grep -o '\-\-[a-z-]\+')"
-  shtopt="$(bashdb --help | command grep -o '\s\+\-\w')"
+  if [ "${__COMP_CACHE_BASHDB}x" = "x" ]; then
+    lngopt="$(bashdb --help | command grep -o '\-\-[a-z-]\+')"
+    shtopt="$(bashdb --help | command grep -o '\s\+\-\w')"
+    __COMP_CACHE_BASHDB=( "$lngopt" "$shtopt" )
+    export __COMP_CACHE_BASHDB
+  else
+    lngopt="${__COMP_CACHE_BASHDB[0]}"
+    shtopt="${__COMP_CACHE_BASHDB[1]}"
+  fi
 
   # these options require an argument
   if [[ "${prev}" == -@(A|c) ]] ; then
