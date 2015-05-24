@@ -1,6 +1,6 @@
 valid_name tmux &&
 _tmux() {
-  local lngopt shtopt split=false cur prev
+  local lngopt shtopt cur prev split=false
   cur=$(_get_cword "=")
   prev="${COMP_WORDS[COMP_CWORD-1]}"
   COMPREPLY=()
