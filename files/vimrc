@@ -25,7 +25,7 @@ try
   elseif has('lua')
     Plug 'Shougo/neocomplete.vim'
   endif
-  Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' "Default snippets
+  Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
   " UI
   Plug 'bling/vim-airline'
@@ -87,7 +87,7 @@ try
   Plug 'elzr/vim-json'
   "Plug 'fatih/vim-go'
   Plug 'hdima/python-syntax'
-  Plug 'junegunn/vader.vim' "Testing vim scripts
+  Plug 'junegunn/vader.vim'
   Plug 'justinmk/vim-syntax-extra'
   " Very large, enable when needed
   "Plug 'LaTeX-Box-Team/LaTeX-Box'
