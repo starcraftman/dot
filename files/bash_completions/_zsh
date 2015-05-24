@@ -1,222 +1,43 @@
 valid_name zsh &&
 _zsh() {
-    local lngopt shtopt split=false
-    local cur prev
+  local lngopt shtopt cur prev
+  cur=$(_get_cword "=")
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  COMPREPLY=()
 
-    COMPREPLY=()
-    cur=$(_get_cword "=")
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
+  _expand || return 0
 
-    _expand || return 0
+  if [ "${__COMP_CACHE_ZSH}x" = "x" ]; then
+    lngopt="$(zsh --help | command grep -o '^\s\+\-\-[a-z-]\+')"
+    lngopt_trim="$(zsh --help | command grep -o '^\s\+\-\-[a-z-]\+' | cut -b 5-)"
+    __COMP_CACHE_ZSH=( "$lngopt" "$lngopt_trim" )
+    export __COMP_CACHE_ZSH
+  else
+    lngopt="${__COMP_CACHE_ZSH[0]}"
+    lngopt_trim="${__COMP_CACHE_ZSH[1]}"
+  fi
+  shtopt='-b -c -o'
 
-    lngopt='
-        --aliases
-        --allexport
-        --alwayslastprompt
-        --alwaystoend
-        --appendhistory
-        --autocd
-        --autocontinue
-        --autolist
-        --automenu
-        --autonamedirs
-        --autoparamkeys
-        --autoparamslash
-        --autopushd
-        --autoremoveslash
-        --autoresume
-        --badpattern
-        --banghist
-        --bareglobqual
-        --bashautolist
-        --bashrematch
-        --beep
-        --bgnice
-        --braceccl
-        --braceexpand
-        --bsdecho
-        --caseglob
-        --casematch
-        --cbases
-        --cdablevars
-        --chasedots
-        --chaselinks
-        --checkjobs
-        --clobber
-        --combiningchars
-        --completealiases
-        --completeinword
-        --continueonerror
-        --correct
-        --correctall
-        --cprecedences
-        --cshjunkiehistory
-        --cshjunkieloops
-        --cshjunkiequotes
-        --cshnullcmd
-        --cshnullglob
-        --debugbeforecmd
-        --dotglob
-        --dvorak
-        --emacs
-        --equals
-        --errexit
-        --errreturn
-        --evallineno
-        --exec
-        --extendedglob
-        --extendedhistory
-        --flowcontrol
-        --functionargzero
-        --glob
-        --globalexport
-        --globalrcs
-        --globassign
-        --globcomplete
-        --globdots
-        --globsubst
-        --hashall
-        --hashcmds
-        --hashdirs
-        --hashexecutablesonly
-        --hashlistall
-        --help
-        --histallowclobber
-        --histappend
-        --histbeep
-        --histexpand
-        --histexpiredupsfirst
-        --histfcntllock
-        --histfindnodups
-        --histignorealldups
-        --histignoredups
-        --histignorespace
-        --histlexwords
-        --histnofunctions
-        --histnostore
-        --histreduceblanks
-        --histsavebycopy
-        --histsavenodups
-        --histsubstpattern
-        --histverify
-        --hup
-        --ignorebraces
-        --ignoreclosebraces
-        --ignoreeof
-        --incappendhistory
-        --interactive
-        --interactivecomments
-        --ksharrays
-        --kshautoload
-        --kshglob
-        --kshoptionprint
-        --kshtypeset
-        --kshzerosubscript
-        --listambiguous
-        --listbeep
-        --listpacked
-        --listrowsfirst
-        --listtypes
-        --localoptions
-        --localtraps
-        --log
-        --login
-        --longlistjobs
-        --magicequalsubst
-        --mailwarn
-        --mailwarning
-        --markdirs
-        --menucomplete
-        --monitor
-        --multibyte
-        --multifuncdef
-        --multios
-        --nomatch
-        --notify
-        --nullglob
-        --numericglobsort
-        --octalzeroes
-        --onecmd
-        --overstrike
-        --pathdirs
-        --pathscript
-        --physical
-        --posixaliases
-        --posixbuiltins
-        --posixcd
-        --posixidentifiers
-        --posixjobs
-        --posixstrings
-        --posixtraps
-        --printeightbit
-        --printexitvalue
-        --privileged
-        --promptbang
-        --promptcr
-        --promptpercent
-        --promptsp
-        --promptsubst
-        --promptvars
-        --pushdignoredups
-        --pushdminus
-        --pushdsilent
-        --pushdtohome
-        --rcexpandparam
-        --rcquotes
-        --rcs
-        --recexact
-        --rematchpcre
-        --restricted
-        --rmstarsilent
-        --rmstarwait
-        --sharehistory
-        --shfileexpansion
-        --shglob
-        --shinstdin
-        --shnullcmd
-        --shoptionletters
-        --shortloops
-        --shwordsplit
-        --singlecommand
-        --singlelinezle
-        --sourcetrace
-        --stdin
-        --sunkeyboardhack
-        --trackall
-        --transientrprompt
-        --trapsasync
-        --typesetsilent
-        --unset
-        --verbose
-        --version
-        --vi
-        --warncreateglobal
-        --xtrace
-        --zle
-    '
-    shtopt='
-        -b -c -o
-    '
+  case "${prev}" in
+    -b|-c)
+      return 0
+      ;;
+    -o)
+      COMPREPLY=( $(compgen -W "${lngopt_trim}" -- "${cur}") )
+      return 0
+      ;;
+  esac
 
-    # these options require an argument
-    if [[ "${prev}" == -@(b|c) ]] ; then
-        return 0
-    fi
-
-    _split_longopt && split=true
-
-    $split && return 0
-
-    case "${cur}" in
-        -*)
-            COMPREPLY=( $(compgen -W "${lngopt} ${shtopt}" -- "${cur}") )
-            return 0
-            ;;
-        *)
-            _filedir
-            return 0
-            ;;
-    esac
+  case "${cur}" in
+    -*)
+      COMPREPLY=( $(compgen -W "${lngopt} ${shtopt}" -- "${cur}") )
+      return 0
+      ;;
+    *)
+      _filedir
+      return 0
+      ;;
+  esac
 } &&
 complete -F _zsh ${nospace} zsh
 # vim:set ft=sh:

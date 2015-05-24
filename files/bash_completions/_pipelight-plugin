@@ -1,11 +1,9 @@
 have pipelight-plugin &&
 _pipelight-plugin() {
-  local lngopt plugs split=false
-  local cur prev
-
-  COMPREPLY=()
+  local lngopt plugs cur prev
   cur=$(_get_cword "=")
   prev="${COMP_WORDS[COMP_CWORD-1]}"
+  COMPREPLY=()
 
   _expand || return 0
 
@@ -25,8 +23,6 @@ _pipelight-plugin() {
       return 0
       ;;
   esac
-
-  $split && return 0
 
   case "${cur}" in
     -*)
