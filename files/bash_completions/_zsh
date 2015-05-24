@@ -1,6 +1,6 @@
 valid_name zsh &&
 _zsh() {
-  local lngopt shtopt cur prev
+  local lngopt lngopt_trim shtopt cur prev
   cur=$(_get_cword "=")
   prev="${COMP_WORDS[COMP_CWORD-1]}"
   COMPREPLY=()
