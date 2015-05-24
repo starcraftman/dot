@@ -9,63 +9,34 @@ _pipelight-plugin() {
 
   _expand || return 0
 
-  lngopt='
-    --accept
-    --create-mozilla-plugins
-    --disable
-    --disable-all
-    --enable
-    --help
-    --list-enabled
-    --list-enabled-all
-    --lock
-    --remove-mozilla-plugins
-    --show-license
-    --system-check
-    --unlock
-    --update
-    --version
-  '
-
-  plugs='
-    silverlight5.1
-    silverlight5.0
-    silverlight4
-    flash
-    unity3d
-    widevine
-
-    shockwave
-    foxitpdf
-    grandstream
-    adobereader
-    hikvision
-    npactivex
-    roblox
-    vizzedrgr
-    viewright-caiway
-    x64-unity3d
-    x64-flash
-  '
-
-  _split_longopt && split=true
+  if [ "${__COMP_CACHE_PIPELIGHT}x" = "x" ]; then
+    lngopt="$(pipelight-plugin --help | command grep -o '\-\-[a-z-]\+')"
+    plugs="$(pipelight-plugin --help | command grep -v '^$\|.*:\|MOZ.*\|--\w\+')"
+  __COMP_CACHE_PIPELIGHT=( "$lngopt" "$plugs" )
+    export __COMP_CACHE_PIPELIGHT
+  else
+    lngopt="${__COMP_CACHE_PIPELIGHT[0]}"
+    plugs="${__COMP_CACHE_PIPELIGHT[1]}"
+  fi
 
   case "${prev}" in
     --lock|--unlock|--enable|--disable)
-      COMPREPLY=( $(compgen -W \
-        "${plugs}" -- "${cur}") )
-      return 0;;
+      COMPREPLY=( $(compgen -W "${plugs}" -- "${cur}") )
+      return 0
+      ;;
   esac
 
   $split && return 0
 
   case "${cur}" in
     -*)
-      COMPREPLY=( $(compgen -W \
-        "${lngopt} " -- "${cur}") )
-      return 0;;
+      COMPREPLY=( $(compgen -W "${lngopt} " -- "${cur}") )
+      return 0
+      ;;
     *)
-      return 0;;
+      COMPREPLY=( $(compgen -W "${plugs}" -- "${cur}") )
+      return 0
+      ;;
   esac
 } &&
 complete -F _pipelight-plugin ${nospace} pipelight-plugin

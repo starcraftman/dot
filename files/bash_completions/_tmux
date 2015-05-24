@@ -1,78 +1,78 @@
 valid_name tmux &&
 _tmux() {
-    local lngopt shtopt split=false
-    local cur prev
+  local lngopt shtopt split=false
+  local cur prev
 
-    COMPREPLY=()
-    cur=$(_get_cword "=")
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
+  COMPREPLY=()
+  cur=$(_get_cword "=")
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-    _expand || return 0
+  _expand || return 0
 
-    lngopt='
-        attach
-        detach
-        has-session
-        kill-server
-        kill-session
-        list-clients
-        list-commands
-        list-keys
-        list-sessions
-        lock-client
-        lock-session
-        new
-        refresh
-        rename
-        show-messages
-        source
-        start-server
-        suspend-client
-        switch-client
-    '
-    shtopt='
-        -2 -8 -c -C -f -l -L
-        -q -S -u -v -V
-    '
+  lngopt='
+    attach
+    detach
+    has-session
+    kill-server
+    kill-session
+    list-clients
+    list-commands
+    list-keys
+    list-sessions
+    lock-client
+    lock-session
+    new
+    refresh
+    rename
+    show-messages
+    source
+    start-server
+    suspend-client
+    switch-client
+  '
+  shtopt='
+    -2 -8 -c -C -f -l -L
+    -q -S -u -v -V
+  '
 
-    # these options require an argument
-    if [[ "${prev}" == -@(c|L) ]] ; then
-        return 0
-    fi
+  # these options require an argument
+  if [[ "${prev}" == -@(c|L) ]] ; then
+    return 0
+  fi
 
-    _split_longopt && split=true
+  _split_longopt && split=true
 
-    case "${prev}" in
-        # file completion
-        source|-f|-S)
-            _filedir
-            return 0
-            ;;
-        # session completion
-        -t)
-            if ! contains "$(tmux list-sessions 2>&1)" "failed"; then
-                COMPREPLY=( $(tmux list-sessions | cut -d ' ' -f 1 | tr ':' ' ') )
-            fi
-            return 0
-            ;;
-        # no completion for these
-        kill-server|list-commands|list-sessions|start)
-            return 0
-            ;;
-    esac
+  case "${prev}" in
+    # file completion
+    source|-f|-S)
+      _filedir
+      return 0
+      ;;
+    # session completion
+    -t)
+      if ! contains "$(tmux list-sessions 2>&1)" "failed"; then
+        COMPREPLY=( $(tmux list-sessions | cut -d ' ' -f 1 | tr ':' ' ') )
+      fi
+      return 0
+      ;;
+    # no completion for these
+    kill-server|list-commands|list-sessions|start)
+      return 0
+      ;;
+  esac
 
-    $split && return 0
+  $split && return 0
 
-    case "${cur}" in
-        -*)
-            COMPREPLY=( $(compgen -W "${lngopt} ${shtopt}" -- "${cur}") )
-            return 0
-            ;;
-        *)
-            COMPREPLY=( $(compgen -W "${lngopt} ${shtopt}" -- "${cur}") )
-            return 0
-            ;;
-    esac
+  case "${cur}" in
+    -*)
+      COMPREPLY=( $(compgen -W "${shtopt} " -- "${cur}") )
+      return 0
+      ;;
+    *)
+      COMPREPLY=( $(compgen -W "${lngopt} ${shtopt}" -- "${cur}") )
+      return 0
+      ;;
+  esac
 } &&
 complete -F _tmux ${nospace} tmux
 # vim:set ft=sh:
