@@ -1,0 +1,38 @@
+have vim &&
+_vim() {
+  local lngopt shtopt cur prev
+  cur=$(_get_cword "=")
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  COMPREPLY=()
+
+  _expand || return 0
+
+  if [ "${__COMP_CACHE_VIM}x" = "x" ]; then
+    lngopt="$(vim --help | command grep -o '\-\-[a-z-]\+')"
+    shtopt="$(vim --help | command grep -o '^\s\+\-\w')"
+    __COMP_CACHE_VIM=( "$lngopt" "$shtopt" )
+    export __COMP_CACHE_VIM
+  else
+    lngopt="${__COMP_CACHE_VIM[0]}"
+    shtopt="${__COMP_CACHE_VIM[1]}"
+  fi
+
+  # these options require an argument
+  if [[ "${prev}" == -[cT] ]] ; then
+    return 0
+  fi
+
+  case "${cur}" in
+    -*)
+      COMPREPLY=( $(compgen -W \
+          "${lngopt} ${shtopt} " -- "${cur}") )
+      return 0
+      ;;
+    *)
+      _filedir
+      return 0
+      ;;
+  esac
+} &&
+complete -F _vim ${nospace} vim
+# vim:set ft=sh:
