@@ -1,4 +1,3 @@
-valid_name ack &&
 _ack() {
   local lngopt shtopt cur prev types prev_types split=false
   cur=$(_get_cword "=")
@@ -8,12 +7,12 @@ _ack() {
   _expand || return 0
 
   if [ "${__COMP_CACHE_ACK}x" = "x" ]; then
-    lngopt="$(ack --help | command grep -o '\-\-[a-z-]\+') --help --version"
-    for i in $(ack --help | command grep -o '\-\-\[no\S*' | cut -b 7-); do
+    lngopt="$(ack --help | command grep -o '\-\-[a-z-]\+')"
+    for i in $(ack --help | command grep -o '\-\-\[no\S[a-z-]\+' | cut -c 7-); do
       lngopt="$lngopt --no$i --$i"
     done
-    shtopt="$(ack --help | command grep -o '\-\w\s') -R"
-    for t in $(ack --help-types | command grep -o '\-\-\[no\]\w\+' | cut -b 7-); do
+    shtopt="$(ack --help | command grep -o '\-[a-zA-Z0-9]\b') -?"
+    for t in $(ack --help-types | command grep -o '\-\-\[no\]\w\+' | cut -c 7-); do
       types="$types --no$t --$t"
       prev_types="$prev_types no$t $t"
     done
@@ -50,14 +49,15 @@ _ack() {
           -- "${cur}") )
       return 0
       ;;
-    # no completion for these
-    --after-context|--before-context|--context|--color*|--ignore-file|\
-        --lines|--match|--max-count|--output)
-      return 0
-      ;;
+    # complete base types
     --type)
       COMPREPLY=( $(compgen -W \
           "${prev_types}" -- "${cur}") )
+      return 0
+      ;;
+    # no completion for these
+    --after-context|--before-context|--context|--color*|--ignore-file|\
+        --lines|--match|--max-count|--output)
       return 0
       ;;
   esac
@@ -75,6 +75,9 @@ _ack() {
       return 0
       ;;
   esac
-} &&
-complete -F _ack ${nospace} ack
+}
+
+for i in "ack" "ack2" "ack-grep" "ack-standalone"; do
+  have "$i" && complete -F _ack ${nospace} "$i"
+done
 # vim:set ft=sh:

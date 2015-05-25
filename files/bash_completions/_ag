@@ -8,11 +8,11 @@ _ag() {
   _expand || return 0
 
   if [ "${__COMP_CACHE_AG}x" = "x" ]; then
-    lngopt="$(ag --help | command grep -o '\-\-[a-z-]\+') --help --version"
-    for t in $(ag --help | command grep -o '\-\-\[no\S*' | cut -b 7-); do
+    lngopt="$(ag --help | command grep -o '\-\-\S+') --help --version"
+    for t in $(ag --help | command grep -o '\-\-\[no\S+' | cut -c 7-); do
       lngopt="$lngopt --no$t --$t"
     done
-    shtopt="$(ag --help | command grep -o '\-\w\s')"
+    shtopt="$(ag --help | command grep -o '\-[a-zA-Z0-9]\b')"
     types="$(ag --list-file-types | grep -- '--')"
     __COMP_CACHE_AG=( "$lngopt" "$shtopt" "$types" )
     export __COMP_CACHE_AG
