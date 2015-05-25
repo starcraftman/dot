@@ -7,12 +7,12 @@ _ack() {
   _expand || return 0
 
   if [ "${__COMP_CACHE_ACK}x" = "x" ]; then
-    lngopt="$(ack --help | command grep -o '\-\-[a-z-]\+')"
-    for i in $(ack --help | command grep -o '\-\-\[no\S[a-z-]\+' | cut -c 7-); do
+    lngopt="$(ack --help | command ack -o '\-\-[a-z-]+')"
+    for i in $(ack --help | command ack -o '\-\-\[no\][a-z-]+' | cut -c 7-); do
       lngopt="$lngopt --no$i --$i"
     done
-    shtopt="$(ack --help | command grep -o '\-[a-zA-Z0-9]\b') -?"
-    for t in $(ack --help-types | command grep -o '\-\-\[no\]\w\+' | cut -c 7-); do
+    shtopt="$(ack --help | command ack -o '\-[a-zA-Z0-9]\b') -?"
+    for t in $(ack --help-types | command ack -o '\-\-\[no\]\w+' | cut -c 7-); do
       types="$types --no$t --$t"
       prev_types="$prev_types no$t $t"
     done
@@ -54,7 +54,7 @@ _ack() {
     --color-*)
       local colors="black red green yellow blue magenta cyan white
           on_black on_red on_green on_yellow on_blue on_magenta on_cyan on_white
-          clear reset dark bold underline underscore blink reverse concealed"
+          bold underline underscore"
       COMPREPLY=( $(compgen -W \
           "${colors}" -- "${cur}") )
       return 0
