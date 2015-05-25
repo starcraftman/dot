@@ -46,7 +46,8 @@ _bashdb() {
 
   case "${cur}" in
     -*)
-      COMPREPLY=( $(compgen -W "${lngopt} ${shtopt}" -- "${cur}") )
+      COMPREPLY=( $(compgen -W \
+          "${lngopt} ${shtopt}" -- "${cur}") )
       return 0
       ;;
     *)
