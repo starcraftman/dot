@@ -8,11 +8,13 @@ _ack() {
 
   if [ "${__COMP_CACHE_ACK}x" = "x" ]; then
     lngopt="$(ack --help | command ack -o '\-\-[a-z-]+')"
-    for i in $(ack --help | command ack -o '\-\-\[no\][a-z-]+' | cut -c 7-); do
+    for i in $(ack --help | command ack -o '\-\-\[no\][a-z-]+'); do
+      i="${i#--\[no\]}"
       lngopt="$lngopt --no$i --$i"
     done
-    shtopt="$(ack --help | command ack -o '\-[a-zA-Z0-9]\b') -?"
-    for t in $(ack --help-types | command ack -o '\-\-\[no\]\w+' | cut -c 7-); do
+    shtopt="$(ack --help | command ack -o '\-[?a-zA-Z0-9]\b') -?"
+    for t in $(ack --help-types | command ack -o '\-\-\[no\]\w+'); do
+      t="${t#--\[no\]}"
       types="$types --no$t --$t"
       prev_types="$prev_types no$t $t"
     done
