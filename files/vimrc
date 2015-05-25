@@ -38,6 +38,7 @@ try
   Plug 'rhysd/committia.vim'
   Plug 'scrooloose/syntastic'
   Plug 'simnalamburt/vim-mundo'
+  "Plug 'sjl/gundo.vim'
   Plug 'vim-scripts/taghighlight'
 
   " Movement
