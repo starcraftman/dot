@@ -10,13 +10,14 @@ _zsh() {
   if [ "${__COMP_CACHE_ZSH}x" = "x" ]; then
     lngopt="$(zsh --help | command grep -o '^\s\+\-\-[a-z-]\+')"
     lngopt_trim="$(zsh --help | command grep -o '^\s\+\-\-[a-z-]\+' | cut -b 5-)"
-    __COMP_CACHE_ZSH=( "$lngopt" "$lngopt_trim" )
+    shtopt="+o $(zsh --help | command grep -o '^\s\+\-\w')"
+    __COMP_CACHE_ZSH=( "$lngopt" "$lngopt_trim" "$shtopt" )
     export __COMP_CACHE_ZSH
   else
     lngopt="${__COMP_CACHE_ZSH[0]}"
     lngopt_trim="${__COMP_CACHE_ZSH[1]}"
+    shtopt="${__COMP_CACHE_ZSH[2]}"
   fi
-  shtopt='-b -c -o'
 
   case "${prev}" in
     -b|-c)
