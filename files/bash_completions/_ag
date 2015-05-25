@@ -9,6 +9,9 @@ _ag() {
 
   if [ "${__COMP_CACHE_AG}x" = "x" ]; then
     lngopt="$(ag --help | command grep -o '\-\-[a-z-]\+') --help --version"
+    for t in $(ag --help | command grep -o '\-\-\[no\S*' | cut -b 7-); do
+      lngopt="$lngopt --no$t --$t"
+    done
     shtopt="$(ag --help | command grep -o '\-\w\s')"
     types="$(ag --list-file-types | command grep '\-\-\w\+')"
     __COMP_CACHE_AG=( "$lngopt" "$shtopt" "$types" )

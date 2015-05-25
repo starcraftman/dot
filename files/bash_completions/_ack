@@ -1,124 +1,80 @@
 valid_name ack &&
 _ack() {
-    local lngopt shtopt split=false
-    local cur prev
+  local lngopt shtopt cur prev types prev_types split=false
+  cur=$(_get_cword "=")
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  COMPREPLY=()
 
-    COMPREPLY=()
-    cur=$(_get_cword "=")
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
+  _expand || return 0
 
-    _expand || return 0
+  if [ "${__COMP_CACHE_ACK}x" = "x" ]; then
+    lngopt="$(ack --help | command grep -o '\-\-[a-z-]\+') --help --version"
+    for i in $(ack --help | command grep -o '\-\-\[no\S*' | cut -b 7-); do
+      lngopt="$lngopt --no$i --$i"
+    done
+    shtopt="$(ack --help | command grep -o '\-\w\s')"
+    for t in $(ack --help-types | command grep -o '\-\-\[no\]\w\+' | cut -b 7-); do
+      types="$types --no$t --$t"
+      prev_types="$prev_types no$t $t"
+    done
+    __COMP_CACHE_ACK=( "$lngopt" "$shtopt" "$types" "$prev_types" )
+    export __COMP_CACHE_ACK
+  else
+    lngopt="${__COMP_CACHE_ACK[0]}"
+    shtopt="${__COMP_CACHE_ACK[1]}"
+    types="${__COMP_CACHE_ACK[2]}"
+    prev_types="${__COMP_CACHE_ACK[3]}"
+  fi
 
-    lngopt='
-        --ackrc
-        --after-context
-        --before-context
-        --column
-        --context
-        --count
-        --dump
-        --env
-        --files-from
-        --files-with-matches
-        --files-without-matches
-        --flush
-        --follow
-        --group
-        --help
-        --help-types
-        --ignore-case
-        --ignore-dir
-        --ignore-file
-        --invert-match
-        --lines
-        --literal
-        --man
-        --match
-        --max-count
-        --no-filename
-        --no-recurse
-        --nobreak
-        --nocolor
-        --nocolumn
-        --noenv
-        --nogroup
-        --noheading
-        --noignore-dir
-        --nopager
-        --nosmart-case
-        --output
-        --pager
-        --passthru
-        --print0
-        --show-types
-        --smart-case
-        --sort-files
-        --type
-        --version
-        --with-filename
-        --word-regexp
-    '
-    shtopt='
-        -1 -A -B -C -c -f
-        -g -h -H -i -k -l
-        -L -n -m -M -o -r
-        -R -s -v -w -Q -x
-    '
+  # these options require an argument
+  if [[ "${prev}" == -@(A|B|C|G|g|m) ]] ; then
+    return 0
+  fi
 
-    # these options require an argument
-    if [[ "${prev}" == -@(A|B|C|G|g|m) ]] ; then
-        return 0
-    fi
+  _split_longopt && split=true
 
-    _split_longopt && split=true
-
-    local avail_pagers
-    if [ -n "${__PAGERS_CACHE}" ]; then
-        avail_pagers="${__PAGERS_CACHE}"
-    else
-        for pager in "less" "more" "vimpager"; do
-            if valid_name $pager; then
-                avail_pagers+="$pager "
-            fi
-        done
-        export __PAGERS_CACHE="$avail_pagers"
-    fi
-
-    case "${prev}" in
-        # directory completion
-        --ignore-dir)
-            _filedir -d
-            return 0
-            ;;
-        # file completion
-        --ackrc|--files-from)
-            _filedir
-            return 0
-            ;;
-        # pager completion
-        --pager)
-            COMPREPLY=( $(compgen -W "${avail_pagers}" -- "${cur}") )
-            return 0
-            ;;
-        # no completion for these
-        --after-context|--before-context|--context|--color*|--ignore-file|\
+  case "${prev}" in
+    # directory completion
+    --ignore-dir)
+      _filedir -d
+      return 0
+      ;;
+    # file completion
+    --ackrc|--files-from)
+      _filedir
+      return 0
+      ;;
+    # pager completion
+    --pager)
+      COMPREPLY=( $(compgen -c \
+          -- "${cur}") )
+      return 0
+      ;;
+    # no completion for these
+    --after-context|--before-context|--context|--color*|--ignore-file|\
         --lines|--match|--max-count|--output)
-            return 0
-            ;;
-    esac
+      return 0
+      ;;
+    --type)
+      COMPREPLY=( $(compgen -W \
+          "${prev_types}" -- "${cur}") )
+      return 0
+      ;;
+  esac
 
-    $split && return 0
+  $split && return 0
 
-    case "${cur}" in
-        -*)
-            COMPREPLY=( $(compgen -W "${lngopt} ${shtopt}" -- "${cur}") )
-            return 0
-            ;;
-        *)
-            _filedir
-            return 0
-            ;;
-    esac
+  case "${cur}" in
+    -*)
+      COMPREPLY=( $(compgen -W \
+          "${lngopt} ${shtopt} ${types}" -- "${cur}") )
+      return 0
+      ;;
+    *)
+      _filedir
+      return 0
+      ;;
+  esac
 } &&
 complete -F _ack ${nospace} ack
 # vim:set ft=sh:
