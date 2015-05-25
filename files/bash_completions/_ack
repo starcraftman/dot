@@ -12,7 +12,7 @@ _ack() {
     for i in $(ack --help | command grep -o '\-\-\[no\S*' | cut -b 7-); do
       lngopt="$lngopt --no$i --$i"
     done
-    shtopt="$(ack --help | command grep -o '\-\w\s')"
+    shtopt="$(ack --help | command grep -o '\-\w\s') -R"
     for t in $(ack --help-types | command grep -o '\-\-\[no\]\w\+' | cut -b 7-); do
       types="$types --no$t --$t"
       prev_types="$prev_types no$t $t"
