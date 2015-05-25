@@ -1,5 +1,5 @@
 _ack() {
-  local lngopt shtopt cur prev types prev_types split=false
+  local lngopt shtopt types prev_types cur prev split=false
   cur=$(_get_cword "=")
   prev="${COMP_WORDS[COMP_CWORD-1]}"
   COMPREPLY=()
@@ -25,11 +25,6 @@ _ack() {
     prev_types="${__COMP_CACHE_ACK[3]}"
   fi
 
-  # these options require an argument
-  if [[ "${prev}" == -@(A|B|C|G|g|m) ]] ; then
-    return 0
-  fi
-
   _split_longopt && split=true
 
   case "${prev}" in
@@ -43,20 +38,30 @@ _ack() {
       _filedir
       return 0
       ;;
-    # pager completion
+    # command completion
     --pager)
       COMPREPLY=( $(compgen -c \
           -- "${cur}") )
       return 0
       ;;
-    # complete base types
+    # search type completion
     --type)
       COMPREPLY=( $(compgen -W \
           "${prev_types}" -- "${cur}") )
       return 0
       ;;
-    # no completion for these
-    --after-context|--before-context|--context|--color*|--ignore-file|\
+    # color completion
+    --color-*)
+      local colors="black red green yellow blue magenta cyan white
+          on_black on_red on_green on_yellow on_blue on_magenta on_cyan on_white
+          clear reset dark bold underline underscore blink reverse concealed"
+      COMPREPLY=( $(compgen -W \
+          "${colors}" -- "${cur}") )
+      return 0
+      ;;
+    # no completion
+    -A|-B|-C|-G|-g|-m|\
+        --after-context|--before-context|--context|--color|--colour|--ignore-file|\
         --lines|--match|--max-count|--output)
       return 0
       ;;

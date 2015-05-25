@@ -8,8 +8,8 @@ _ag() {
   _expand || return 0
 
   if [ "${__COMP_CACHE_AG}x" = "x" ]; then
-    lngopt="$(ag --help | command grep -o '\-\-\S+') --help --version"
-    for t in $(ag --help | command grep -o '\-\-\[no\S+' | cut -c 7-); do
+    lngopt="$(ag --help | command grep -o '\-\-[a-z-]\+') --help --version"
+    for t in $(ag --help | command grep -o '\-\-\[no\S[a-z-]\+' | cut -c 7-); do
       lngopt="$lngopt --no$t --$t"
     done
     shtopt="$(ag --help | command grep -o '\-[a-zA-Z0-9]\b')"
@@ -22,28 +22,37 @@ _ag() {
     types="${__COMP_CACHE_AG[2]}"
   fi
 
-  # these options require an argument
-  if [[ "${prev}" == -[ABCGgm] ]] ; then
-    return 0
-  fi
-
   _split_longopt && split=true
 
   case "${prev}" in
-    --ignore-dir) # directory completion
+    # directory completion
+    --ignore-dir)
       _filedir -d
       return 0
       ;;
-    --path-to-agignore) # file completion
+    # file completion
+    --path-to-agignore)
       _filedir
       return 0
       ;;
-    --pager) # command completion
+    # command completion
+    --pager)
       COMPREPLY=( $(compgen -W "${avail_pagers}" -- "${cur}") )
       return 0
       ;;
-    --ackmate-dir-filter|--after|--before|--color-*|--context|--depth\
-        |--file-search-regex|--ignore|--max-count|--workers)
+    # color completion
+    --color-*)
+      local colors="black red green yellow blue magenta cyan white
+          on_black on_red on_green on_yellow on_blue on_magenta on_cyan on_white
+          clear reset dark bold underline underscore blink reverse concealed"
+      COMPREPLY=( $(compgen -W \
+          "${colors}" -- "${cur}") )
+      return 0
+      ;;
+    # no completion
+    -A|-B|-C|-G|-g|-m|\
+        --ackmate-dir-filter|--after|--before|--context|--color|--depth|\
+        --file-search-regex|--ignore|--max-count|--workers)
       return 0
       ;;
   esac
