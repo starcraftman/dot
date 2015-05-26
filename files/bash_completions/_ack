@@ -31,7 +31,7 @@ _ack() {
 
   case "${prev}" in
     # directory completion
-    --ignore-dir)
+    --ignore-dir*)
       _filedir -d
       return 0
       ;;
@@ -63,8 +63,8 @@ _ack() {
       ;;
     # no completion
     -A|-B|-C|-G|-g|-m|\
-        --after-context|--before-context|--context|--color|--colour|--ignore-file|\
-        --lines|--match|--max-count|--output)
+        --after-context|--before-context|--context|--color|--colour|\
+        --ignore-file|--lines|--match|--max-count|--output|--type-*)
       return 0
       ;;
   esac
