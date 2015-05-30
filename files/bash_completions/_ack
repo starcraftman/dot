@@ -61,7 +61,7 @@ _ack() {
           "${colors}" -- "${cur}") )
       return 0
       ;;
-    # no completion
+    # require args, no completion
     -A|-B|-C|-G|-g|-m|\
         --after-context|--before-context|--context|--color|--colour|\
         --ignore-file|--lines|--match|--max-count|--output|--type-*)

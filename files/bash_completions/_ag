@@ -50,7 +50,7 @@ _ag() {
           "${colors}" -- "${cur}") )
       return 0
       ;;
-    # no completion
+    # require args, no completion
     -A|-B|-C|-G|-g|-m|\
         --ackmate-dir-filter|--after|--before|--context|--color|--depth|\
         --file-search-regex|--ignore|--max-count|--workers)
