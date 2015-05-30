@@ -8,12 +8,12 @@ _ack() {
 
   if [ "${__COMP_CACHE_ACK}x" = "x" ]; then
     for i in $(ack --help); do
+        i=${i%%=*}
         if [[ "$i" =~ ^--\[no\] ]]; then
             i="${i#--\[no\]}"
             lngopt="$lngopt --no$i --$i"
         fi
         if [[ "$i" =~ ^--[a-z-]+ ]]; then
-            i=${i%%=*}
             lngopt="$lngopt ${i//[\[.,\'\"]}"
         fi
         if [[ "$i" =~ ^-[a-zA-Z?] ]]; then
