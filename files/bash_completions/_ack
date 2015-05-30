@@ -20,10 +20,12 @@ _ack() {
             shtopt="$shtopt ${i//[.\",]}"
         fi
     done
-    for t in $(ack --help-types | command ack -o '\-\-\[no\]\w+'); do
-      t="${t#--\[no\]}"
-      types="$types --no$t --$t"
-      prev_types="$prev_types no$t $t"
+    for t in $(ack --help-types); do
+        if [[ "$t" =~ ^--\[no\] ]]; then
+            t="${t#--\[no\]}"
+            types="$types --no$t --$t"
+            prev_types="$prev_types no$t $t"
+        fi
     done
     __COMP_CACHE_ACK=( "$lngopt" "$shtopt" "$types" "$prev_types" )
     export __COMP_CACHE_ACK
@@ -61,9 +63,15 @@ _ack() {
       ;;
     # color completion
     --color-*)
-      local colors="black red green yellow blue magenta cyan white
-          on_black on_red on_green on_yellow on_blue on_magenta on_cyan on_white
-          bold underline underscore"
+      local colors="
+        black     on_black    clear
+        red       on_red      reset
+        green     on_green    underline
+        yellow    on_yellow   reverse
+        blue      on_blue     bold
+        magenta   on_magenta
+        cyan      on_cyan
+        white     on_white"
       COMPREPLY=( $(compgen -W \
           "${colors}" -- "${cur}") )
       return 0

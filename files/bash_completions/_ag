@@ -8,13 +8,24 @@ _ag() {
   _expand || return 0
 
   if [ "${__COMP_CACHE_AG}x" = "x" ]; then
-    lngopt="$(ag --help | command ag -o '\-\-[a-z-]+') --help --version"
-    for t in $(ag --help | command ag -o '\-\-\[no\S[a-z-]+'); do
-      t="${t#--\[no\]}"
-      lngopt="$lngopt --no$t --$t"
+    for i in $(ag --help); do
+        i=${i%%=*}
+        if [[ "$i" =~ ^--\[no\] ]]; then
+            i="${i#--\[no\]}"
+            lngopt="$lngopt --no$i --$i"
+        fi
+        if [[ "$i" =~ ^--[a-z-]+ ]]; then
+            lngopt="$lngopt ${i//[\[.,\'\"]}"
+        fi
+        if [[ "$i" =~ ^-[a-zA-Z?] ]]; then
+            shtopt="$shtopt ${i//[.\",]}"
+        fi
     done
-    shtopt="$(ag --help | command ag -o '\-[a-zA-Z0-9]\b')"
-    types="$(ag --list-file-types | ag -- '--')"
+    for t in $(ag --list-file-types); do
+        if [[ "$t" =~ ^-- ]]; then
+            types="$types $t"
+        fi
+    done
     __COMP_CACHE_AG=( "$lngopt" "$shtopt" "$types" )
     export __COMP_CACHE_AG
   else
@@ -43,9 +54,15 @@ _ag() {
       ;;
     # color completion
     --color-*)
-      local colors="black red green yellow blue magenta cyan white
-          on_black on_red on_green on_yellow on_blue on_magenta on_cyan on_white
-          clear reset dark bold underline underscore blink reverse concealed"
+      local colors="
+        black     on_black    clear
+        red       on_red      reset
+        green     on_green    underline
+        yellow    on_yellow   reverse
+        blue      on_blue     bold
+        magenta   on_magenta
+        cyan      on_cyan
+        white     on_white"
       COMPREPLY=( $(compgen -W \
           "${colors}" -- "${cur}") )
       return 0
