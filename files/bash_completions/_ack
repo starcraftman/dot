@@ -8,16 +8,15 @@ _ack() {
 
   if [ "${__COMP_CACHE_ACK}x" = "x" ]; then
     for i in $(ack --help); do
+        [ "$i" == "" ] && continue
         i=${i%%=*}
-        if [[ "$i" =~ ^--\[no\] ]]; then
-            i="${i#--\[no\]}"
-            lngopt="$lngopt --no$i --$i"
-        fi
         if [[ "$i" =~ ^--[a-z-]+ ]]; then
             lngopt="$lngopt ${i//[\[.,\'\"]}"
-        fi
-        if [[ "$i" =~ ^-[a-zA-Z?] ]]; then
+        elif [[ "$i" =~ ^-[a-zA-Z?] ]]; then
             shtopt="$shtopt ${i//[.\",]}"
+        elif [[ "$i" =~ ^--\[no\] ]]; then
+            i="${i#--\[no\]}"
+            lngopt="$lngopt --no$i --$i"
         fi
     done
     for t in $(ack --help-types); do
@@ -64,20 +63,21 @@ _ack() {
     # color completion
     --color-*)
       local colors="
-        black     on_black    clear
-        red       on_red      reset
-        green     on_green    underline
-        yellow    on_yellow   reverse
-        blue      on_blue     bold
-        magenta   on_magenta
+        black     on_black
+        blue      on_blue
         cyan      on_cyan
-        white     on_white"
+        green     on_green
+        magenta   on_magenta
+        red       on_red
+        white     on_white
+        yellow    on_yellow
+      "
       COMPREPLY=( $(compgen -W \
           "${colors}" -- "${cur}") )
       return 0
       ;;
     # require args, no completion
-    -A|-B|-C|-G|-g|-m|--|\
+    -[ABCGgm-]|\
         --after-context|--before-context|--context|--color|--colour|\
         --ignore-file|--lines|--match|--max-count|--output|--type-*)
       return 0

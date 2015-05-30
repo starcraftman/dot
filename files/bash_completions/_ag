@@ -13,11 +13,9 @@ _ag() {
         if [[ "$i" =~ ^--\[no\] ]]; then
             i="${i#--\[no\]}"
             lngopt="$lngopt --no$i --$i"
-        fi
-        if [[ "$i" =~ ^--[a-z-]+ ]]; then
+        elif [[ "$i" =~ ^--[a-z-]+ ]]; then
             lngopt="$lngopt ${i//[\[.,\'\"]}"
-        fi
-        if [[ "$i" =~ ^-[a-zA-Z?] ]]; then
+        elif [[ "$i" =~ ^-[a-zA-Z?] ]]; then
             shtopt="$shtopt ${i//[.\",]}"
         fi
     done
@@ -55,14 +53,15 @@ _ag() {
     # color completion
     --color-*)
       local colors="
-        black     on_black    clear
-        red       on_red      reset
-        green     on_green    underline
-        yellow    on_yellow   reverse
-        blue      on_blue     bold
-        magenta   on_magenta
+        black     on_black
+        blue      on_blue
         cyan      on_cyan
-        white     on_white"
+        green     on_green
+        magenta   on_magenta
+        red       on_red
+        white     on_white
+        yellow    on_yellow
+      "
       COMPREPLY=( $(compgen -W \
           "${colors}" -- "${cur}") )
       return 0
