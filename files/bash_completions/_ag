@@ -9,20 +9,20 @@ _ag() {
 
   if [ "${__COMP_CACHE_AG}x" = "x" ]; then
     for i in $(ag --help); do
-        i=${i%%=*}
-        if [[ "$i" =~ ^--\[no\] ]]; then
-            i="${i#--\[no\]}"
-            lngopt="$lngopt --no$i --$i"
-        elif [[ "$i" =~ ^--[a-z-]+ ]]; then
-            lngopt="$lngopt ${i//[\[.,\'\"]}"
-        elif [[ "$i" =~ ^-[a-zA-Z?] ]]; then
-            shtopt="$shtopt ${i//[.\",]}"
-        fi
+      i=${i%%=*}
+      if [[ "$i" =~ ^--\[no\] ]]; then
+        i="${i#--\[no\]}"
+        lngopt="$lngopt --no$i --$i"
+      elif [[ "$i" =~ ^--[a-z-]+ ]]; then
+        lngopt="$lngopt ${i//[\[.,\'\"]}"
+      elif [[ "$i" =~ ^-[a-zA-Z?] ]]; then
+        shtopt="$shtopt ${i//[.\",]}"
+      fi
     done
     for t in $(ag --list-file-types); do
-        if [[ "$t" =~ ^-- ]]; then
-            types="$types $t"
-        fi
+      if [[ "$t" =~ ^-- ]]; then
+        types="$types $t"
+      fi
     done
     __COMP_CACHE_AG=( "$lngopt" "$shtopt" "$types" )
     export __COMP_CACHE_AG
@@ -47,27 +47,26 @@ _ag() {
       ;;
     # command completion
     --pager)
-      COMPREPLY=( $(compgen -W "${avail_pagers}" -- "${cur}") )
+      COMPREPLY=( $(compgen -c -- "${cur}") )
       return 0
       ;;
     # color completion
     --color-*)
       local colors="
-        black     on_black
-        blue      on_blue
-        cyan      on_cyan
-        green     on_green
-        magenta   on_magenta
-        red       on_red
-        white     on_white
-        yellow    on_yellow
+          black     on_black
+          blue      on_blue
+          cyan      on_cyan
+          green     on_green
+          magenta   on_magenta
+          red       on_red
+          white     on_white
+          yellow    on_yellow
       "
-      COMPREPLY=( $(compgen -W \
-          "${colors}" -- "${cur}") )
+      COMPREPLY=( $(compgen -W "${colors}" -- "${cur}") )
       return 0
       ;;
     # require args, no completion
-    -A|-B|-C|-G|-g|-m|--|\
+    -[ABCGgm-]|\
         --ackmate-dir-filter|--after|--before|--context|--color|--depth|\
         --file-search-regex|--ignore|--max-count|--workers)
       return 0
@@ -77,16 +76,16 @@ _ag() {
   $split && return 0
 
   case "${cur}" in
-  -*)
-    COMPREPLY=( $(compgen -W \
+    -*)
+      COMPREPLY=( $(compgen -W \
         "${lngopt} ${shtopt} ${types}" -- "${cur}") )
-    return 0
-    ;;
-  *)
-    _filedir
-    return 0
-    ;;
+      return 0
+      ;;
+    *)
+      _filedir
+      return 0
+      ;;
   esac
 } &&
 complete -F _ag ${nospace} ag
-# vim:set ft=sh:
+# vim:set ft=sh ts=2 sts=2 sw=2:

@@ -8,23 +8,22 @@ _ack() {
 
   if [ "${__COMP_CACHE_ACK}x" = "x" ]; then
     for i in $(ack --help); do
-        [ "$i" == "" ] && continue
-        i=${i%%=*}
-        if [[ "$i" =~ ^--[a-z-]+ ]]; then
-            lngopt="$lngopt ${i//[\[.,\'\"]}"
-        elif [[ "$i" =~ ^-[a-zA-Z?] ]]; then
-            shtopt="$shtopt ${i//[.\",]}"
-        elif [[ "$i" =~ ^--\[no\] ]]; then
-            i="${i#--\[no\]}"
-            lngopt="$lngopt --no$i --$i"
-        fi
+      i=${i%%=*}
+      if [[ "$i" =~ ^--[a-z-]+ ]]; then
+        lngopt="$lngopt ${i//[\[.,\'\"]}"
+      elif [[ "$i" =~ ^-[a-zA-Z?] ]]; then
+        shtopt="$shtopt ${i//[.\",]}"
+      elif [[ "$i" =~ ^--\[no\] ]]; then
+        i="${i#--\[no\]}"
+        lngopt="$lngopt --no$i --$i"
+      fi
     done
     for t in $(ack --help-types); do
-        if [[ "$t" =~ ^--\[no\] ]]; then
-            t="${t#--\[no\]}"
-            types="$types --no$t --$t"
-            prev_types="$prev_types no$t $t"
-        fi
+      if [[ "$t" =~ ^--\[no\] ]]; then
+        t="${t#--\[no\]}"
+        types="$types --no$t --$t"
+        prev_types="$prev_types no$t $t"
+      fi
     done
     __COMP_CACHE_ACK=( "$lngopt" "$shtopt" "$types" "$prev_types" )
     export __COMP_CACHE_ACK
@@ -50,30 +49,27 @@ _ack() {
       ;;
     # command completion
     --pager)
-      COMPREPLY=( $(compgen -c \
-          -- "${cur}") )
+      COMPREPLY=( $(compgen -c -- "${cur}") )
       return 0
       ;;
     # search type completion
     --type)
-      COMPREPLY=( $(compgen -W \
-          "${prev_types}" -- "${cur}") )
+      COMPREPLY=( $(compgen -W "${prev_types}" -- "${cur}") )
       return 0
       ;;
     # color completion
     --color-*)
       local colors="
-        black     on_black
-        blue      on_blue
-        cyan      on_cyan
-        green     on_green
-        magenta   on_magenta
-        red       on_red
-        white     on_white
-        yellow    on_yellow
+          black     on_black
+          blue      on_blue
+          cyan      on_cyan
+          green     on_green
+          magenta   on_magenta
+          red       on_red
+          white     on_white
+          yellow    on_yellow
       "
-      COMPREPLY=( $(compgen -W \
-          "${colors}" -- "${cur}") )
+      COMPREPLY=( $(compgen -W "${colors}" -- "${cur}") )
       return 0
       ;;
     # require args, no completion
@@ -102,4 +98,4 @@ _ack() {
 for i in "ack" "ack2" "ack-grep" "ack-standalone"; do
   have "$i" && complete -F _ack ${nospace} "$i"
 done
-# vim:set ft=sh:
+# vim:set ft=sh ts=2 sts=2 sw=2:
