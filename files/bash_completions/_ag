@@ -7,6 +7,13 @@ _ag() {
 
   _expand || return 0
 
+  # Once user writes '--', just file completion after PATTERN
+  [ "$prev" = "--" ] && return 0
+  for word in ${COMP_WORDS[@]}; do
+    [ "$word" = "--" ] && _filedir && return 0
+    [ "$word" = "$prev" ] && break
+  done
+
   if [ "${__COMP_CACHE_AG}x" = "x" ]; then
     for i in $(ag --help); do
       i=${i%%=*}
@@ -66,7 +73,7 @@ _ag() {
       return 0
       ;;
     # require args, no completion
-    -[ABCGgm-]|--ackmate-dir-filter|--after|--before|--context|--color|--depth|\
+    -[ABCGgm]|--ackmate-dir-filter|--after|--before|--context|--color|--depth|\
         --file-search-regex|--ignore|--max-count|--workers)
       return 0
       ;;
