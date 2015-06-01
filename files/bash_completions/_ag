@@ -66,8 +66,7 @@ _ag() {
       return 0
       ;;
     # require args, no completion
-    -[ABCGgm-]|\
-        --ackmate-dir-filter|--after|--before|--context|--color|--depth|\
+    -[ABCGgm-]|--ackmate-dir-filter|--after|--before|--context|--color|--depth|\
         --file-search-regex|--ignore|--max-count|--workers)
       return 0
       ;;

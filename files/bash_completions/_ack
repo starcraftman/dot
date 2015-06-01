@@ -73,8 +73,7 @@ _ack() {
       return 0
       ;;
     # require args, no completion
-    -[ABCGgm-]|\
-        --after-context|--before-context|--context|--color|--colour|\
+    -[ABCGgm-]|--after-context|--before-context|--context|--color|--colour|\
         --ignore-file|--lines|--match|--max-count|--output|--type-*)
       return 0
       ;;
