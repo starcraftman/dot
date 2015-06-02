@@ -1,6 +1,6 @@
 have ag &&
 _ag() {
-  local lngopt shtopt cur prev split=false
+  local cur prev split=false
   cur=$(_get_cword "=")
   prev="${COMP_WORDS[COMP_CWORD-1]}"
   COMPREPLY=()
@@ -14,6 +14,7 @@ _ag() {
     [ "$word" = "$prev" ] && break
   done
 
+  local lngopt shtopt
   if [ "${__COMP_CACHE_AG}x" = "x" ]; then
     for i in $(ag --help); do
       i=${i%%=*}

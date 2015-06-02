@@ -1,7 +1,8 @@
 _ack() {
-  local lngopt shtopt types prev_types cur prev split=false
+  local prog_name cur prev split=false
   cur=$(_get_cword "=")
   prev="${COMP_WORDS[COMP_CWORD-1]}"
+  prog="${COMP_WORDS[0]}"
   COMPREPLY=()
 
   _expand || return 0
@@ -9,12 +10,13 @@ _ack() {
   # Once user writes '--', just file completion after PATTERN
   [ "$prev" = "--" ] && return 0
   for word in ${COMP_WORDS[@]}; do
-    [ "$word" = "--" ] && _filedir && return 0
     [ "$word" = "$prev" ] && break
+    [ "$word" = "--" ] && _filedir && return 0
   done
 
+  local lngopt shtopt types prev_types
   if [ "${__COMP_CACHE_ACK}x" = "x" ]; then
-    for i in $(ack --help); do
+    for i in $("$prog" --help); do
       i=${i%%=*}
       if [[ "$i" =~ ^--[a-z-]+ ]]; then
         lngopt="$lngopt ${i//[\[.,\'\"]}"
@@ -25,7 +27,7 @@ _ack() {
         lngopt="$lngopt --no$i --$i"
       fi
     done
-    for t in $(ack --help-types); do
+    for t in $("$prog" --help-types); do
       if [[ "$t" =~ ^--\[no\] ]]; then
         t="${t#--\[no\]}"
         types="$types --no$t --$t"
