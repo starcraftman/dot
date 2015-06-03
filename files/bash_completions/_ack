@@ -18,13 +18,13 @@ _ack() {
   if [ "${__COMP_CACHE_ACK}x" = "x" ]; then
     for i in $("$prog" --help); do
       i=${i%%=*}
-      if [[ "$i" =~ ^--[a-z-]+ ]]; then
+      if [ "${i:0:6}" = '--[no]' ]; then
+        i="${i#--\[no\]}"
+        lngopt="$lngopt --no$i --$i"
+      elif [[ "$i" =~ ^--[a-z-]+ ]]; then
         lngopt="$lngopt ${i//[\[.,\'\"]}"
       elif [[ "$i" =~ -[a-zA-Z?] ]]; then
         shtopt="$shtopt ${i//[.\",]}"
-      elif [ "${i:0:6}" = '--[no]' ]; then
-        i="${i#--\[no\]}"
-        lngopt="$lngopt --no$i --$i"
       fi
     done
     for t in $("$prog" --help-types); do
