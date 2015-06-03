@@ -14,33 +14,32 @@ _ack() {
     [ "$word" = "--" ] && _filedir && return 0
   done
 
-  local lngopt shtopt types prev_types
+  local lngopt shtopt types
   if [ "${__COMP_CACHE_ACK}x" = "x" ]; then
     for i in $("$prog" --help); do
       i=${i%%=*}
       if [[ "$i" =~ ^--[a-z-]+ ]]; then
         lngopt="$lngopt ${i//[\[.,\'\"]}"
-      elif [[ "$i" =~ ^-[a-zA-Z?] ]]; then
+      elif [[ "$i" =~ -[a-zA-Z?] ]]; then
         shtopt="$shtopt ${i//[.\",]}"
-      elif [[ "$i" =~ ^--\[no\] ]]; then
+      elif [ "${i:0:6}" = '--[no]' ]; then
         i="${i#--\[no\]}"
         lngopt="$lngopt --no$i --$i"
       fi
     done
     for t in $("$prog" --help-types); do
-      if [[ "$t" =~ ^--\[no\] ]]; then
+      if [ "${t:0:6}" = '--[no]' ]; then
         t="${t#--\[no\]}"
-        types="$types --no$t --$t"
-        prev_types="$prev_types no$t $t"
+        lngopt="$lngopt --no$t --$t"
+        types="$types no$t $t"
       fi
     done
-    __COMP_CACHE_ACK=( "$lngopt" "$shtopt" "$types" "$prev_types" )
+    __COMP_CACHE_ACK=( "$lngopt" "$shtopt" "$types" )
     export __COMP_CACHE_ACK
   else
     lngopt="${__COMP_CACHE_ACK[0]}"
     shtopt="${__COMP_CACHE_ACK[1]}"
     types="${__COMP_CACHE_ACK[2]}"
-    prev_types="${__COMP_CACHE_ACK[3]}"
   fi
 
   _split_longopt && split=true
@@ -63,7 +62,7 @@ _ack() {
       ;;
     # search type completion
     --type)
-      COMPREPLY=( $(compgen -W "${prev_types}" -- "${cur}") )
+      COMPREPLY=( $(compgen -W "${types}" -- "${cur}") )
       return 0
       ;;
     # color completion
@@ -92,8 +91,7 @@ _ack() {
 
   case "${cur}" in
     -*)
-      COMPREPLY=( $(compgen -W \
-          "${lngopt} ${shtopt} ${types}" -- "${cur}") )
+      COMPREPLY=( $(compgen -W "${lngopt} ${shtopt}" -- "${cur}") )
       return 0
       ;;
     *)
