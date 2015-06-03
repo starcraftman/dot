@@ -1,8 +1,9 @@
 have ag &&
 _ag() {
-  local cur prev split=false
+  local cur prev prog split=false
   cur=$(_get_cword "=")
   prev="${COMP_WORDS[COMP_CWORD-1]}"
+  prog="${COMP_WORDS[0]}"
   COMPREPLY=()
 
   _expand || return 0
@@ -14,30 +15,25 @@ _ag() {
     [ "$word" = "$prev" ] && break
   done
 
-  local lngopt shtopt
+  local opts types
   if [ "${__COMP_CACHE_AG}x" = "x" ]; then
-    for i in $(ag --help); do
+    for i in $("$prog" --help); do
       i=${i%%=*}
-      if [[ "$i" =~ ^--\[no\] ]]; then
+      if [ "${i:0:6}" = '--[no]' ]; then
         i="${i#--\[no\]}"
-        lngopt="$lngopt --no$i --$i"
-      elif [[ "$i" =~ ^--[a-z-]+ ]]; then
-        lngopt="$lngopt ${i//[\[.,\'\"]}"
-      elif [[ "$i" =~ ^-[a-zA-Z?] ]]; then
-        shtopt="$shtopt ${i//[.\",]}"
+        opts="$opts --no$i --$i"
+      elif [[ "$i" =~ ^-[a-zA-Z0-9?-]+,? ]]; then
+        opts="$opts ${i//[\[.,\'\"\(\)]}"
       fi
     done
-    for t in $(ag --list-file-types); do
-      if [[ "$t" =~ ^-- ]]; then
-        types="$types $t"
-      fi
+    for t in $("$prog" --list-file-types); do
+      [ "${t:0:2}" = '--' ] && types="$types $t"
     done
-    __COMP_CACHE_AG=( "$lngopt" "$shtopt" "$types" )
+    __COMP_CACHE_AG=( "$opts" "$types" )
     export __COMP_CACHE_AG
   else
-    lngopt="${__COMP_CACHE_AG[0]}"
-    shtopt="${__COMP_CACHE_AG[1]}"
-    types="${__COMP_CACHE_AG[2]}"
+    opts="${__COMP_CACHE_AG[0]}"
+    types="${__COMP_CACHE_AG[1]}"
   fi
 
   _split_longopt && split=true
@@ -84,8 +80,7 @@ _ag() {
 
   case "${cur}" in
     -*)
-      COMPREPLY=( $(compgen -W \
-        "${lngopt} ${shtopt} ${types}" -- "${cur}") )
+      COMPREPLY=( $(compgen -W "${opts} ${types}" -- "${cur}") )
       return 0
       ;;
     *)
