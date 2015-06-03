@@ -88,7 +88,7 @@ _ack() {
 
   case "${cur}" in
     -*)
-      COMPREPLY=( $(compgen -W "${opts} " -- "${cur}") )
+      COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
       return 0
       ;;
     *)
