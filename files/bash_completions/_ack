@@ -78,8 +78,8 @@ _ack() {
       return 0
       ;;
     # require args, no completion
-    -[ABCGgm]|--after-context|--before-context|--context|--color|--colour|\
-        --ignore-file|--lines|--match|--max-count|--output|--type-*)
+      -[ABCGgm]|--*context|--color|--colour|--ignore-file|\
+          --lines|--match|--max-count|--output|--type-*)
       return 0
       ;;
   esac
