@@ -19,7 +19,7 @@ _pytest() {
     for i in $("$prog" --help); do
       i=${i%%=*}
       if [[ "$i" =~ ^-[a-zA-Z0-9?-]+,? ]]; then
-        opts="$opts ${i//[\[.,\'\"]}"
+        opts="$opts ${i//[\(\)\[.,\'\"]}"
       fi
     done
     __COMP_CACHE_PYTEST=( "$opts" )
