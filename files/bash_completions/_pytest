@@ -1,0 +1,83 @@
+_pytest() {
+  local cur prev prog split=false
+  cur=$(_get_cword "=")
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  prog="${COMP_WORDS[0]}"
+  COMPREPLY=()
+
+  _expand || return 0
+
+  # Once user writes '--', just file completion after PATTERN
+  [ "$prev" = "--" ] && return 0
+  for word in ${COMP_WORDS[@]}; do
+    [ "$word" = "$prev" ] && break
+    [ "$word" = "--" ] && _filedir && return 0
+  done
+
+  local opts
+  if [ "${__COMP_CACHE_PYTEST}x" = "x" ]; then
+    for i in $("$prog" --help); do
+      i=${i%%=*}
+      if [[ "$i" =~ ^-[a-zA-Z0-9?-]+,? ]]; then
+        opts="$opts ${i//[\[.,\'\"]}"
+      fi
+    done
+    __COMP_CACHE_PYTEST=( "$opts" )
+    export __COMP_CACHE_PYTEST
+  else
+    opts="${__COMP_CACHE_PYTEST[0]}"
+  fi
+
+  _split_longopt && split=true
+
+  case "${prev}" in
+    # directory completion
+    --basetemp|--confcutdir)
+      _filedir -d
+      return 0
+      ;;
+    # file completion
+    -c|--genscript|--ignore|--junit-xml|--result-log)
+      _filedir
+      return 0
+      ;;
+    --assert)
+      COMPREPLY=( $(compgen -W "plain reinterp rewrite" -- "${cur}") )
+      return 0
+      ;;
+    --capture)
+      COMPREPLY=( $(compgen -W "fd sys no" -- "${cur}") )
+      return 0
+      ;;
+    --color)
+      COMPREPLY=( $(compgen -W "yes no auto" -- "${cur}") )
+      return 0
+      ;;
+    --pastebin)
+      COMPREPLY=( $(compgen -W "failed all" -- "${cur}") )
+      return 0
+      ;;
+    # require args, no completion
+    -p|--doctest-glob|--durations|--junit-prefix|--max-fail)
+      return 0
+      ;;
+  esac
+
+  $split && return 0
+
+  case "${cur}" in
+    -*)
+      COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+      return 0
+      ;;
+    *)
+      _filedir
+      return 0
+      ;;
+  esac
+}
+
+for i in "py.test" "py.test-"{2.6,2.7,3.1,3.2,3.3,3.4,3.5}; do
+  have "$i" && complete -F _pytest ${nospace} "$i"
+done
+# vim:set ft=sh ts=2 sts=2 sw=2:
