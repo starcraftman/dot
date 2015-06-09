@@ -25,6 +25,7 @@ try
   elseif has('lua')
     Plug 'Shougo/neocomplete.vim'
   endif
+  Plug 'artur-shaik/vim-javacomplete2'
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
   " UI
@@ -170,6 +171,12 @@ let g:EclimCompletionMethod = 'omnifunc'
 
 " Fix for signs
 let g:EclimShowQuickfixSigns = 0
+
+" vim-javacomplete
+""""""""""""""""""
+let g:JavaComplete_Home = g:vim_dir . '/plugged/vim-javacomplete2'
+
+autocmd FileType java set omnifunc=javacomplete#Complete
 
 " Syntastic
 """""""""""
@@ -465,6 +472,7 @@ try
   " Shortcuts for plugin management
   call cmdalias#add('pi', 'PlugInstall')
   call cmdalias#add('pu', 'PlugUpdate')
+  call cmdalias#add('puu', 'PlugUpdate <bar> PlugUpgrade')
   call cmdalias#add('pc', 'PlugClean')
 catch
 endtry
