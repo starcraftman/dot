@@ -26,6 +26,7 @@ _ag() {
         opts="$opts ${i//[\[.,\'\"\(\)]}"
       fi
     done
+    opts="$opts --help"
     for t in $("$prog" --list-file-types); do
       [ "${t:0:2}" = '--' ] && types="$types $t"
     done
