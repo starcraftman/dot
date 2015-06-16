@@ -261,7 +261,11 @@ if valid_name trash-put; then
     alias tp='trash-put'
     alias tl='trash-list'
     alias te='trash-empty'
-    alias rm='echo "Don''t use. If must, \rm -Rf file."; false'
+    alias rrm='rm -rf'
+    rm() {
+        echo -e 'Do not use.\nIf essential: rrm file'
+        false
+    }
 fi
 
 # Tree program, use instead of recursive ls. Very pretty.
