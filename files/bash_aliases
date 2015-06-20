@@ -261,11 +261,6 @@ if valid_name trash-put; then
     alias tp='trash-put'
     alias tl='trash-list'
     alias te='trash-empty'
-    alias rrm='rm -rf'
-    rm() {
-        echo -e 'Do not use.\nIf essential: rrm file'
-        false
-    }
 fi
 
 # Tree program, use instead of recursive ls. Very pretty.
@@ -283,6 +278,20 @@ fi
 # Functions
 ############################################################################
 #{{{
+
+# Discourage using darngerouns rm.
+rm() {
+    echo 'Do not use.\nIf essential: rrm file'
+    false
+}
+
+rrm() {
+    read -p "Will execute: \`rm -rf $@\` y/n?"
+    if [ "$REPLY" = "y" -o "$REPLY" = "Y" ]; then
+        command rm -rf $@
+    fi
+}
+
 # Shorthand for tee
 t() {
     if [ $# -lt 1 ]; then

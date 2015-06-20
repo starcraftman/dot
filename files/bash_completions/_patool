@@ -1,0 +1,34 @@
+have patool &&
+_patool()
+{
+  local cur prev opts pos
+  COMPREPLY=()
+  cur=${COMP_WORDS[COMP_CWORD]}
+  prev=${COMP_WORDS[COMP_CWORD-1]}
+
+  pos=" extract list create test repack diff search formats "
+  opts="-h --help -v --verbose"
+
+  case "${prev}" in
+    search)
+      return 0
+      ;;
+  esac
+
+  # Once positional given, only filedir
+  for word in ${COMP_WORDS[@]}; do
+    for pos_word in ${pos}; do
+      [ "$word" = "$pos_word" ] && _filedir && return 0
+    done
+  done
+
+  case "${cur}" in
+    *)
+      COMPREPLY=( $(compgen -W "${opts} ${pos}" -- "${cur}") )
+      return 0
+      ;;
+  esac
+}
+complete -F _patool ${nospace} patool
+
+# vim:set ft=sh ts=2 sts=2 sw=2:
