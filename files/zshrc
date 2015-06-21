@@ -263,20 +263,23 @@ alias debug='if debug; then setopt xtrace; else unsetopt xtrace; clear; fi'
 #{{{
 
 # Discourage using darngerouns rm.
-rm() {
+function rm() {
     echo 'Do not use.\nIf essential: rrm file'
     false
 }
 
-rrm() {
-    read -p "Will execute: \`rm -rf $@\` y/n?"
-    if [ "$REPLY" = "y" -o "$REPLY" = "Y" ]; then
+function rrm() {
+    echo -e "Execute: ${fg_bold[cyan]}rm -rf $@${reset_color}"
+    echo "y/n?"
+    read
+    local go="$(echo "$REPLY" | tr [[:upper:]] [[:lower:]])"
+    if [[ "$go" == y* ]]; then
         command rm -rf $@
     fi
 }
 
 # Shorthand for tee
-t() {
+function t() {
     if [ $# -lt 1 ]; then
         echo 'Give me a command!'
         return
@@ -294,12 +297,10 @@ t() {
 # Reruns the last command with sudo.
 function please() {
     local cmd="$(fc -l -n -2 | head -n 1 | sed -e "s/^[ \t]*//")"
-    echo -e "Will execute with sudo: ${T_BGREEN}${cmd}${T_RESET}";
-    echo "Execute? y/n"
-
-    local go
-    read go
-    go="$(echo "$go" | tr [[:upper:]] [[:lower:]])"
+    echo -e "Execute with sudo: ${fg_bold[cyan]}${cmd}${reset_color}";
+    echo "y/n?"
+    read
+    local go="$(echo "$REPLY" | tr [[:upper:]] [[:lower:]])"
     if [[ "$go" == y* ]]; then
         sudo $cmd
     fi

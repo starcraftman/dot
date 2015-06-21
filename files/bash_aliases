@@ -279,6 +279,17 @@ fi
 ############################################################################
 #{{{
 
+# Help selecting colors
+color_test() {
+    echo -e "${T_RED}T_RED\t\t${T_BRED}T_BRED"
+    echo -e "${T_YELLOW}T_YELLOW\t${T_BYELLOW}T_BYELLOW"
+    echo -e "${T_CYAN}T_CYAN\t\t${T_BCYAN}T_BCYAN"
+    echo -e "${T_BLUE}T_BLUE\t\t${T_BBLUE}T_BBLUE"
+    echo -e "${T_MAGENTA}T_MAGENTA\t${T_BMAGENTA}T_BMAGENTA"
+    echo -e "${T_WHITE}T_WHITE\t\t${T_BWHITE}T_BWHITE"
+    echo -e "${T_RESET}"
+}
+
 # Discourage using darngerouns rm.
 rm() {
     echo 'Do not use.\nIf essential: rrm file'
@@ -286,8 +297,11 @@ rm() {
 }
 
 rrm() {
-    read -p "Will execute: \`rm -rf $@\` y/n?"
-    if [ "$REPLY" = "y" -o "$REPLY" = "Y" ]; then
+    echo -e "Execute: ${T_BCYAN}rm -rf $@${T_RESET}"
+    echo "y/n?"
+    read
+    local go="$(echo "$REPLY" | tr [[:upper:]] [[:lower:]])"
+    if [[ "$go" == y* ]]; then
         command rm -rf $@
     fi
 }
@@ -311,12 +325,10 @@ t() {
 # Reruns the last command with sudo.
 please() {
     local cmd="$(fc -l -n -2 | head -n 1 | sed -e "s/^[ \t]*//")"
-    echo -e "Will execute with sudo: ${T_BGREEN}${cmd}${T_RESET}";
-    echo "Execute? y/n"
-
-    local go
-    read go
-    go="$(echo "$go" | tr [[:upper:]] [[:lower:]])"
+    echo -e "Execute with sudo: ${T_BCYAN}${cmd}${T_RESET}";
+    echo "y/n?"
+    read
+    local go="$(echo "$REPLY" | tr [[:upper:]] [[:lower:]])"
     if [[ "$go" == y* ]]; then
         sudo $cmd
     fi
