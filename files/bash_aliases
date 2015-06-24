@@ -292,7 +292,8 @@ color_test() {
 
 # Discourage using darngerouns rm.
 rm() {
-    echo 'Do not use.\nIf essential: rrm file'
+    echo 'Do not use.'
+    echo 'If essential: rrm file'
     false
 }
 

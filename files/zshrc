@@ -264,7 +264,8 @@ alias debug='if debug; then setopt xtrace; else unsetopt xtrace; clear; fi'
 
 # Discourage using darngerouns rm.
 function rm() {
-    echo 'Do not use.\nIf essential: rrm file'
+    echo 'Do not use.'
+    echo 'If essential: rrm file'
     false
 }
 
