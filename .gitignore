@@ -46,6 +46,7 @@ files/vim/plugged/
 files/vim/eclim/
 files/vim/undo/
 files/vim/view/
+files/vim/.gissue-cache/
 files/vim/.lvimrc_persist
 files/vim/.netrwhist
 files/vim/plugin/eclim.vim
