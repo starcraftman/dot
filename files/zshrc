@@ -275,7 +275,7 @@ function rrm() {
     read
     local go="$(echo "$REPLY" | tr [[:upper:]] [[:lower:]])"
     if [[ "$go" == y* ]]; then
-        command rm -rf $@
+        command rm -rf "$@"
     fi
 }
 
