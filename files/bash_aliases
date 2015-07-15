@@ -307,6 +307,18 @@ rrm() {
     fi
 }
 
+# Secure delete a file
+secDel() {
+    echo -e "Will Securely Delete: ${T_BCYAN}$@${T_RESET}"
+    echo "y/n?"
+    read
+    local go="$(echo "$REPLY" | tr [[:upper:]] [[:lower:]])"
+    if [[ "$go" == y* ]]; then
+        shred -vzn 3 "$@"
+        command rm -rf "$@"
+    fi
+}
+
 # Shorthand for tee
 t() {
     if [ $# -lt 1 ]; then
