@@ -1,0 +1,59 @@
+_pep8() {
+  local cur prev prog split=false
+  cur=$(_get_cword "=")
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  prog="${COMP_WORDS[0]}"
+  COMPREPLY=()
+
+  _expand || return 0
+
+  local opts
+  if [ "${__COMP_CACHE_PEP8}x" = "x" ]; then
+    for i in $("$prog" --help); do
+      i=${i%%=*}
+      if [[ "$i" =~ ^-[a-zA-Z0-9?-]+,? ]]; then
+        opts="$opts ${i//[\(\)\[.,\'\"]}"
+      fi
+    done
+    __COMP_CACHE_PEP8=( "$opts" )
+    export __COMP_CACHE_PEP8
+  else
+    opts="${__COMP_CACHE_PEP8[0]}"
+  fi
+
+  _split_longopt && split=true
+
+  case "${prev}" in
+    ## directory completion
+    #--basetemp|--confcutdir)
+      #_filedir -d
+      #return 0
+      #;;
+    # file completion
+    --output-file|--config)
+      _filedir
+      return 0
+      ;;
+    # require args, no completion
+    --builtins|--exclude|--filenames|--jobs|--max-complexity|\
+        --max-line-length)
+      return 0
+      ;;
+  esac
+
+  $split && return 0
+
+  case "${cur}" in
+    -*)
+      COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+      return 0
+      ;;
+    *)
+      _filedir
+      return 0
+      ;;
+  esac
+}
+
+have pep8 && complete -F _pep8 ${nospace} pep8
+# vim:set ft=sh ts=2 sts=2 sw=2:

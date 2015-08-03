@@ -1,0 +1,89 @@
+_pylint() {
+  local cur prev prog split=false
+  cur=$(_get_cword "=")
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  prog="${COMP_WORDS[0]}"
+  COMPREPLY=()
+
+  _expand || return 0
+
+  local opts
+  if [ "${__COMP_CACHE_PYLINT}x" = "x" ]; then
+    for i in $("$prog" --long-help 2>/dev/null); do
+      i=${i%%=*}
+      if [[ "$i" =~ ^-[a-zA-Z0-9?-]+,? ]]; then
+        opts="$opts ${i//[\(\)\[.,\'\"]}"
+      fi
+    done
+    __COMP_CACHE_PYLINT=( "$opts" )
+    export __COMP_CACHE_PYLINT
+  else
+    opts="${__COMP_CACHE_PYLINT[0]}"
+  fi
+
+  _split_longopt && split=true
+
+  case "${prev}" in
+    ## directory completion
+    #--basetemp|--confcutdir)
+      #_filedir -d
+      #return 0
+      #;;
+    # file completion
+    --ignore|--rcfile)
+      _filedir
+      return 0
+      ;;
+    # boolean value
+    -r|--comment|--files-output|--ignore-comments|--ignore-docstrings|\
+        --ignore-imports|--ignore-mixin-members|--init-import|--persistent|\
+        --reports|--single-line-if-stmt|--zope)
+      COMPREPLY=( $(compgen -W "yes no" -- "${cur}") )
+      return 0
+      ;;
+    # msgids, completed from --list-msgs
+    -d|-e|--disable|--enable|--help-msg)
+      #COMPREPLY=( $(compgen -W "colorized html msvs parseable text" -- "${cur}") )
+      return 0
+      ;;
+    # format specific
+    --output-format|-f)
+      COMPREPLY=( $(compgen -W "colorized html msvs parseable text" -- "${cur}") )
+      return 0
+      ;;
+    # require args, no completion
+    --additional-builtins|--argument-rgx|--attr-rgx|--bad-functions|--bad-names|\
+        --class-attribute-rgx|--class-rgx|--const-rgx|--defining-attr-methods|\
+        --deprecated-modules|--docstring-min-length|--dummy-variables-rgx|\
+        --evaluation|--ext-import-graph|--function-rgx|--generated-members|\
+        --good-names|--ignore-iface-methods|--ignore-long-lines|\
+        --ignored-argument-names|--ignored-classes|--import-graph|\
+        --indent-string|--init-hook|--inlinevar-rgx|--int-import-graph|\
+        --load-plugins|--max-args|--max-attributes|--max-branches|\
+        --max-line-length|--max-locals|--max-module-lines|--max-parents|\
+        --max-public-methods|--max-returns|--max-statements|--method-rgx|\
+        --min-public-methods|--min-similarity-lines|--module-rgx|\
+        --msg-template|--no-docstring-rgx|--no-space-check|--notes|\
+        --overgeneral-exceptions|--required-attributes|\
+        --valid-classmethod-first-arg|--valid-metaclass-classmethod-first-arg|\
+        --variable-rgx)
+      return 0
+      ;;
+  esac
+
+  $split && return 0
+
+  case "${cur}" in
+    -*)
+      COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+      return 0
+      ;;
+    *)
+      _filedir
+      return 0
+      ;;
+  esac
+}
+
+have pylint && complete -F _pylint ${nospace} pylint
+# vim:set ft=sh ts=2 sts=2 sw=2:
