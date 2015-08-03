@@ -1,0 +1,64 @@
+_tox() {
+  local cur prev prog split=false
+  cur=$(_get_cword "=")
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  prog="${COMP_WORDS[0]}"
+  COMPREPLY=()
+
+  _expand || return 0
+
+  local opts
+  if [ "${__COMP_CACHE_TOX}x" = "x" ]; then
+    for i in $("$prog" --help); do
+      i=${i%%=*}
+      if [[ "$i" =~ ^-[a-zA-Z0-9?-]+,? ]]; then
+        opts="$opts ${i//[\(\)\[.,\'\"]}"
+      fi
+    done
+    __COMP_CACHE_TOX=( "$opts" )
+    export __COMP_CACHE_TOX
+  else
+    opts="${__COMP_CACHE_TOX[0]}"
+  fi
+
+  _split_longopt && split=true
+
+  case "${prev}" in
+    ## directory completion
+    #--basetemp|--confcutdir)
+      #_filedir -d
+      #return 0
+      #;;
+    # file completion
+    -c|--installpkg|--result-json)
+      _filedir
+      return 0
+      ;;
+    # possible environments, parse tox.ini
+    -e)
+      local envs
+      envs=$(command grep -- 'envlist' ./tox.ini | sed -e 's/envlist\s*=\s*//' | sed -e 's/,/ /')
+      COMPREPLY=( $(compgen -W "$envs" -- "${cur}") )
+      return 0
+      ;;
+    # require args, no completion
+    -i|--hashseed|--force-dep)
+      return 0
+      ;;
+  esac
+
+  $split && return 0
+
+  case "${cur}" in
+    -*)
+      COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+      return 0
+      ;;
+    *)
+      return 0
+      ;;
+  esac
+}
+
+have tox && complete -F _tox ${nospace} tox
+# vim:set ft=sh ts=2 sts=2 sw=2:
