@@ -5,6 +5,8 @@ _tox() {
   prog="${COMP_WORDS[0]}"
   COMPREPLY=()
 
+  # Only works if tox.ini exists
+  [ ! -e "tox.ini" ] && return 0
   _expand || return 0
 
   local opts
