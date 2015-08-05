@@ -15,6 +15,7 @@ _pylint() {
         opts="$opts ${i//[\(\)\[.,\'\"]}"
       fi
     done
+    opts=$(echo "$opts" | sed -e 's/-1] //')
     __COMP_CACHE_PYLINT=( "$opts" )
     export __COMP_CACHE_PYLINT
   else
@@ -43,7 +44,8 @@ _pylint() {
       ;;
     # msgids, completed from --list-msgs
     -d|-e|--disable|--enable|--help-msg)
-      #COMPREPLY=( $(compgen -W "colorized html msvs parseable text" -- "${cur}") )
+      local ids=$(pylint --list-msgs 2>/dev/null | command grep -o '\w[0-9]\{4\}')
+      COMPREPLY=( $(compgen -W "${ids}" -- "${cur}") )
       return 0
       ;;
     # format specific
