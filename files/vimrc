@@ -378,10 +378,6 @@ function s:goyo_enter()
 endfunction
 
 function s:goyo_leave()
-  " Hack to fix airline bug
-  split
-  redraw
-  quit
 endfunction
 
 autocmd! User GoyoEnter
