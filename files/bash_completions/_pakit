@@ -1,0 +1,58 @@
+_pakit() {
+  local cur prev prog split=false
+  cur=$(_get_cword "=")
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  prog="${COMP_WORDS[0]}"
+  COMPREPLY=()
+
+  _expand || return 0
+
+  local opts
+  if [ "${__COMP_CACHE_PAKIT}x" = "x" ]; then
+    for i in $("$prog" --help); do
+      i=${i%%=*}
+      if [[ "$i" =~ ^-[a-zA-Z0-9?-]+,? ]]; then
+        opts="$opts ${i//[\(\)\[.,\'\"\`]}"
+      fi
+    done
+    __COMP_CACHE_PAKIT=( "$opts" )
+    export __COMP_CACHE_PAKIT
+  else
+    opts="${__COMP_CACHE_PAKIT[0]}"
+  fi
+
+  _split_longopt && split=true
+
+  case "${prev}" in
+    ## directory completion
+    #--basetemp|--confcutdir)
+      #_filedir -d
+      #return 0
+      #;;
+    # file completion
+    --conf|-c)
+      _filedir
+      return 0
+      ;;
+    # require args, no completion
+    -a|-h|-l|-u|-v|--available|--create-conf|--help|--list|--update|--version)
+      return 0
+      ;;
+  esac
+
+  $split && return 0
+
+  case "${cur}" in
+    -*)
+      COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+      return 0
+      ;;
+    *)
+      _filedir
+      return 0
+      ;;
+  esac
+}
+
+have pakit && complete -F _pakit ${nospace} pakit
+# vim:set ft=sh ts=2 sts=2 sw=2:
