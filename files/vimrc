@@ -94,6 +94,7 @@ try
   " Very large, enable when needed
   "Plug 'LaTeX-Box-Team/LaTeX-Box'
   "Plug 'plasticboy/vim-markdown' | Plug 'godlygeek/tabular'
+  Plug 'Rykka/riv.vim'
   Plug 'tfnico/vim-gradle'
   Plug 'tomswartz07/vim-todo'
   Plug 'tpope/vim-markdown'
@@ -208,6 +209,7 @@ let g:syntastic_enable_perl_checker = 1
 " Manually set important checkers:
 let g:syntastic_python_checkers = ['python', 'pylint', 'flake8']
 let g:syntastic_perl_checkers = ['perl', 'perlcritic']
+let g:syntastic_rst_checkers = ['sphinx']
 
 " Options to pass to above checkers take form:
 " syntastic_filetype_checker_argtype = ''
