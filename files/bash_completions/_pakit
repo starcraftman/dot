@@ -7,7 +7,7 @@ _pakit() {
 
   _expand || return 0
 
-  local opts
+  local avail opts
   if [ "${__COMP_CACHE_PAKIT}x" = "x" ]; then
     for i in $("$prog" --help); do
       i=${i%%=*}
@@ -15,23 +15,31 @@ _pakit() {
         opts="$opts ${i//[\(\)\[.,\'\"\`]}"
       fi
     done
-    __COMP_CACHE_PAKIT=( "$opts" )
+    avail=$(pakit --available-short 2>/dev/null)
+    __COMP_CACHE_PAKIT=( "$opts" "$avail" )
     export __COMP_CACHE_PAKIT
   else
     opts="${__COMP_CACHE_PAKIT[0]}"
+    avail="${__COMP_CACHE_PAKIT[1]}"
   fi
 
   _split_longopt && split=true
 
   case "${prev}" in
-    ## directory completion
-    #--basetemp|--confcutdir)
-      #_filedir -d
-      #return 0
-      #;;
     # file completion
-    --conf|-c)
+    -c|--conf)
       _filedir
+      return 0
+      ;;
+    # complete available programs
+    -i|--install)
+      COMPREPLY=( $(compgen -W "${avail}" -- "${cur}") )
+      return 0
+      ;;
+    # complete installed programs
+    -r|--remove)
+      installed=$(pakit --list-short 2>/dev/null)
+      COMPREPLY=( $(compgen -W "${installed}" -- "${cur}") )
       return 0
       ;;
     # require args, no completion

@@ -64,7 +64,7 @@ try
   endif
 
   " Searching & Files
-  Plug 'ctrlpvim/ctrlp.vim' | Plug 'FelikZ/ctrlp-py-matcher'
+  Plug 'ctrlpvim/ctrlp.vim' | Plug 'FelikZ/ctrlp-py-matcher' | Plug 'fisadev/vim-ctrlp-cmdpalette'
   Plug 'gabesoft/vim-ags'
   Plug 'ludovicchabant/vim-lawrencium'
   "Plug 'mileszs/ack.vim'
