@@ -536,6 +536,7 @@ nnoremap <Leader>ft :FTOpen<CR>
 " Binding for extra search modes
 nnoremap <C-P>m :CtrlPMRUFiles<CR>
 nnoremap <C-P>b :CtrlPBuffer<CR>
+nnoremap <C-P>c :CtrlPCmdPalette<CR>
 nnoremap <C-T> :CtrlPTag<CR>
 nnoremap <C-T>>a :CtrlPBufTagAll<CR>
 

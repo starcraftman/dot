@@ -5,6 +5,6 @@
 " a:info.force Bang (!) issued to command
 
 function! hooks#YCMInstall(info)
-  silent ! ./install.sh --clang-completer >/dev/null 2>&1 &
+  silent ! ./install.py --clang-completer >/dev/null 2>&1 &
   redraw!
 endfunction
