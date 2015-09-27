@@ -273,6 +273,10 @@ if valid_name vimpager; then
     alias vcat='vimcat'
     alias vpager='vimpager'
 fi
+
+if valid_name sed; then
+    alias strip_colors='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
+fi
 #}}}
 ############################################################################
 # Functions
