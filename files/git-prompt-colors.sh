@@ -1,6 +1,8 @@
 ## These are the color definitions used by gitprompt.sh
 
-define_git_prompt_colors() {
+override_git_prompt_colors() {
+  GIT_PROMPT_THEME_NAME="Custom"
+
   # These are the color definitions used by gitprompt.sh
   GIT_PROMPT_PREFIX="["                 # start of the git info string
   GIT_PROMPT_SUFFIX="]"                 # the end of the git info string
@@ -57,5 +59,5 @@ define_git_prompt_colors() {
 }
 
 if [[ -z "$GIT_PROMPT_SEPARATOR" || -z "$GIT_PROMPT_COMMAND_OK" ]]; then
-  define_git_prompt_colors
+  reload_git_prompt_colors "Custom"
 fi
