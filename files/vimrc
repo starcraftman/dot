@@ -1122,6 +1122,15 @@ function! s:bundle_vim()
   call delete(dst)
 endfunction
 
+command! -nargs=0 Spell call s:tog_spell()
+function! s:tog_spell()
+  if &spell
+    setlocal nospell
+  else
+    setlocal spell spelllang=en_ca
+  endif
+endfunction
+
 " }}}
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General Notes
