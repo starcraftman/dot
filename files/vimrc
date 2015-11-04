@@ -100,6 +100,7 @@ try
   Plug 'tpope/vim-markdown'
   " Linux Kernel style plugin
   "Plug 'vivien/vim-addon-linux-coding-style'
+  Plug 'xolox/vim-misc' | Plug 'xolox/vim-lua-ftplugin'
   Plug 'zaiste/tmux.vim'
 
   " Web Programming
@@ -395,6 +396,14 @@ let g:localvimrc_sandbox = 0
 " Store decisions on Y/N/A in file
 let g:localvimrc_persistent = 1
 let g:localvimrc_persistence_file = expand(g:vim_dir . '/.lvimrc_persist')
+
+" Lua-ftplug
+""""""""""""
+" Enable omnicomplete, works with ycm
+let g:lua_complete_omni = 1
+
+" Disable automatic insertion
+let g:lua_complete_dynamic = 0
 
 " }}}
 
