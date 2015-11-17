@@ -64,8 +64,11 @@ _pakit() {
        [ "$(word_in_array "available" "${COMP_WORDS[@]}")" = "1" ]; then
     COMPREPLY=( $(compgen -W "${subopts} --short" -- "${cur}") )
     return 0
-  elif [ "$(word_in_array "search" "${COMP_WORDS[@]}")" = "1" ] ||
-       [ "$(word_in_array "update" "${COMP_WORDS[@]}")" = "1" ] ||
+  elif [ "$(word_in_array "search" "${COMP_WORDS[@]}")" = "1" ]; then
+    local search_flags="--case --names"
+    COMPREPLY=( $(compgen -W "${subopts} ${search_flags}" -- "${cur}") )
+    return 0
+  elif [ "$(word_in_array "update" "${COMP_WORDS[@]}")" = "1" ] ||
        [ "$(word_in_array "relink" "${COMP_WORDS[@]}")" = "1" ]; then
     COMPREPLY=( $(compgen -W "${subopts}" -- "${cur}") )
     return 0
