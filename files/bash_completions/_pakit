@@ -27,7 +27,7 @@ _pakit() {
 
   local available opts subcoms
   opts="-c -h -v --conf --help --version"
-  subcoms="install remove update display list available search relink"
+  subcoms="install remove update display list available search relink create-conf"
   if [ "${__COMP_CACHE_PAKIT}x" = "x" ]; then
     available=$($prog available --short 2>/dev/null)
     __COMP_CACHE_PAKIT=( "$available" )
