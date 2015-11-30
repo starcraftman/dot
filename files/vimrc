@@ -9,14 +9,28 @@
 """""""""
 " {{{
 
+" Like os.path.join, join all elements by path separator
+function! s:path_join(...)
+  if stridx(a:0, '\') != -1 || g:win_shell
+    let sep = '\'
+  else
+    let sep = '/'
+  endif
+  return join(a:000, sep)
+endfunction
+
 " On Windows with cmd.exe use vimfiles, else use normal unix .vim folder
 let g:win_shell = (has('win32') || has('win64')) && &shellcmdflag =~ '/'
 let g:cygwin_shell = has('win32unix')
-let s:prefix = has('nvim') ? 'config/nvim' : 'vim'
-let g:vim_dir = printf(g:win_shell ? '$HOME/%sfiles' : '$HOME/.%s', s:prefix)
+if has('nvim')
+  let g:vim_dir = g:win_shell ? '$USERPROFILE/AppData/Local/nvim' : '~/.config/nvim'
+else
+  let g:vim_dir = g:win_shell ? '~/vimfiles' : '~/.vim'
+endif
+let g:vim_dir = expand(g:vim_dir)
 
 try
-  call plug#begin(expand(g:vim_dir . '/plugged'))
+  call plug#begin(s:path_join(vim_dir, 'plugged'))
 
   " Completion
   if !g:win_shell && !g:cygwin_shell &&
@@ -220,7 +234,7 @@ let g:syntastic_python_flake8_args = "--max-complexity 10"
 " UltiSnips
 """""""""""
 " Set dir to .vim section
-let g:UltiSnipsSnippetsDir = expand(g:vim_dir . '/snippets')
+let g:UltiSnipsSnippetsDir = s:path_join(g:vim_dir, 'snippets')
 
 " Force a version of python
 "let g:UltiSnipsUsePythonVersion = 2
@@ -377,10 +391,10 @@ let g:bookmark_auto_close = 1
 " Goyo.vim
 """"""""""
 " Hooks that run on enter/exit of Goyo command
-function s:goyo_enter()
+function! s:goyo_enter()
 endfunction
 
-function s:goyo_leave()
+function! s:goyo_leave()
 endfunction
 
 autocmd! User GoyoEnter
@@ -395,7 +409,7 @@ let g:localvimrc_sandbox = 0
 
 " Store decisions on Y/N/A in file
 let g:localvimrc_persistent = 1
-let g:localvimrc_persistence_file = expand(g:vim_dir . '/.lvimrc_persist')
+let g:localvimrc_persistence_file = s:path_join(g:vim_dir, '.lvimrc_persist')
 
 " Lua-ftplug
 """"""""""""
@@ -428,7 +442,7 @@ let g:airline_powerline_fonts = 1
 """""""""""""""""""""
 " Syntastic modification to line, only if installed
 let s:syn_status = ''
-if exists(':Plug') && filereadable(expand(g:vim_dir . '/plugged/syntastic/LICENCE'))
+if exists(':SyntasticInfo')
   let s:syn_status .= ' || %{SyntasticStatuslineFlag()}'
 endif
 
@@ -647,7 +661,7 @@ set undolevels=1000
 
 " Keep a persistent backup file, preserves undo history between edit sessions
 if has('persistent_undo')
-  let &undodir = expand(g:vim_dir . '/undo')
+  let &undodir = s:path_join(g:vim_dir,  'undo')
   try
     call mkdir(&undodir, 'p')
   catch
@@ -752,7 +766,7 @@ endtry
 syntax on
 
 highlight ColorColumn ctermbg=238
-function s:match_col_no()
+function! s:match_col_no()
   let col_no = exists('b:match_column_no') ? b:match_column_no : 100
   call matchadd('ColorColumn', '\%' . col_no . 'v', 100)
 endfunction
@@ -1109,7 +1123,7 @@ endfunction
 command! -nargs=0 Bootstrap call s:bootstrap()
 function! s:bootstrap()
   let plug_src = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  let plug_dst = expand(g:vim_dir . '/autoload/plug.vim')
+  let plug_dst = s:path_join(g:vim_dir, 'autoload', 'plug.vim')
   call g:FileFetch(plug_src, plug_dst)
   echo 'Restart and run `PlugInstall`.'
 endfunction

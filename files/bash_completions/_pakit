@@ -27,7 +27,7 @@ _pakit() {
 
   local available opts subcoms
   opts="-c -h -v --conf --help --version"
-  subcoms="install remove update display list available search relink create-conf"
+  subcoms="install remove update display list available search relink purge"
   if [ "${__COMP_CACHE_PAKIT}x" = "x" ]; then
     available=$($prog available --short 2>/dev/null)
     __COMP_CACHE_PAKIT=( "$available" )
@@ -56,7 +56,8 @@ _pakit() {
      [ "$(word_in_array "display" "${COMP_WORDS[@]}")" = "1" ]; then
     COMPREPLY=( $(compgen -W "${subopts} ${available}" -- "${cur}") )
     return 0
-  elif [ "$(word_in_array "remove" "${COMP_WORDS[@]}")" = "1" ]; then
+  elif [ "$(word_in_array "remove" "${COMP_WORDS[@]}")" = "1" ] ||
+       [ "$(word_in_array "update" "${COMP_WORDS[@]}")" = "1" ]; then
     local installed=$($prog list --short 2>/dev/null)
     COMPREPLY=( $(compgen -W "${subopts} ${installed}" -- "${cur}") )
     return 0
@@ -68,7 +69,7 @@ _pakit() {
     local search_flags="--case --names"
     COMPREPLY=( $(compgen -W "${subopts} ${search_flags}" -- "${cur}") )
     return 0
-  elif [ "$(word_in_array "update" "${COMP_WORDS[@]}")" = "1" ] ||
+  elif [ "$(word_in_array "purge" "${COMP_WORDS[@]}")" = "1" ] ||
        [ "$(word_in_array "relink" "${COMP_WORDS[@]}")" = "1" ]; then
     COMPREPLY=( $(compgen -W "${subopts}" -- "${cur}") )
     return 0
