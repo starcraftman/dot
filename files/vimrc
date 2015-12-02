@@ -917,7 +917,7 @@ if has('autocmd')
   augroup ftype_cmds
     autocmd!
     " missing keywords for bash statement syntax
-    autocmd FileType sh exec 'syntax keyword shStatement source shopt'
+    autocmd FileType sh execute 'syntax keyword shStatement source shopt'
     " s is sort in tagbar, use alternate
     autocmd FileType tagbar nmap <Leader>s <Plug>Sneak_s
     autocmd FileType tagbar nmap <Leader>S <Plug>Sneak_S
@@ -987,7 +987,7 @@ function! Color.Set()
   " Set new scheme
   syntax off
   set background=dark
-  exec 'colorscheme ' . self.list[self.cur]
+  execute 'colorscheme ' . self.list[self.cur]
   syntax on
   echomsg 'colorscheme is now: ' . g:colors_name
 endfunction
@@ -1010,22 +1010,27 @@ endfunction
 call Color.Init(1)
 
 " For a block of lines change spacing from old tab size to new tab size
+
+try
+  call cmdalias#add('CS', 'ChangeSpace')
+catch
+endtry
 command! -nargs=+ -range=% ChangeSpace call s:ChangeSpace(<line1>, <line2>, <f-args>)
 function! s:ChangeSpace(line1, line2, old_tab, new_tab)
   let l:rtab_cmd = printf('%s,%sretab', a:line1, a:line2)
 
-  exec printf('set ts=%s sts=%s sw=%s noet', a:old_tab, a:old_tab, a:old_tab)
-  exec l:rtab_cmd . '!'
+  execute printf('set ts=%s sts=%s sw=%s noet', a:old_tab, a:old_tab, a:old_tab)
+  execute l:rtab_cmd . '!'
 
-  exec printf('set ts=%s sts=%s sw=%s et', a:new_tab, a:new_tab, a:new_tab)
-  exec l:rtab_cmd
+  execute printf('set ts=%s sts=%s sw=%s et', a:new_tab, a:new_tab, a:new_tab)
+  execute l:rtab_cmd
 endfunction
 
 " Open the ftplugin file for current buffer
 command! -nargs=0 FTOpen call s:FTOpen()
 function! s:FTOpen()
   let l:file = printf('%s/ftplugin/%s.vim', g:vim_dir, &ft)
-  exec 'sp ' . l:file
+  execute 'sp ' . l:file
 endfunction
 
 " Make a NERDTree like side buffer

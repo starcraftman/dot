@@ -18,7 +18,7 @@ export SOFT=~/.software
 export OPTDIR=~/.opt
 
 # Personal scripts go here to stay outside of root.
-export MYSCRIPTS=~/.my_scripts
+export SCRIPTS=~/.my_scripts
 export DFILES=~/.shell/dot/files
 
 # Dir to locally install cabal for haskell.
@@ -33,7 +33,7 @@ ANDROID=$SOFT/android-sdk/tools:$SOFT/android-sdk/platform-tools:$SOFT/android-n
 export JAVA_HOME=$SOFT/jdk
 export CLASSPATH=$SOFT/jlibs:$JAVA_HOME/lib:/usr/share/ant/lib:/usr/share/java:$CLASSPATH
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
-export PATH=/usr/lib/ccache:$MYSCRIPTS:$OPTDIR/bin:~/.local/bin:$SOFT/bin:$JAVA_HOME/bin:$PATH
+export PATH=/usr/lib/ccache:$SCRIPTS:$OPTDIR/bin:~/.local/bin:$SOFT/bin:$JAVA_HOME/bin:$PATH
 export PATH=$HASKELL_BIN:$GROOVY_HOME/bin:$GRADLE_HOME/bin:$ANDROID:$PATH
 
 #export CPATH=$SOFT/libs/include:$CPATH
