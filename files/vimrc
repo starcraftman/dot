@@ -1011,10 +1011,7 @@ call Color.Init(1)
 
 " For a block of lines change spacing from old tab size to new tab size
 
-try
-  call cmdalias#add('CS', 'ChangeSpace')
-catch
-endtry
+command! -nargs=+ -range=% CS call s:ChangeSpace(<line1>, <line2>, <f-args>)
 command! -nargs=+ -range=% ChangeSpace call s:ChangeSpace(<line1>, <line2>, <f-args>)
 function! s:ChangeSpace(line1, line2, old_tab, new_tab)
   let l:rtab_cmd = printf('%s,%sretab', a:line1, a:line2)
