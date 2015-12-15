@@ -9,6 +9,9 @@
 """""""""
 " {{{
 
+" Implied usually, force to guarantee
+set nocompatible
+
 " Like os.path.join, join all elements by path separator
 function! s:path_join(...)
   if stridx(a:0, '\') != -1 || g:win_shell
@@ -30,7 +33,7 @@ endif
 let g:vim_dir = expand(g:vim_dir)
 
 try
-  call plug#begin(s:path_join(vim_dir, 'plugged'))
+  call plug#begin(s:path_join(g:vim_dir, 'plugged'))
 
   " Completion
   if !g:win_shell && !g:cygwin_shell &&
@@ -118,8 +121,8 @@ try
   Plug 'zaiste/tmux.vim'
 
   " Web Programming
-  "Plug 'othree/html5.vim'
-  "Plug 'ap/vim-css-color'
+  Plug 'othree/html5.vim'
+  Plug 'ap/vim-css-color'
   "Plug 'hail2u/vim-css3-syntax'
   "Plug 'kchmck/vim-coffee-script'
   "Plug 'pangloss/vim-javascript'

@@ -1,4 +1,3 @@
-valid_name bashdb &&
 _bashdb() {
   local lngopt shtopt cur prev split=false
   cur=$(_get_cword "=")
@@ -55,6 +54,7 @@ _bashdb() {
       return 0
       ;;
   esac
-} &&
-complete -F _bashdb ${nospace} bashdb
+}
+
+have bashdb && complete -F _bashdb ${nospace} bashdb
 # vim:set ft=sh:

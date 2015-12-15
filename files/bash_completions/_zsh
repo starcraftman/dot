@@ -1,4 +1,3 @@
-valid_name zsh &&
 _zsh() {
   local lngopt lngopt_trim shtopt cur prev
   cur=$(_get_cword "=")
@@ -39,6 +38,7 @@ _zsh() {
       return 0
       ;;
   esac
-} &&
-complete -F _zsh ${nospace} zsh
+}
+
+have zsh && complete -F _zsh ${nospace} zsh
 # vim:set ft=sh:

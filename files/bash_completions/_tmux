@@ -1,4 +1,3 @@
-valid_name tmux &&
 _tmux() {
   local lngopt shtopt cur prev split=false
   cur=$(_get_cword "=")
@@ -71,6 +70,7 @@ _tmux() {
       return 0
       ;;
   esac
-} &&
-complete -F _tmux ${nospace} tmux
+}
+
+have tmux && complete -F _tmux ${nospace} tmux
 # vim:set ft=sh:
