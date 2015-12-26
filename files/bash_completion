@@ -1,7 +1,9 @@
 # Holds any custom complete commands found useful
 
 # Ssh completion of used hosts
-complete -W "$(echo $(grep '^ssh ' .bash_history | cut -d ' ' -f 2 | sort -u))" ssh
+if [ -e ~/.bash_history ]; then
+    complete -W "$(echo $(grep '^ssh ' .bash_history | cut -d ' ' -f 2 | sort -u))" ssh
+fi
 
 # Source local completions
 for script in ~/.bash_completions/* ; do
