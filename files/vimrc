@@ -45,8 +45,11 @@ try
   Plug 'artur-shaik/vim-javacomplete2'
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
+  " In development
+  Plug '~/programming/github/vsearch'
+
   " UI
-  Plug 'bling/vim-airline'
+  Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
   Plug 'edkolev/tmuxline.vim'
   Plug 'junegunn/goyo.vim'
   Plug 'Konfekt/FastFold'
