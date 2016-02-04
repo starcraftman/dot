@@ -14,11 +14,7 @@ set nocompatible
 
 " Like os.path.join, join all elements by path separator
 function! s:path_join(...)
-  if stridx(a:0, '\') != -1 || g:win_shell
-    let sep = '\'
-  else
-    let sep = '/'
-  endif
+  let sep = stridx(a:0, '\') != -1 || g:win_shell ? '\' : '/'
   return join(a:000, sep)
 endfunction
 
