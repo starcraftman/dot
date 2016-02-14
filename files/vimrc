@@ -54,7 +54,8 @@ try
   Plug 'mhinz/vim-signify'
   Plug 'rhysd/committia.vim'
   Plug 'scrooloose/syntastic'
-  Plug 'simnalamburt/vim-mundo'
+  Plug 'mbbill/undotree'
+  "Plug 'simnalamburt/vim-mundo'  " Needs some work, bit busted
   "Plug 'sjl/gundo.vim'
   Plug 'vim-scripts/taghighlight'
 
@@ -308,13 +309,25 @@ let g:tagbar_autofocus = 1
 " Compact the menu
 let g:tagbar_compact = 1
 
-" Gundo
+
+" UndoTree
+""""""""""
+" To the left, diff expands to whole bottom
+let g:undotree_WindowLayout = 2
+
+" Width of new split
+let g:undotree_SplitWidth = 35
+
+" Focus on open
+let g:undotree_SetFocusWhenToggle = 1
+
+" Gundo/Mundo
 """""""
 " Seems to take too long
-let g:gundo_inline_undo = 0
+let g:mundo_inline_undo = 0
 
 " Compacts the graph
-let g:gundo_verbose_graph = 0
+let g:mundo_verbose_graph = 0
 
 " Nerdtree
 """""""""""""
@@ -607,7 +620,7 @@ nnoremap <silent> <F2> :TagbarToggle<CR>
 inoremap <silent> <F2> <Esc>:call feedkeys("\<F2>")<CR>
 
 " Shortcut for gundo sidebar
-nnoremap <silent> <F3> :GundoToggle<CR>
+nnoremap <silent> <F3> :UndotreeToggle<CR>
 inoremap <silent> <F3> <Esc>:call feedkeys("\<F3>")<CR>
 
 " Toggle showing whitespace
