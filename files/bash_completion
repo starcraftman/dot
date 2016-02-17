@@ -2,7 +2,7 @@
 
 # Ssh completion of used hosts
 if [ -e ~/.bash_history ]; then
-    complete -W "$(echo $(grep '^ssh ' .bash_history | cut -d ' ' -f 2 | sort -u))" ssh
+    complete -W "$(echo $(grep '^ssh ' ~/.bash_history | cut -d ' ' -f 2 | sort -u))" ssh
 fi
 
 # Source local completions
