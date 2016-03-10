@@ -146,7 +146,7 @@ try
 
   call plug#end()
 catch
-  echomsg 'Run command `Bootstrap`. After restart run command `pi'
+  echomsg 'Run command `Bootstrap`. After restart run command `PlugInstall`.'
 endtry
 
 " }}}
@@ -1114,7 +1114,7 @@ function! g:FileFetch(src, dst)
   elseif executable('wget')
     silent execute printf('!wget -O %s %s >/dev/null 2>&1', a:dst, a:src)
   else
-    echoerr 'No supported file download method.'
+    throw 'Need any of: `curl` or `wget` or +python or +ruby'
   endif
   redraw!
   echomsg 'File ' . fnamemodify(a:src, ':t') . ' written to ' . a:dst . '.'
