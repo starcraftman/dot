@@ -124,9 +124,9 @@ try
   " Web Programming
   Plug 'othree/html5.vim'
   Plug 'ap/vim-css-color'
-  "Plug 'hail2u/vim-css3-syntax'
+  Plug 'hail2u/vim-css3-syntax'
   "Plug 'kchmck/vim-coffee-script'
-  "Plug 'pangloss/vim-javascript'
+  Plug 'pangloss/vim-javascript'
   "Plug 'vim-scripts/jQuery'
   "Plug 'Shutnik/jshint2.vim'
   "Plug 'StanAngeloff/php.vim'
@@ -136,7 +136,7 @@ try
   Plug 'morhetz/gruvbox'
   Plug 'nanotech/jellybeans.vim'
   Plug 'tomasr/molokai'
-  Plug 'w0ng/vim-hybrid'
+  "Plug 'w0ng/vim-hybrid'
   " Nice Alternatives
   "Plug 'chriskempson/vim-tomorrow-theme'
   "Plug 'Lokaltog/vim-distinguished'
@@ -172,6 +172,9 @@ let g:ycm_complete_in_comments = 1
 " Use the following to whitelist dirs for .ycm_extra_conf.py
 let g:ycm_extra_conf_globlist = [
     \ '~/programming/*' ]
+
+" Force python 3 completion rather than default 2.
+"let g:ycm_python_binary_path = '/usr/bin/python3'
 
 " Put rust src here for completion
 let g:ycm_rust_src_path = '/usr/local/rust/src'
