@@ -220,7 +220,8 @@ fi
 
 # Shutdown the current machine immediately
 if valid_name shutdown; then
-    alias off='sudo shutdown -h now'
+    alias off='sudo shutdown now'
+    alias restart='sudo shutdown -r now'
 fi
 
 # Force 256 colors, woe is me without
