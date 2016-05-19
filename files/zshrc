@@ -253,6 +253,14 @@ if valid_name sed; then
     alias strip_colors='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
 fi
 
+if valid_name vagrant; then
+    alias revagrant='vagrant destroy -f && vagrant up && vagrant ssh'
+fi
+
+if valid_name kstart; then
+    alias krestart='killall plasmashell && kstart plasmashell >/dev/null 2>&1 &'
+fi
+
 # Zsh only aliases
 alias help='run-help'
 

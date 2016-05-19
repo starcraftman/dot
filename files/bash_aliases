@@ -286,6 +286,11 @@ fi
 if valid_name vagrant; then
     alias revagrant='vagrant destroy -f && vagrant up && vagrant ssh'
 fi
+
+if valid_name kstart; then
+    alias krestart='killall plasmashell && kstart plasmashell >/dev/null 2>&1 &'
+fi
+
 #}}}
 ############################################################################
 # Functions
