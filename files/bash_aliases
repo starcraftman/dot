@@ -287,7 +287,10 @@ if valid_name vagrant; then
     alias revagrant='vagrant destroy -f && vagrant up && vagrant ssh'
 fi
 
-if valid_name kstart; then
+# KDE < 4 it is plasma-desktop, >=5 plasmashell
+if valid_name plasma-desktop; then
+    alias krestart='killall plasma-desktop && kstart plasma-desktop >/dev/null 2>&1 &'
+elif valid_name plasmashell; then
     alias krestart='killall plasmashell && kstart plasmashell >/dev/null 2>&1 &'
 fi
 
