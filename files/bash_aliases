@@ -294,6 +294,10 @@ elif valid_name plasmashell; then
     alias krestart='killall plasmashell && kstart plasmashell >/dev/null 2>&1 &'
 fi
 
+if valid_name rsync; then
+    alias xcp='rsync --progress -rv'
+fi
+
 #}}}
 ############################################################################
 # Functions
