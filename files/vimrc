@@ -49,7 +49,7 @@ try
   Plug 'edkolev/tmuxline.vim'
   Plug 'junegunn/goyo.vim'
   Plug 'Konfekt/FastFold'
-  Plug 'kshenoy/vim-togglelist'
+  Plug 'Valloric/ListToggle'
   Plug 'majutsushi/tagbar'
   Plug 'mhinz/vim-signify'
   Plug 'rhysd/committia.vim'
@@ -443,6 +443,12 @@ let g:lua_complete_omni = 1
 " Disable automatic insertion
 let g:lua_complete_dynamic = 0
 
+" ListToggle (Valoric)
+""""""""""""""""""""""
+let g:lt_location_list_toggle_map = '<leader>l'
+let g:lt_quickfix_list_toggle_map = '<leader>q'
+"let g:lt_height = 10
+
 " }}}
 
 " }}}
@@ -540,10 +546,6 @@ nnoremap <C-K> <C-W>k<C-W>_
 " Change window right (<C-W>l) then maximize buffer width (<C-W>|)
 nnoremap <silent> <C-L> <C-W>l:vertical resize<CR>:AirlineToggle<CR>:AirlineToggle<CR>
 nnoremap <silent> <C-H> <C-W>h:vertical resize<CR>:AirlineToggle<CR>:AirlineToggle<CR>
-
-" Toggles for the location and quickfix
-nnoremap <silent> <Leader>q :ToggleQF<CR>
-nnoremap <silent> <Leader>l :ToggleLL<CR>
 
 " Make all windows equal in size
 "nnoremap <Leader>q <C-W>=
