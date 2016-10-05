@@ -16,6 +16,7 @@
     unstage = reset HEAD --
     g = grep --heading --break
     lt = describe --tags --abbrev=0
+    tagd = for-each-ref --sort=taggerdate --format '%(refname) %(taggerdate)' refs/tags
     ;Logging commands
     last = !git ld -1 HEAD
     lg = log --graph --pretty=format:'%Cred%h%Creset %Cgreen(%cd)%Creset %C(bold blue)[%an]%Creset %s' --date=relative
