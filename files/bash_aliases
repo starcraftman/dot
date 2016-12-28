@@ -597,6 +597,18 @@ unset MAILCHECK
 # Misc Options
 ############################################################################
 #{{{
+
+# KDE 5.8 issue, they use an X11 hack to intercept key.
+# Fix written at: https://zren.github.io/projects/kde/#cfg-21
+## RUN CONSOLE
+if grep 'Meta=' ~/.config/kwinrc >/dev/null 2>&1; then
+    :
+else
+    kwriteconfig --file ~/.config/kwinrc --group ModifierOnlyShortcuts --key Meta ""
+    echo 'Restarting kwin'
+    kwin_x11 --replace & disown
+fi
+
 # Enable the windows key on Ubuntu as F13
 if valid_name xmodmap && [ -n "$DISPLAY" ]; then
     xmodmap -e 'keycode 133 = F13'
