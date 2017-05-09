@@ -60,7 +60,7 @@ try
   Plug 'vim-scripts/taghighlight'
 
   " Movement
-  Plug 'edsono/vim-matchit'
+  Plug 'benjifisher/matchit.zip'
   Plug 'justinmk/vim-sneak'
   Plug 'MattesGroeger/vim-bookmarks'
   Plug 'vim-scripts/a.vim'
