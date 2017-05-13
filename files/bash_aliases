@@ -116,7 +116,7 @@ for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
     eval "export T_B$color='\e[1;3${count}m'"
     eval "export PS1_$color='\[\e[0;3${count}m\]'"
     eval "export PS1_B$color='\[\e[1;3${count}m\]'"
-    (( count = $count + 1 ))
+    (( count = count + 1 ))
 done
 unset count
 
@@ -320,10 +320,11 @@ color_test() {
 }
 
 rrm() {
-    echo -e "Execute: ${T_BCYAN}rm -rf $@${T_RESET}"
+    echo -e "Execute: ${T_BCYAN}rm -rf ${T_RESET}"
     echo "y/n?"
     read
-    local go="$(echo "$REPLY" | tr [[:upper:]] [[:lower:]])"
+    local go
+    go="$(echo "$REPLY" | tr '[:upper:]' '[:lower:]')"
     if [[ "$go" == y* ]]; then
         command rm -rf "$@"
     fi
@@ -331,10 +332,11 @@ rrm() {
 
 # Secure delete a file
 secDel() {
-    echo -e "Will Securely Delete: ${T_BCYAN}$@${T_RESET}"
+    echo -e "Will Securely Delete: ${T_BCYAN}${T_RESET}"
     echo "y/n?"
     read
-    local go="$(echo "$REPLY" | tr [[:upper:]] [[:lower:]])"
+    local go
+    go="$(echo "$REPLY" | tr '[:upper:]' '[:lower:]')"
     if [[ "$go" == y* ]]; then
         shred -vzn 3 "$@"
         command rm -rf "$@"
@@ -348,24 +350,27 @@ t() {
         return
     fi
 
-    local log=tee.log
+    local log
+    log=tee.log
     if [ -e "$log" ]; then
         echo "Deleting log before run."
         command rm "$log"
     fi
 
-    $@ 2>&1 | tee "$log"
+   "$@" 2>&1 | tee "$log"
 }
 
 # Reruns the last command with sudo.
 please() {
-    local cmd="$(fc -l -n -2 | head -n 1 | sed -e "s/^[ \t]*//")"
+    local cmd
+    cmd="$(fc -l -n -2 | head -n 1 | sed -e "s/^[ \t]*//")"
     echo -e "Execute with sudo: ${T_BCYAN}${cmd}${T_RESET}";
     echo "y/n?"
     read
-    local go="$(echo "$REPLY" | tr [[:upper:]] [[:lower:]])"
+    local go
+    go="$(echo "$REPLY" | tr '[:upper:]' '[:lower:]')"
     if [[ "$go" == y* ]]; then
-        sudo $cmd
+        sudo "$cmd"
     fi
 }
 
@@ -410,13 +415,13 @@ debug() {
 # Function to go back up when deep in directories.
 # Example: .. 3 == cd ../../..
 ..() {
-    if [ $1 -ge 0 2> /dev/null ]; then
+    if [ "$1" -ge 0 ] 2> /dev/null; then
         x=$1
     else
         x=1
     fi
 
-    for (( i = 0; i < $x; i++ )); do
+    for (( i = 0; i < x; i++ )); do
         cd ..
     done
 }
@@ -458,13 +463,13 @@ conTest() {
 termColor() {
     curl http://www.robmeerman.co.uk/_media/unix/256colors2.pl > c.pl 2>/dev/null
     perl ./c.pl
-    \rm c.pl
+    command rm c.pl
 }
 
 # Format a json file to be pretty
 jsonFix() {
     for file ; do
-        cat "$file" | python -m json.tool > "fix_$file"
+        python -m json.tool < "$file" > "fix_$file"
     done
 }
 
@@ -474,12 +479,13 @@ jsonFix() {
 listNics() {
     local INTS=($(ifconfig -s | awk ' /^wlan.*|eth.*/ { print $1 }'))
     # Ample use of awk/sed for field extraction.
-    for INT in ${INTS[@]} ; do
-        local   MAC=$(ifconfig $INT | awk '/Waddr/ { print $5 } ')
-        local    IP=$(ifconfig $INT | awk '/inet / { print $2 } ' | sed -e s/addr://)
-        local BCAST=$(ifconfig $INT | awk '/inet / { print $3 } ' | sed -e s/Bcast://)
-        local  MASK=$(ifconfig $INT | awk '/inet / { print $4 } ' | sed -e s/Mask://)
-        local   IP6=$(ifconfig $INT | awk '/inet6/ { print $3 } ')
+    local MAC IP BCAST MASK IP6
+    for INT in "${INTS[@]}" ; do
+          MAC=$(ifconfig "$INT" | awk '/Waddr/ { print $5 } ')
+           IP=$(ifconfig "$INT" | awk '/inet / { print $2 } ' | sed -e s/addr://)
+        BCAST=$(ifconfig "$INT" | awk '/inet / { print $3 } ' | sed -e s/Bcast://)
+         MASK=$(ifconfig "$INT" | awk '/inet / { print $4 } ' | sed -e s/Mask://)
+          IP6=$(ifconfig "$INT" | awk '/inet6/ { print $3 } ')
 
         echo -e "Interface: ${T_BGREEN}$INT${T_RESET}"
         echo -e "\tMac:   ${MAC}"
@@ -501,25 +507,27 @@ prettyDf() {
             continue
         fi
 
-        local info=( $(command df -P $fs | awk 'END{ print $2,$3,$5 }') )
-        local free=( $(command df -Pkh $fs | awk 'END{ print $4 }') )
-        local nbstars=$(( 20 * ${info[1]} / ${info[0]} ))
-        local out="["
+        local info free nbstars out
+        info=( $(command df -P "$fs" | awk 'END{ print $2,$3,$5 }') )
+        free=$(command df -Pkh "$fs" | awk 'END{ print $4 }') 
+        nbstars=$(( 20 * info[1] / info[0] ))
+        out="["
         for ((j=0;j<20;j++)); do
             if [ ${j} -lt ${nbstars} ]; then
-               out=$out"*"
+               out="${out}*"
             else
-               out=$out"-"
+               out="${out}-"
             fi
         done
-        out=${info[2]}" "$out"] ("$free" free on "$fs")"
-        echo -e $out
+        out="${info[2]} $out] ($free free on $fs)"
+        echo -e "$out"
     done
 }
 
 # Get information on current system
 ii() {
-    local TOP=$(top -n 1 -o %CPU | sed '/^$/d' | head -n 12 | tail -n 11)
+    local TOP mounts
+    TOP=$(top -n 1 -o %CPU | sed '/^$/d' | head -n 12 | tail -n 11)
     echo
     echo -e "${T_BBLUE}$USER${T_RESET} is logged on ${T_BBLUE}$HOSTNAME${T_RESET}"
     echo -e "${T_BBLUE}Additionnal information :${T_RESET} " ; uname -a
@@ -528,12 +536,12 @@ ii() {
     echo -e "${T_BBLUE}Current date :${T_RESET} " ; date
     echo -e "${T_BBLUE}Machine stats :${T_RESET} " ; uptime
     echo -e "${T_BBLUE}Diskspace :${T_RESET} "
-    if valid_name dfc; then
-        dfc
-    else
-        local mounts=$(mount -v | awk '/\/dev\/s/ { print $3 }')
-        prettyDf $mounts
-    fi
+    #if valid_name dfc; then
+        #dfc
+    #else
+        mounts=$(mount -v | awk '/\/dev\/s/ { print $3 }')
+        prettyDf "$mounts"
+    #fi
     echo -e "${T_BBLUE}Memory stats :${T_RESET} " ; free -h
     echo -e "${T_BBLUE}Top 5 CPU% :${T_RESET} " ; echo -e "$TOP" | head -n 2 ; echo -e "$TOP" | tail -n 6
     echo -e "${T_BBLUE}Top 5 MEM% :${T_RESET} " ; top -n 1 -o %MEM | sed '/^$/d' | head -n 12 | tail -n 5
@@ -648,12 +656,13 @@ fi
 # HG Prompt: http://sjl.bitbucket.org/hg-prompt/
 # Git Prompt: https://github.com/magicmonty/bash-git-prompt
 prompt_callback() {
-    local p_line="${PS1_BMAGENTA}{branch}${PS1_R}{ ${PS1_RED}↓{incoming|count}${PS1_R}}"
+    local p_line HG T
+    p_line="${PS1_BMAGENTA}{branch}${PS1_R}{ ${PS1_RED}↓{incoming|count}${PS1_R}}"
     p_line="${p_line}{${PS1_GREEN}↑{outgoing|count}${PS1_R}}|${PS1_YELLOW}{status}{update}${PS1_R}"
-    local HG=$(hg prompt "[${p_line}]" 2>/dev/null)
+    HG=$(hg prompt "[${p_line}]" 2>/dev/null)
 
     # Strip everything except where status to outgoing would be.
-    local T=${HG##*|}
+    T=${HG##*|}
     T=${T%%]}
 
     # Insert check mark only if T doesn't contain other codes like status or update, see regexp.
