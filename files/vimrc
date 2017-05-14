@@ -42,7 +42,7 @@ try
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
   " In development
-  Plug '~/programming/github/vsearch'
+  "Plug '~/prog/github/vsearch'
 
   " UI
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'

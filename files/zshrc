@@ -49,7 +49,7 @@ if valid_name vim; then
 fi
 
 # If you want to have a fallback path lookup, use CDPAth.
-#export CDPATH=~/programming
+#export CDPATH=~/prog
 
 #CCache Directory
 #Info: https://ccache.samba.org/manual.html
