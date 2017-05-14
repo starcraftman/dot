@@ -320,7 +320,7 @@ color_test() {
 }
 
 rrm() {
-    echo -e "Execute: ${T_BCYAN}rm -rf ${T_RESET}"
+    echo -e "Execute: ${T_BCYAN}rm -rf $@ ${T_RESET}"
     echo "y/n?"
     read
     local go
@@ -509,7 +509,7 @@ prettyDf() {
 
         local info free nbstars out
         info=( $(command df -P "$fs" | awk 'END{ print $2,$3,$5 }') )
-        free=$(command df -Pkh "$fs" | awk 'END{ print $4 }') 
+        free=$(command df -Pkh "$fs" | awk 'END{ print $4 }')
         nbstars=$(( 20 * info[1] / info[0] ))
         out="["
         for ((j=0;j<20;j++)); do
