@@ -16,6 +16,7 @@
 # .opt is for programs compiled from src, sources stay in OPT/src while bins to OPT/bin
 export SOFT=~/.software
 export OPTDIR=~/.opt
+export SHELLD=~/.shell
 
 # Personal scripts go here to stay outside of root.
 export SCRIPTS=~/.my_scripts
@@ -36,6 +37,13 @@ export CLASSPATH=$SOFT/jlibs:$JAVA_HOME/lib:/usr/share/ant/lib:/usr/share/java:$
 export PATH=/usr/lib/ccache:$SCRIPTS:$OPTDIR/bin:~/.local/bin:$SOFT/bin:$JAVA_HOME/bin:$PATH
 export PATH=$HASKELL_BIN:$GROOVY_HOME/bin:$GRADLE_HOME/bin:$ANDROID:$PATH
 
+
+if [ -d "$SHELLD/pyenv" ]; then
+   export PYENV_ROOT="$SHELLD/pyenv"
+   export PATH="$PYENV_ROOT/bin:$PATH"
+   eval "$(pyenv init -)"
+fi
+
 #export CPATH=$SOFT/libs/include:$CPATH
 #export LIBRARY_PATH=$SOFT/libs/lib:$LIBRARY_PATH
 
@@ -44,6 +52,7 @@ export PATH=$HASKELL_BIN:$GROOVY_HOME/bin:$GRADLE_HOME/bin:$ANDROID:$PATH
 
 # Paths for specific tools.
 export ANT_HOME=/usr/share/ant
+
 #}}}
 ############################################################################
 # Environment Variables
