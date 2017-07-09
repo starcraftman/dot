@@ -101,6 +101,7 @@ try
   Plug 'starcraftman/cmdalias.vim'
 
   " Syntax / File Specific
+  Plug 'alfredodeza/coveragepy.vim'
   Plug 'chrisbra/csv.vim'
   Plug 'clones/vim-zsh'
   Plug 'elzr/vim-json'
