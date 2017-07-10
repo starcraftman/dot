@@ -646,6 +646,11 @@ if has('nvim')
   tnoremap <C-J> <C-\><C-n>
 endif
 
+nnoremap <silent> <C-C> :Coverage report<CR>
+nnoremap <silent> <C-C>l :Coverage reload<CR>
+nnoremap <silent> <C-C>o :Coverage show<CR>
+
+
 " }}}
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General Options & Features
