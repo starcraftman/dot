@@ -9,9 +9,9 @@ function! hooks#YCMInstall(info)
   if executable('go')
     let opts .= '--gocode-completer '
   endif
-  if executable('mono')
-    let opts .= '--omnisharp-completer '
-  endif
+  "if executable('mono')
+    "let opts .= '--omnisharp-completer '
+  "endif
   if executable('nodejs') && executable('npm')
     let opts .= '--tern-completer '
   endif
