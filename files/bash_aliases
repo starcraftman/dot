@@ -232,9 +232,9 @@ fi
 
 # Apt aliases
 if valid_name apt; then
-    alias apti='apt install'
-    alias aptr='apt remove'
-    alias aptu='apt update && apt dist-upgrade && apt autoremove'
+    alias apti='sudo apt install'
+    alias aptr='sudo apt remove'
+    alias aptu='sudo apt update && sudo apt dist-upgrade && sudo apt autoremove'
 elif valid_name apt-get; then
     alias apti='sudo apt-get -y install'
     alias aptr='sudo apt-get -y remove'
