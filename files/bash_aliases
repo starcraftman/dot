@@ -30,7 +30,8 @@ export GROOVY_HOME=$SOFT/groovy
 export GOPATH=$HOME/go
 
 # Exported paths.
-ANDROID=$SOFT/android-sdk/tools:$SOFT/android-sdk/platform-tools:$SOFT/android-ndk
+ANDR=$HOME/.android/
+ANDROID=$ANDR/tools:$ANDR/platform-tools:$ANDR/android-ndk
 export JAVA_HOME=$SOFT/jdk
 export CLASSPATH=$SOFT/jlibs:$JAVA_HOME/lib:/usr/share/ant/lib:/usr/share/java:$CLASSPATH
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
@@ -310,6 +311,10 @@ fi
 
 if valid_name rsync; then
     alias xcp='rsync --progress -rv'
+fi
+
+if [ -d "$SHELLD/bfg" ]; then
+   alias bfg="java -jar $SHELLD/bfg/bfg.jar"
 fi
 
 #}}}
