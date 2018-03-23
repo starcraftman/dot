@@ -28,6 +28,7 @@ HASKELL_BIN=~/.cabal/bin
 export GRADLE_HOME=$SOFT/gradle
 export GROOVY_HOME=$SOFT/groovy
 export GOPATH=$HOME/.go
+export CARGO_HOME=$HOME/.cargo
 
 # Exported paths.
 ANDR=$HOME/.android/
@@ -37,7 +38,7 @@ export CLASSPATH=$SOFT/jlibs:$JAVA_HOME/lib:/usr/share/ant/lib:/usr/share/java:$
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
 export PATH=/usr/lib/ccache:$SCRIPTS:$OPTDIR/bin:~/.local/bin:$SOFT/bin:$JAVA_HOME/bin:$PATH
 export PATH=$HASKELL_BIN:$GROOVY_HOME/bin:$GRADLE_HOME/bin:$ANDROID:$PATH
-export PATH=$PATH:$GOPATH
+export PATH=$PATH:$GOPATH:$CARGO_HOME
 
 
 if [ -d "$SHELLD/pyenv" ]; then
