@@ -31,7 +31,7 @@ export CARGO_HOME=$HOME/.cargo
 # Base path
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
 export PATH=/usr/lib/ccache:$SCRIPTS:$OPTDIR/bin:~/.local/bin:$SOFT/bin:$PATH
-export PATH=$HASKELL_BIN:$GOPATH:$CARGO_HOME:$PATH
+export PATH=$HASKELL_BIN:$GOPATH/bin:$CARGO_HOME/bin:$PATH
 
 if [ -d "$SHELLD/pyenv" ]; then
    export PYENV_ROOT="$SHELLD/pyenv"
