@@ -25,21 +25,21 @@ export DFILES=~/.shell/dot/files
 # Dir to locally install cabal for haskell.
 HASKELL_BIN=~/.cabal/bin
 
-export GRADLE_HOME=$SOFT/gradle
-export GROOVY_HOME=$SOFT/groovy
 export GOPATH=$HOME/.go
 export CARGO_HOME=$HOME/.cargo
 
-# Exported paths.
-ANDR=$HOME/.android/
-ANDROID=$ANDR/tools:$ANDR/platform-tools:$ANDR/android-ndk
-export JAVA_HOME=$SOFT/jdk
-export CLASSPATH=$SOFT/jlibs:$JAVA_HOME/lib:/usr/share/ant/lib:/usr/share/java:$CLASSPATH
-# /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
-export PATH=/usr/lib/ccache:$SCRIPTS:$OPTDIR/bin:~/.local/bin:$SOFT/bin:$JAVA_HOME/bin:$PATH
-export PATH=$HASKELL_BIN:$GROOVY_HOME/bin:$GRADLE_HOME/bin:$ANDROID:$PATH
-export PATH=$PATH:$GOPATH:$CARGO_HOME
+# Old Java paths, archived
+#ANDR=$HOME/.android/
+#ANDROID=$ANDR/tools:$ANDR/platform-tools:$ANDR/android-ndk
+#export JAVA_HOME=$SOFT/jdk
+#export CLASSPATH=$SOFT/jlibs:$JAVA_HOME/lib:/usr/share/ant/lib:/usr/share/java:$CLASSPATH
+#export GRADLE_HOME=$SOFT/gradle
+#export GROOVY_HOME=$SOFT/groovy
+#export PATH=$GROOVY_HOME/bin:$GRADLE_HOME/bin:$JAVA_HOME/bin:$ANDROID:$PATH
 
+# /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
+export PATH=/usr/lib/ccache:$SCRIPTS:$OPTDIR/bin:~/.local/bin:$SOFT/bin:$PATH
+export PATH=$HASKELL_BIN:$GOPATH:$CARGO_HOME:$PATH
 
 if [ -d "$SHELLD/pyenv" ]; then
    export PYENV_ROOT="$SHELLD/pyenv"
@@ -628,7 +628,7 @@ unset MAILCHECK
 ## RUN CONSOLE
 if grep 'Meta=' ~/.config/kwinrc >/dev/null 2>&1; then
     :
-else
+elif valid_name kwriteconfig && valid_name kwin_x11; then
     kwriteconfig --file ~/.config/kwinrc --group ModifierOnlyShortcuts --key Meta ""
     echo 'Restarting kwin'
     kwin_x11 --replace & disown
