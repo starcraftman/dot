@@ -28,15 +28,7 @@ HASKELL_BIN=~/.cabal/bin
 export GOPATH=$HOME/.go
 export CARGO_HOME=$HOME/.cargo
 
-# Old Java paths, archived
-#ANDR=$HOME/.android/
-#ANDROID=$ANDR/tools:$ANDR/platform-tools:$ANDR/android-ndk
-#export JAVA_HOME=$SOFT/jdk
-#export CLASSPATH=$SOFT/jlibs:$JAVA_HOME/lib:/usr/share/ant/lib:/usr/share/java:$CLASSPATH
-#export GRADLE_HOME=$SOFT/gradle
-#export GROOVY_HOME=$SOFT/groovy
-#export PATH=$GROOVY_HOME/bin:$GRADLE_HOME/bin:$JAVA_HOME/bin:$ANDROID:$PATH
-
+# Base path
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
 export PATH=/usr/lib/ccache:$SCRIPTS:$OPTDIR/bin:~/.local/bin:$SOFT/bin:$PATH
 export PATH=$HASKELL_BIN:$GOPATH:$CARGO_HOME:$PATH
@@ -48,14 +40,27 @@ if [ -d "$SHELLD/pyenv" ]; then
    eval "$(pyenv init -)"
 fi
 
+# Java junk
+export JAVA_HOME=$SOFT/jdk
+export INTELLI_ANDROID=$SOFT/android-studio/bin
+export INTELLI_J=$SOFT/intelliJ/bin
+export ACTIVE_INTELLI=$INTELLI_J
+export PATH=$JAVA_HOME/bin:$PATH:$ACTIVE_INTELLI
+# Prefer custom java to local, deprioritize anything in intellij
+
+# Old Java paths, archived
+#ANDR=$HOME/.android/
+#ANDROID=$ANDR/tools:$ANDR/platform-tools:$ANDR/android-ndk
+#export CLASSPATH=$SOFT/jlibs:$JAVA_HOME/lib:/usr/share/ant/lib:/usr/share/java:$CLASSPATH
+#export GRADLE_HOME=$SOFT/gradle
+#export GROOVY_HOME=$SOFT/groovy
+#export PATH=$GROOVY_HOME/bin:$GRADLE_HOME/bin:$JAVA_HOME/bin:$ANDROID:$PATH
+
 #export CPATH=$SOFT/libs/include:$CPATH
 #export LIBRARY_PATH=$SOFT/libs/lib:$LIBRARY_PATH
 
 #export PERL_MB_OPT="--install_base \"$HOME/perl5\""
 #export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
-
-# Paths for specific tools.
-export ANT_HOME=/usr/share/ant
 
 #}}}
 ############################################################################
@@ -324,6 +329,17 @@ fi
 # Functions
 ############################################################################
 #{{{
+
+# Use to swap active IntelliJ install
+swap_intelli() {
+   if [ "$ACTIVE_INTELLI" = "$INTELLI_ANDROID" ]; then
+      export ACTIVE_INTELLI=$INTELLI_J
+      export PATH="${PATH//$INTELLI_ANDROID/$INTELLI_J}"
+   elif [ "$ACTIVE_INTELLI" = "$INTELLI_J" ]; then
+      export ACTIVE_INTELLI=$INTELLI_ANDROID
+      export PATH="${PATH//$INTELLI_J/$INTELLI_ANDROID}"
+   fi
+}
 
 # Help selecting colors
 color_test() {

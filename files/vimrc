@@ -38,7 +38,7 @@ try
   elseif has('lua')
     Plug 'Shougo/neocomplete.vim'
   endif
-  Plug 'artur-shaik/vim-javacomplete2'
+  "Plug 'artur-shaik/vim-javacomplete2'  " Disabled for now
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
   " In development
@@ -101,7 +101,7 @@ try
   Plug 'starcraftman/cmdalias.vim'
 
   " Syntax / File Specific
-  Plug 'alfredodeza/coveragepy.vim'
+  "Plug 'alfredodeza/coveragepy.vim'
   Plug 'chrisbra/csv.vim'
   Plug 'clones/vim-zsh'
   Plug 'elzr/vim-json'
@@ -113,8 +113,8 @@ try
   "Plug 'LaTeX-Box-Team/LaTeX-Box'
   "Plug 'plasticboy/vim-markdown' | Plug 'godlygeek/tabular'
   Plug 'rust-lang/rust.vim'
-  Plug 'Rykka/riv.vim'
-  Plug 'tfnico/vim-gradle'
+  Plug 'Rykka/riv.vim'  " Note taking plugin
+  "Plug 'tfnico/vim-gradle'
   Plug 'tomswartz07/vim-todo'
   Plug 'tpope/vim-markdown'
   " Linux Kernel style plugin
@@ -137,6 +137,7 @@ try
   Plug 'morhetz/gruvbox'
   Plug 'nanotech/jellybeans.vim'
   Plug 'tomasr/molokai'
+  "Plug 'Reewr/vim-monokai-phoenix' " More vibrant monokai
   "Plug 'w0ng/vim-hybrid'
   " Nice Alternatives
   "Plug 'chriskempson/vim-tomorrow-theme'
