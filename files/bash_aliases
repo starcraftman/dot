@@ -716,5 +716,13 @@ prompt_callback() {
 
 # See ~/.git-prompt-colors.sh for scheme
 source ~/.shell/bash-git-prompt/gitprompt.sh
+
+############################################################################
+# Local Bash Config Sourced (~/.lbashrc)
+############################################################################
+if [ -e ~/.lbashrc ]; then
+   source ~/.lbashrc
+fi
+
 #}}}
 # vim:set ft=sh foldmethod=marker:
