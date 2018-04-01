@@ -38,6 +38,7 @@ if [ -d "$SHELLD/pyenv" ]; then
    export PATH="$PYENV_ROOT/bin:$PATH"
    export PYTHON_CONFIGURE_OPTS="--enable-shared"
    eval "$(pyenv init -)"
+   #eval "$(pyenv virtualenv-init -)"
 fi
 
 # Java junk

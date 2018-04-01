@@ -35,14 +35,11 @@ try
   if !g:win_shell && !g:cygwin_shell &&
       \  (has('nvim') || (v:version >= 704 || (v:version == 703 && has('patch584'))))
     Plug 'Valloric/YouCompleteMe', { 'do': function('hooks#YCMInstall') }
-  elseif has('lua')
-    Plug 'Shougo/neocomplete.vim'
+  elseif has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   endif
-  "Plug 'artur-shaik/vim-javacomplete2'  " Disabled for now
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
-  " In development
-  "Plug '~/prog/github/vsearch'
+  "Plug 'artur-shaik/vim-javacomplete2'  " Archived
 
   " UI
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
@@ -91,7 +88,7 @@ try
 
   " Misc Functions
   Plug 'embear/vim-localvimrc'
-  Plug 'jaxbot/github-issues.vim'
+  "Plug 'jaxbot/github-issues.vim'
   Plug 'kopischke/vim-fetch'
   "Plug 'ludovicchabant/vim-gutentags'
   Plug 'mhinz/vim-hugefile'
@@ -175,7 +172,7 @@ let g:ycm_complete_in_comments = 1
 
 " Use the following to whitelist dirs for .ycm_extra_conf.py
 let g:ycm_extra_conf_globlist = [
-    \ '~/programming/*' ]
+    \ '~/prog/*' ]
 
 " Force python 3 completion rather than default 2.
 "let g:ycm_python_binary_path = '/usr/bin/python3'
@@ -183,30 +180,30 @@ let g:ycm_extra_conf_globlist = [
 " Put rust src here for completion
 let g:ycm_rust_src_path = '/usr/local/rust/src'
 
-" Neocomplete
+" Deoplete (drop in for neo, nvim/python3 only)
 """""""""""""
 " Enable neocomplete at startup
-let g:neocomplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 
 " Use smartcase
-let g:neocomplete#enable_smart_case = 1
+let g:deoplete#enable_smart_case = 1
 
 " Automatically select first option
-let g:neocomplete#enable_auto_select = 1
+let g:deoplete#enable_auto_select = 1
 
 " Eclim
 """""""
 " For eclim, YCM will query for completion
-let g:EclimCompletionMethod = 'omnifunc'
+"let g:EclimCompletionMethod = 'omnifunc'
 
 " Fix for signs
-let g:EclimShowQuickfixSigns = 0
+"let g:EclimShowQuickfixSigns = 0
 
 " vim-javacomplete
 """"""""""""""""""
-let g:JavaComplete_Home = g:vim_dir . '/plugged/vim-javacomplete2'
+"let g:JavaComplete_Home = g:vim_dir . '/plugged/vim-javacomplete2'
 
-autocmd FileType java set omnifunc=javacomplete#Complete
+"autocmd FileType java set omnifunc=javacomplete#Complete
 
 " Syntastic
 """""""""""
