@@ -20,12 +20,17 @@ function! hooks#YCMInstall(info)
   endif
   if executable('java')
     let java_version = split(system('java -version'), '\n')[0]
-    echomsg java_version
     if stridx(java_version, 'java version "10"') == 0
       let opts .= '--java-completer'
     endif
   endif
-  echomsg './install.py ' . opts
-  silent execute '! ./install.py ' . opts . '>/tmp/YCMBuild 2>&1 &'
+  let line = printf("%s %s", expand(g:vim_dir . '/plugged/YouCompleteMe/install.py'), opts)
+  echomsg line
+  if has('nvim')
+    new
+    call termopen(line)
+  else
+    execute '! ' . line . ' >/tmp/YCMBuild 2>&1 &'
+  endif
   redraw!
 endfunction

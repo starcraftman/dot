@@ -28,18 +28,36 @@ else
 endif
 let g:vim_dir = expand(g:vim_dir)
 
+if has('nvim')
+  " Set python path for neovim integration
+  let g:python_host_prog = s:path_join(g:vim_dir, 'python_bin')
+  let g:python3_host_prog = s:path_join(g:vim_dir, 'python3_bin')
+endif
+
 try
   call plug#begin(s:path_join(g:vim_dir, 'plugged'))
 
   " Completion
-  if !g:win_shell && !g:cygwin_shell &&
-      \  (has('nvim') || (v:version >= 704 || (v:version == 703 && has('patch584'))))
+  if !g:win_shell && !g:cygwin_shell && (has('nvim') || (has('patch-7.3-584')))
     Plug 'Valloric/YouCompleteMe', { 'do': function('hooks#YCMInstall') }
   elseif has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   endif
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
   "Plug 'artur-shaik/vim-javacomplete2'  " Archived
+
+  " Prefer async checks when available
+  if has('nvim') || v:version >= 800
+    Plug 'w0rp/ale' "https://github.com/w0rp/ale
+  else
+    Plug 'vim-syntastic/syntastic' | Plug 'myint/syntastic-extras'
+  endif
+
+  " Allows easy use of async jobs with unified interface
+  Plug 'skywind3000/asyncrun.vim'
+  if !has('nvim') && !has('patch-7.4-1829')
+    echomsg "Warning: AsyncRun will be synchronous."
+  endif
 
   " UI
   Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
@@ -50,7 +68,6 @@ try
   Plug 'majutsushi/tagbar'
   Plug 'mhinz/vim-signify'
   Plug 'rhysd/committia.vim'
-  Plug 'scrooloose/syntastic'
   Plug 'mbbill/undotree'
   "Plug 'simnalamburt/vim-mundo'  " Needs some work, bit busted
   "Plug 'sjl/gundo.vim'
@@ -92,7 +109,6 @@ try
   Plug 'kopischke/vim-fetch'
   "Plug 'ludovicchabant/vim-gutentags'
   Plug 'mhinz/vim-hugefile'
-  Plug 'tpope/vim-dispatch'
   Plug 'tpope/vim-sleuth'
   Plug 'tyru/open-browser.vim'
   Plug 'starcraftman/cmdalias.vim'
@@ -241,6 +257,23 @@ let g:syntastic_rst_checkers = ['sphinx']
 " syntastic_filetype_checker_argtype = ''
 " Command Run: <exe> <args> <fname> <post_args> <tail>
 let g:syntastic_python_flake8_args = "--max-complexity 10"
+
+" ALE
+"""""
+
+let g:ale_python_flake8_args = "--max-complexity 10"
+" Override active checkers by 'lang': ['check', 'check']
+"let g:ale_linters = {
+"\}
+
+" AsyncRun
+""""""""""
+
+" Open window on command for n pixels, and scroll
+let g:asyncrun_open = 8
+
+" Trim blank lines
+let g:asyncrun_trim = 1
 
 " UltiSnips
 """""""""""
