@@ -382,8 +382,13 @@ let g:mundo_verbose_graph = 0
 
 " Nerdtree
 """""""""""""
+" Control sort
+let g:NERDTreeNaturalSort = 1
+"let g:NERDTreeCaseSensitiveSort = 1
+
 " Show hidden files by default
 let g:NERDTreeShowHidden = 1
+let g:NERDTreeSortHiddenFirst = 1
 
 " Don't need window after selecting file
 let g:NERDTreeQuitOnOpen = 1
@@ -395,7 +400,10 @@ let g:NERDTreeDirArrows = 0
 let g:NERDTreeWinSize = 40
 
 " Don't replace netrw (i.e. :e directory), defualt is 1
-"let g:NERDTreeHijackNetrw = 0
+let g:NERDTreeHijackNetrw = 1
+
+" Bookmarks can persist here
+let g:NERDTreeBookmarksFile = s:path_join(g:vim_dir, '.nerd_marks')
 
 " DeleteTrailingWhitespace
 """"""""""""""""""""""""""
@@ -925,8 +933,9 @@ endfor
 let s:wild_regex = s:wild_regex[:-2]
 let s:netrw_regex = s:netrw_regex[:-3]
 
-" Hide VCS folders in this list
-let s:vcs_hide = '\.git/,\.hg/,\.svn/,\.bzr/'
+" Hide VCS & build folders
+let s:vcs_hide =  '\.git,\.hg,\.svn,\.bzr,\.cache,\.tox'
+let s:vcs_hide .= ',__pycache__,\w\+\.egg-info,\.pytest_cache'
 
 " When using autocomplete tab, ignore all matching strings
 let &wildignore = s:wild_regex . ',' . s:vcs_hide
@@ -936,8 +945,10 @@ let g:netrw_list_hide = '\w\+\.\(' . s:netrw_regex . '\)\*\?$\c,' . s:vcs_hide
 let g:NERDTreeIgnore = split(g:netrw_list_hide, ',')
 
 " Sort by extensions commonly found
-let s:sort_exts =  ['h', 'hh', 'hpp', 'hxx', 'c', 'cc', 'cpp', 'cxx', 'java']
-let s:sort_exts += ['py', 'pl', 'rb', 'html', 'css', 'js', 'xml', 'json']
+let s:sort_exts =  ['h', 'hh', 'hpp', 'hxx', 'c', 'cc', 'cpp', 'cxx']
+let s:sort_exts += ['go', 'rs', 'java', 'py', 'pl', 'rb']
+let s:sort_exts += ['sql', 'html', 'css', 'js', 'json', 'csv']
+let s:sort_exts += ['ini', 'toml', 'xml', 'yaml']
 
 let g:netrw_sort_sequence = '[\/]$,\<core\%(\.\d\+\)\=\>,'
 for ext in s:sort_exts

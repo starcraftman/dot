@@ -39,7 +39,7 @@ endfunction
 
 function! myutil#run()
   let cmd = exists('b:amake_run') ? b:amake_run : g:amake_run
-  execute 'AsyncRun! ' . cmd
+  execute 'AsyncRun ' . cmd
 endfunction
 
 function! myutil#test()
