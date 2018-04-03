@@ -21,14 +21,17 @@ endfunction
 " On Windows with cmd.exe use vimfiles, else use normal unix .vim folder
 let g:win_shell = (has('win32') || has('win64')) && &shellcmdflag =~ '/'
 let g:cygwin_shell = has('win32unix')
-if has('nvim')
-  let g:vim_dir = g:win_shell ? '$USERPROFILE/AppData/Local/nvim' : '~/.config/nvim'
-else
-  let g:vim_dir = g:win_shell ? '~/vimfiles' : '~/.vim'
-endif
-let g:vim_dir = expand(g:vim_dir)
+let g:vim_dir = expand(g:win_shell ? '~/vimfiles' : '~/.vim')
 
+" NVim specifc configuration
 if has('nvim')
+  let g:vim_dir = expand(g:win_shell ? '$USERPROFILE/AppData/Local/nvim' : '~/.config/nvim')
+
+  " TODO: Resolve 'q' issue another way, I don't care for the feature though
+  if exists("$SSH_CONNECTION")
+    set guicursor=
+  endif
+
   " Set python path for neovim integration
   let g:python_host_prog = s:path_join(g:vim_dir, 'python_bin')
   let g:python3_host_prog = s:path_join(g:vim_dir, 'python3_bin')
