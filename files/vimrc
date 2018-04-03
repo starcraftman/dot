@@ -151,9 +151,10 @@ try
   Plug 'morhetz/gruvbox'
   Plug 'nanotech/jellybeans.vim'
   Plug 'tomasr/molokai'
+  Plug 'w0ng/vim-hybrid'
   "Plug 'Reewr/vim-monokai-phoenix' " More vibrant monokai
-  "Plug 'w0ng/vim-hybrid'
   " Nice Alternatives
+  "Plug 'danilo-augusto/vim-afterglow'
   "Plug 'chriskempson/vim-tomorrow-theme'
   "Plug 'Lokaltog/vim-distinguished'
   "Plug 'tpope/vim-vividchalk'
@@ -606,10 +607,10 @@ nnoremap <silent> <C-H> <C-W>h:vertical resize<CR>:AirlineToggle<CR>:AirlineTogg
 "nnoremap <silent> <Leader>h :Hexplore!<CR>
 
 " To open NERDTree when used
-nnoremap <silent> <Leader>n :NERDTreeToggle<CR>
+nnoremap <silent> <Leader>v :NERDTreeToggle<CR>
 
 " Find the current file in the source tree
-nnoremap <silent> <Leader>nf :NERDTreeFind<CR>
+nnoremap <silent> <Leader>vf :NERDTreeFind<CR>
 
 " Signify binding to jump between hunks
 nmap <Leader>hj <Plug>(signify-next-hunk)
