@@ -46,3 +46,61 @@ function! myutil#test()
   let cmd = exists('b:amake_test') ? b:amake_test : g:amake_test
   execute 'AsyncRun ' . cmd
 endfunction
+
+" Archived, not really happy with it atm
+
+"autocmd BufRead * call Vex.Off()
+
+" Make a NERDTree like side buffer
+"let g:Vex = {}
+"function! Vex.Toggle()
+  "if exists('t:vex')
+    "call self.Close()
+  "else
+    "call self.Open()
+  "endif
+"endfunction
+
+"function! Vex.Off()
+  "if exists('t:vex')
+    "call self.Close()
+  "endif
+"endfunction
+
+"function! Vex.Open()
+  "let t:vex = {'orig_buf': winnr(), 'orig_bsplit': g:netrw_browse_split}
+  "let g:netrw_browse_split = 4
+
+  "topleft vnew
+  "wincmd H
+  "execute 'vertical resize ' . g:NERDTreeWinSize
+  "Explore
+
+  "nmap <buffer> <silent> q :call Vex.Close()<CR>
+  "nmap <buffer> <silent> o :call Vex.Action('new')<CR>
+  "nmap <buffer> <silent> O :call Vex.Action('vnew')<CR>
+
+  "let t:vex.new_buf = bufnr('%')
+"endfunction
+
+"function! Vex.Close()
+  "let vex_buf = bufwinnr(t:vex.new_buf)
+
+  "if vex_buf != -1
+    "execute vex_buf . ' wincmd w'
+    "close
+    "execute t:vex.orig_buf . ' wincmd w'
+  "endif
+
+  "let g:netrw_browse_split = t:vex.orig_bsplit
+  "unlet t:vex
+"endfunction
+
+"function! Vex.Action(action)
+  "let l:orig_win = winnr()
+  "wincmd l
+  "execute a:action
+  "let t:vex.orig_buf = winnr() - 1
+  "execute l:orig_win . ' wincmd w'
+  "call feedkeys("\<CR>", 't')
+"endfunction

@@ -100,7 +100,7 @@ try
   Plug 'gabesoft/vim-ags'
   Plug 'ludovicchabant/vim-lawrencium'
   "Plug 'mileszs/ack.vim'
-  "Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
   Plug 'tpope/vim-fugitive'
   Plug 'zhaocai/DirDiff.vim'
 
@@ -592,11 +592,9 @@ nnoremap <silent> <C-H> <C-W>h:vertical resize<CR>:AirlineToggle<CR>:AirlineTogg
 " Make all windows equal in size
 "nnoremap <Leader>q <C-W>=
 
-" Open netrw in current buffer
-nnoremap <silent> <Leader>e :Explore<CR>
-
-" Open netrw vertically or horizontally
-nnoremap <silent> <Leader>v :call Vex.Toggle()<CR>
+" Open netrw easily
+"nnoremap <silent> <Leader>e :Explore<CR>
+"nnoremap <silent> <Leader>v :Vexplore<CR>
 "nnoremap <silent> <Leader>h :Hexplore!<CR>
 
 " To open NERDTree when used
@@ -976,7 +974,6 @@ if has('autocmd')
     " Includes cursor position, fold states,
     "au BufWinLeave *.* silent! mkview
     "au BufWinEnter *.* silent! loadview
-    autocmd BufRead * call Vex.Off()
 
     "Highlight when I exceed a column limit
     autocmd BufEnter * call s:match_col_no()
@@ -1007,6 +1004,7 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " {{{
 
+" TODO: Move to myutil when feeling less lazy.
 " A simple colorscheme function to test colors for a buffer
 " Allow both cycling choosing by name
 command! -nargs=0 SchemeNext call Color.Next()
@@ -1099,60 +1097,6 @@ command! -nargs=0 FTOpen call s:FTOpen()
 function! s:FTOpen()
   let l:file = printf('%s/ftplugin/%s.vim', g:vim_dir, &ft)
   execute 'sp ' . l:file
-endfunction
-
-" Make a NERDTree like side buffer
-let g:Vex = {}
-function! Vex.Toggle()
-  if exists('t:vex')
-    call self.Close()
-  else
-    call self.Open()
-  endif
-endfunction
-
-function! Vex.Off()
-  if exists('t:vex')
-    call self.Close()
-  endif
-endfunction
-
-function! Vex.Open()
-  let t:vex = {'orig_buf': winnr(), 'orig_bsplit': g:netrw_browse_split}
-  let g:netrw_browse_split = 4
-
-  topleft vnew
-  wincmd H
-  execute 'vertical resize ' . g:NERDTreeWinSize
-  Explore
-
-  nmap <buffer> <silent> q :call Vex.Close()<CR>
-  nmap <buffer> <silent> o :call Vex.Action('new')<CR>
-  nmap <buffer> <silent> O :call Vex.Action('vnew')<CR>
-
-  let t:vex.new_buf = bufnr('%')
-endfunction
-
-function! Vex.Close()
-  let vex_buf = bufwinnr(t:vex.new_buf)
-
-  if vex_buf != -1
-    execute vex_buf . ' wincmd w'
-    close
-    execute t:vex.orig_buf . ' wincmd w'
-  endif
-
-  let g:netrw_browse_split = t:vex.orig_bsplit
-  unlet t:vex
-endfunction
-
-function! Vex.Action(action)
-  let l:orig_win = winnr()
-  wincmd l
-  execute a:action
-  let t:vex.orig_buf = winnr() - 1
-  execute l:orig_win . ' wincmd w'
-  call feedkeys("\<CR>", 't')
 endfunction
 
 command! -nargs=+ FileFetch call g:FileFetch(<f-args>)
