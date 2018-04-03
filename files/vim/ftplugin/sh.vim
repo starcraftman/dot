@@ -1,2 +1,2 @@
 " To run current script
-nnoremap <buffer> <leader>m :!bash %<CR>
+"nnoremap <buffer> <leader>m :!bash %<CR>

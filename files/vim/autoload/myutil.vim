@@ -1,10 +1,12 @@
+" Store my own utiliy funcs here
+
 " Hooks to be used with plug.vim for bundles.
 "
 " a:info.status == 'installed' Plugin was installed
 " a:info.status == 'updated' Plugin was updated
 " a:info.force Bang (!) issued to command
 
-function! hooks#YCMInstall(info)
+function! myutil#ycm_hook(info)
   let opts =  '--clang-completer '
   if executable('go')
     let opts .= '--gocode-completer '
@@ -12,9 +14,9 @@ function! hooks#YCMInstall(info)
   "if executable('mono')
     "let opts .= '--omnisharp-completer '
   "endif
-  if executable('nodejs') && executable('npm')
-    let opts .= '--tern-completer '
-  endif
+  "if executable('nodejs') && executable('npm')
+    "let opts .= '--tern-completer '
+  "endif
   if executable('rustc')
     let opts .= '--racer-completer '
   endif
@@ -33,4 +35,14 @@ function! hooks#YCMInstall(info)
     execute '! ' . line . ' >/tmp/YCMBuild 2>&1 &'
   endif
   redraw!
+endfunction
+
+function! myutil#run()
+  let cmd = exists('b:amake_run') ? b:amake_run : g:amake_run
+  execute 'AsyncRun! ' . cmd
+endfunction
+
+function! myutil#test()
+  let cmd = exists('b:amake_test') ? b:amake_test : g:amake_test
+  execute 'AsyncRun ' . cmd
 endfunction

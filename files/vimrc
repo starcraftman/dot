@@ -39,7 +39,7 @@ try
 
   " Completion
   if !g:win_shell && !g:cygwin_shell && (has('nvim') || (has('patch-7.3-584')))
-    Plug 'Valloric/YouCompleteMe', { 'do': function('hooks#YCMInstall') }
+    Plug 'Valloric/YouCompleteMe', { 'do': function('myutil#ycm_hook') }
   elseif has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   endif
@@ -106,7 +106,7 @@ try
 
   " Misc Functions
   Plug 'embear/vim-localvimrc'
-  "Plug 'jaxbot/github-issues.vim'
+  Plug 'jaxbot/github-issues.vim'
   Plug 'kopischke/vim-fetch'
   "Plug 'ludovicchabant/vim-gutentags'
   Plug 'mhinz/vim-hugefile'
@@ -194,8 +194,8 @@ let g:ycm_extra_conf_globlist = [
 " Force python 3 completion rather than default 2.
 "let g:ycm_python_binary_path = '/usr/bin/python3'
 
-" Put rust src here for completion
-let g:ycm_rust_src_path = '/usr/local/rust/src'
+" link rust src here, can't guarantee same location everywhere
+let g:ycm_rust_src_path = expand('~/.software/rust/src')
 
 " Deoplete (drop in for neo, nvim/python3 only)
 """""""""""""
@@ -273,24 +273,11 @@ let g:ale_python_flake8_args = "--max-complexity 10"
 " AsyncRun
 """"""""""
 
-" Probably should be an autoload, bound in mappings
-" Note run doesn't scroll, test cmd does
-let g:AMake = {}
-function! AMake.Run()
-  let cmd = exists('b:amake_run') ? b:amake_run : g:amake_run
-  execute 'AsyncRun! ' . cmd
-endfunction
-
-function! AMake.Test()
-  let cmd = exists('b:amake_test') ? b:amake_test : g:amake_test
-  execute 'AsyncRun ' . cmd
-endfunction
-
+" See myutil#run in /autoload
 " Set project wide run/test commands with ".lvimrc" files
 " Override temporarily with buffer equivalents
-" TODO: Defaults based on ftdetect in my vim? Not sure if worth effort
-let g:amake_run = 'tox'
-let g:amake_test = 'tox'
+"let g:amake_run = 'tox'
+"let g:amake_test = 'tox'
 
 " Open window on command for n pixels, and scroll
 let g:asyncrun_open = 10
@@ -693,8 +680,8 @@ inoremap <silent> <F5> <Esc>:call feedkeys("\<F5>i")<CR>
 nnoremap <F12> mzgg=G'z
 
 " See " AsyncRun section, build in background
-nnoremap <silent> <Leader>m :call g:AMake.Run()<CR>
-nnoremap <silent> <Leader>mt :call g:AMake.Test()<CR>
+nnoremap <silent> <Leader>m :call myutil#test()<CR>
+nnoremap <silent> <Leader>mr :call myutil#run()<CR>
 nnoremap <silent> <Leader>ms :AsyncStop<CR>
 
 " I forgot the reason for this. Needed?
