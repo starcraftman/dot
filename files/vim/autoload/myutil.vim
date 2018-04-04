@@ -31,6 +31,8 @@ function! myutil#ycm_hook(info)
   if has('nvim')
     new
     call termopen(line)
+  elseif exists(":terminal")
+    execute "terminal " . line
   else
     execute '! ' . line . ' >/tmp/YCMBuild 2>&1 &'
   endif

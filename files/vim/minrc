@@ -31,9 +31,10 @@ if has('nvim')
   let g:python3_host_prog = s:path_join(g:vim_dir, 'python3_bin')
 endif
 
-" Simple and functional
-let &statusline  = '%<%1* %t%m %y || %{&fenc?&fenc:&enc}[%{&ff}] '
-let &statusline .= '%= %b(0x%B) || buf: %n || %p%% %l,%c %0*'
+" Simple fallback, see :h statusline
+let &statusline  = '%<%1* %F%m%r%h %y || %{&fenc?&fenc:&enc}[%{&ff}] '
+let &statusline .= '%= %b(0x%B) || T%{tabpagenr()} W%{winnr()} B%{bufnr("%")} '
+let &statusline .= '|| %p%% %l/%L : %c %0*'
 set laststatus=2
 
 " }}}
@@ -61,6 +62,12 @@ nnoremap <Right> :bnext<CR>
 nnoremap <Left>  :bprevious<CR>
 nnoremap <Up>    :tabn<CR>
 nnoremap <Down>  :tabp<CR>
+
+" Remap Space + direction to move between split windows
+nnoremap <silent> <Space>k :wincmd k<CR>
+nnoremap <silent> <Space>j :wincmd j<CR>
+nnoremap <silent> <Space>h :wincmd h<CR>
+nnoremap <silent> <Space>l :wincmd l<CR>
 
 " Change window down (<C-W>j) then maximize buffer height (<C-W>_)
 nnoremap <C-J> <C-W>j<C-W>_

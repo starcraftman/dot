@@ -530,9 +530,10 @@ if exists(':SyntasticInfo')
   let s:syn_status .= ' || %{SyntasticStatuslineFlag()}'
 endif
 
-" Not prettiest, but functional
-let &statusline  = '%<%1* %t%m %y || %{&fenc?&fenc:&enc}[%{&ff}] ' . s:syn_status
-let &statusline .= '%= %b(0x%B) || buf: %n || %p%% %l,%c %0*'
+" Simple fallback, see :h statusline
+let &statusline  = '%<%1* %F%m%r%h %y || %{&fenc?&fenc:&enc}[%{&ff}] ' . s:syn_status
+let &statusline .= '%= %b(0x%B) || T%{tabpagenr()} W%{winnr()} B%{bufnr("%")} '
+let &statusline .= '|| %p%% %l/%L : %c %0*'
 set laststatus=2
 
 " }}}
