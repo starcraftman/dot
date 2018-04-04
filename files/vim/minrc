@@ -1,0 +1,280 @@
+" This is a minimal version of my vimrc
+" Relies on no plugins and has my preferred core settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Prelude
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" {{{
+set nocompatible
+
+" Like os.path.join, join all elements by path separator
+function! s:path_join(...)
+  let sep = stridx(a:0, '\') != -1 || g:win_shell ? '\' : '/'
+  return join(a:000, sep)
+endfunction
+
+" On Windows with cmd.exe use vimfiles, else use normal unix .vim folder
+let g:win_shell = (has('win32') || has('win64')) && &shellcmdflag =~ '/'
+let g:cygwin_shell = has('win32unix')
+let g:vim_dir = expand(g:win_shell ? '~/vimfiles' : '~/.vim')
+
+" NVim specifc configuration
+if has('nvim')
+  let g:vim_dir = expand(g:win_shell ? '$USERPROFILE/AppData/Local/nvim' : '~/.config/nvim')
+
+  " TODO: Resolve 'q' issue another way, I don't care for the feature though
+  if exists("$SSH_CONNECTION")
+    set guicursor=
+  endif
+
+  " Set python path for neovim integration
+  let g:python_host_prog = s:path_join(g:vim_dir, 'python_bin')
+  let g:python3_host_prog = s:path_join(g:vim_dir, 'python3_bin')
+endif
+
+" Simple and functional
+let &statusline  = '%<%1* %t%m %y || %{&fenc?&fenc:&enc}[%{&ff}] '
+let &statusline .= '%= %b(0x%B) || buf: %n || %p%% %l,%c %0*'
+set laststatus=2
+
+" }}}
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Keybindings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" {{{
+
+" For custom key combos, use leader
+let mapleader = ","
+
+" Never use ex mode
+nnoremap Q <Nop>
+
+" Save your left pinky
+"nnoremap ; :
+
+" Faster binding to escape insert/visual
+inoremap jk <Esc>
+vnoremap i  <Esc>
+"inoremap <esc> <nop>
+
+" Arrow keys to move through buffers/tabs
+nnoremap <Right> :bnext<CR>
+nnoremap <Left>  :bprevious<CR>
+nnoremap <Up>    :tabn<CR>
+nnoremap <Down>  :tabp<CR>
+
+" Change window down (<C-W>j) then maximize buffer height (<C-W>_)
+nnoremap <C-J> <C-W>j<C-W>_
+nnoremap <C-K> <C-W>k<C-W>_
+" Change window right (<C-W>l) then maximize buffer width (<C-W>|)
+nnoremap <silent> <C-L> <C-W>l:vertical resize
+nnoremap <silent> <C-H> <C-W>h:vertical resize
+
+" Make all windows equal in size
+"nnoremap <Leader>q <C-W>=
+
+" Open netrw easily
+"nnoremap <silent> <Leader>e :Explore<CR>
+"nnoremap <silent> <Leader>v :Vexplore<CR>
+"nnoremap <silent> <Leader>h :Hexplore!<CR>
+
+" Open the filetype specific file
+nnoremap <Leader>ft :FTOpen<CR>
+
+" Fix oneline json files
+nnoremap <Leader>jq :%!jq .<CR>
+nnoremap <Leader>jQ :%!jq . -c<CR>
+
+" Toggle line numbers
+nnoremap <silent> <F1> :set number!<CR>:sign unplace *<CR>
+inoremap <silent> <F1> <Esc>:call feedkeys("\<F1>i")<CR>
+
+" Toggle showing whitespace
+nnoremap <silent> <F5> :set list!<CR>
+inoremap <silent> <F5> <Esc>:call feedkeys("\<F5>i")<CR>
+
+" Shortcut to remember how to reindent file
+nnoremap <F12> mzgg=G'z
+
+" }}}
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General Options & Features
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" {{{
+
+" Ensure backspace works as you'd expect, over lines/indents
+set backspace=indent,eol,start
+
+" This is the timeout on key combos and map commands
+set timeout
+set timeoutlen=500
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" Allow hiding of files, when using standard :e filename option
+set hidden
+
+" Set UTF-8 for file enconding
+set encoding=utf8
+
+" Folding method, for most code use indent, no need to clutter source
+set foldmethod=syntax
+set foldminlines=6
+set foldnestmax=2
+
+" Sets how many lines of history & undo VIM has to remember
+set history=1000
+set undolevels=1000
+
+" Keep a persistent backup file, preserves undo history between edit sessions
+if has('persistent_undo')
+  let &undodir = s:path_join(g:vim_dir,  'undo')
+  try
+    call mkdir(&undodir, 'p')
+  catch
+  endtry
+  set undofile
+endif
+
+" Autocomplete feature for command mode (i.e. :command)
+set wildmenu
+set wildmode=longest,list,full
+
+" Turn backup off, since most files in a VCS
+set nobackup
+set nowritebackup
+set noswapfile
+
+" No annoying sound on errors
+set noerrorbells
+set visualbell
+set t_vb=
+
+" }}}
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VIM User Interface & Search
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" {{{
+
+" Set minimum screen size for GVim, on console just fill
+if has('gui_running')
+  set lines=80 columns=140
+endif
+
+" Enable the mouse in all modes of operation
+"set mouse=a
+
+" Show end of line and tabs on screen
+"set list
+set listchars=eol:$,tab:→→,trail:✘
+
+" Set line numbering on left
+set number
+
+" Set position indicator on bottom right
+set ruler
+
+" Show command in last line, usually on by default
+set showcmd
+
+" Highlight current line in number side
+set cursorline
+
+" Minimum number of lines that will always be above/below cursor
+set scrolloff=10
+
+" Highlight search results
+set hlsearch
+
+" Incrementally highlight first matching word as you type a search
+set incsearch
+
+" Show matching brackets when text indicator is over them
+set showmatch
+" How many tenths of a second to blink when matching brackets
+set matchtime=1
+
+" For regular expressions turn magic on, don't need to \* in regex
+set magic
+
+" When searching ignore case unless contains a capital
+" Override with \c/\C flag in regex -- /\cword
+set ignorecase
+set smartcase
+
+" More intiutive when new splits at right and bottom
+set splitbelow
+set splitright
+
+" }}}
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors & Fonts
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" {{{
+
+syntax off
+
+set background=dark
+try
+  if &diff && (has('gui_running') || &t_Co > 255)
+    colorscheme jellybeans
+  elseif has('gui_running') || &t_Co > 255
+    colorscheme molokai
+    " Molokai CursorLine isn't bright enough
+    hi CursorLine  ctermbg=236
+  else
+    colorscheme gruvbox
+  endif
+catch
+  colorscheme desert
+endtry
+
+syntax on
+
+highlight ColorColumn ctermbg=238
+function! s:match_col_no()
+  let col_no = exists('b:match_column_no') ? b:match_column_no : 100
+  call matchadd('ColorColumn', '\%' . col_no . 'v', 100)
+endfunction
+
+" }}}
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Tab & Indents
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" {{{
+
+" 1 tab == 4 spaces
+set softtabstop=4
+set shiftwidth=4
+set tabstop=4
+
+" When using `<<` or `>>`, round to nearest multiple of shiftwidth
+set shiftround
+
+" Use spaces instead of tabs
+set expandtab
+
+" When push tab in insert shift by tabstop, when backspace delete tabstop amount
+set smarttab
+
+" Copy indent at current when inserting new line
+set autoindent
+
+" Wrap lines when hit right side, doesn't affect buffer
+set nowrap
+
+" When wrapping, respect the indent of original line
+if exists('&breakindent')
+  set breakindent
+endif
+
+" Makes smarter decisions about what stays on wrapped line
+set linebreak
+
+" When inserting text, force a line break at this amount
+" Set to 0 to disable
+"set textwidth=150
+set textwidth=0
+
+" }}}
+" vim: set foldmethod=marker filetype=vim:

@@ -9,7 +9,7 @@
 """""""""
 " {{{
 
-" Implied usually, force to guarantee
+" Don't expect someting else.
 set nocompatible
 
 " Like os.path.join, join all elements by path separator
