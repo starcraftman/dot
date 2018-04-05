@@ -3,6 +3,7 @@ scriptencoding utf8
 
 " This is a minimal version of my vimrc
 " Relies on no plugins and has my preferred core settings
+" For neovim do: ln -s ~/.vimrc ~/.config/nvim/init.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Prelude
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -17,15 +18,19 @@ endfunction
 " On Windows with cmd.exe use vimfiles, else use normal unix .vim folder
 let g:win_shell = (has('win32') || has('win64')) && &shellcmdflag =~? '/'
 let g:cygwin_shell = has('win32unix')
-let g:vim_dir = expand(g:win_shell ? '~/vimfiles' : '~/.vim')
+let g:vim_dir = expand(g:win_shell ? '$USERPROFILE/AppData/Local/vim' : '~/.vim')
 
 " NVim specifc configuration
 if has('nvim')
   let g:vim_dir = expand(g:win_shell ? '$USERPROFILE/AppData/Local/nvim' : '~/.config/nvim')
 
-  " TODO: Resolve 'q' issue another way, I don't care for the feature though
+  " Note: Issue affects konsole terminals (i.e. yakuake)
   if exists('$SSH_CONNECTION')
     set guicursor=
+  endif
+
+  if exists('$DISPLAY') && !executable('xclip')
+    echomsg 'WARNING: No xclip == No neovim clipboard'
   endif
 
   " Set python path for neovim integration
