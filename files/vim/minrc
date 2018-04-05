@@ -1,19 +1,21 @@
+set encoding=utf8
+scriptencoding utf8
+
 " This is a minimal version of my vimrc
 " Relies on no plugins and has my preferred core settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Prelude
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " {{{
-set nocompatible
 
 " Like os.path.join, join all elements by path separator
 function! s:path_join(...)
-  let sep = stridx(a:0, '\') != -1 || g:win_shell ? '\' : '/'
-  return join(a:000, sep)
+  let l:sep = stridx(a:0, '\') != -1 || g:win_shell ? '\' : '/'
+  return join(a:000, l:sep)
 endfunction
 
 " On Windows with cmd.exe use vimfiles, else use normal unix .vim folder
-let g:win_shell = (has('win32') || has('win64')) && &shellcmdflag =~ '/'
+let g:win_shell = (has('win32') || has('win64')) && &shellcmdflag =~? '/'
 let g:cygwin_shell = has('win32unix')
 let g:vim_dir = expand(g:win_shell ? '~/vimfiles' : '~/.vim')
 
@@ -22,7 +24,7 @@ if has('nvim')
   let g:vim_dir = expand(g:win_shell ? '$USERPROFILE/AppData/Local/nvim' : '~/.config/nvim')
 
   " TODO: Resolve 'q' issue another way, I don't care for the feature though
-  if exists("$SSH_CONNECTION")
+  if exists('$SSH_CONNECTION')
     set guicursor=
   endif
 
@@ -44,7 +46,7 @@ set laststatus=2
 " {{{
 
 " For custom key combos, use leader
-let mapleader = ","
+let g:mapleader = ','
 
 " Never use ex mode
 nnoremap Q <Nop>
@@ -120,9 +122,6 @@ set autoread
 
 " Allow hiding of files, when using standard :e filename option
 set hidden
-
-" Set UTF-8 for file enconding
-set encoding=utf8
 
 " Folding method, for most code use indent, no need to clutter source
 set foldmethod=syntax
@@ -240,8 +239,8 @@ syntax on
 
 highlight ColorColumn ctermbg=238
 function! s:match_col_no()
-  let col_no = exists('b:match_column_no') ? b:match_column_no : 100
-  call matchadd('ColorColumn', '\%' . col_no . 'v', 100)
+  let l:col_no = exists('b:match_column_no') ? b:match_column_no : 100
+  call matchadd('ColorColumn', '\%' . l:col_no . 'v', 100)
 endfunction
 
 " }}}

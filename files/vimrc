@@ -1,3 +1,6 @@
+set encoding=utf8
+scriptencoding utf8
+
 " If you are confused by not seeing a lot of text, push zi
 " For more info, see :help folding. Read General Notes section to learn
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -9,17 +12,14 @@
 """""""""
 " {{{
 
-" Don't expect someting else.
-set nocompatible
-
 " Like os.path.join, join all elements by path separator
 function! s:path_join(...)
-  let sep = stridx(a:0, '\') != -1 || g:win_shell ? '\' : '/'
-  return join(a:000, sep)
+  let l:sep = stridx(a:0, '\') != -1 || g:win_shell ? '\' : '/'
+  return join(a:000, l:sep)
 endfunction
 
 " On Windows with cmd.exe use vimfiles, else use normal unix .vim folder
-let g:win_shell = (has('win32') || has('win64')) && &shellcmdflag =~ '/'
+let g:win_shell = (has('win32') || has('win64')) && &shellcmdflag =~? '/'
 let g:cygwin_shell = has('win32unix')
 let g:vim_dir = expand(g:win_shell ? '~/vimfiles' : '~/.vim')
 
@@ -28,7 +28,7 @@ if has('nvim')
   let g:vim_dir = expand(g:win_shell ? '$USERPROFILE/AppData/Local/nvim' : '~/.config/nvim')
 
   " TODO: Resolve 'q' issue another way, I don't care for the feature though
-  if exists("$SSH_CONNECTION")
+  if exists('$SSH_CONNECTION')
     set guicursor=
   endif
 
@@ -60,7 +60,7 @@ try
   " Allows easy use of async jobs with unified interface
   Plug 'skywind3000/asyncrun.vim'
   if !has('nvim') && !has('patch-7.4-1829')
-    echomsg "Warning: AsyncRun will be synchronous."
+    echomsg 'Warning: AsyncRun will be synchronous.'
   endif
 
   " UI
@@ -261,7 +261,7 @@ let g:syntastic_rst_checkers = ['sphinx']
 " Options to pass to above checkers take form:
 " syntastic_filetype_checker_argtype = ''
 " Command Run: <exe> <args> <fname> <post_args> <tail>
-let g:syntastic_python_flake8_args = "--max-complexity 10"
+let g:syntastic_python_flake8_args = '--max-complexity 10'
 
 " ALE
 """""
@@ -272,7 +272,7 @@ let g:syntastic_python_flake8_args = "--max-complexity 10"
 "\}
 
 " Prefer low complexity funcs
-let g:ale_python_flake8_args = "--max-complexity 10"
+let g:ale_python_flake8_args = '--max-complexity 10'
 
 " AsyncRun
 """"""""""
@@ -479,10 +479,13 @@ endfunction
 function! s:goyo_leave()
 endfunction
 
-autocmd! User GoyoEnter
-autocmd! User GoyoLeave
-autocmd  User GoyoEnter nested call <SID>goyo_enter()
-autocmd  User GoyoLeave nested call <SID>goyo_leave()
+augroup my_goyo
+  autocmd!
+  autocmd! User GoyoEnter
+  autocmd! User GoyoLeave
+  autocmd  User GoyoEnter nested call <SID>goyo_enter()
+  autocmd  User GoyoLeave nested call <SID>goyo_leave()
+augroup END
 
 " LocalVimrc
 """"""""""""
@@ -545,7 +548,7 @@ set laststatus=2
 " {{{
 
 " For custom key combos, use leader
-let mapleader = ","
+let g:mapleader = ','
 
 " Apparently used for buffer/filetype specific bindings
 " I feel like I should use this sometime .....
@@ -650,8 +653,8 @@ nnoremap <Leader>j :YcmCompleter GoTo<CR>
 
 " For smart TAB completion
 function! s:check_back_space()
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
+  let l:col = col('.') - 1
+  return !l:col || getline('.')[l:col - 1]  =~? '\s'
 endfunction
 inoremap <expr><TAB>  pumvisible() ? "\<C-N>" :
     \ <SID>check_back_space() ? "\<TAB>" :
@@ -722,9 +725,6 @@ set autoread
 
 " Allow hiding of files, when using standard :e filename option
 set hidden
-
-" Set UTF-8 for file enconding
-set encoding=utf8
 
 " Folding method, for most code use indent, no need to clutter source
 set foldmethod=syntax
@@ -852,8 +852,8 @@ syntax on
 
 highlight ColorColumn ctermbg=238
 function! s:match_col_no()
-  let col_no = exists('b:match_column_no') ? b:match_column_no : 100
-  call matchadd('ColorColumn', '\%' . col_no . 'v', 100)
+  let l:col_no = exists('b:match_column_no') ? b:match_column_no : 100
+  call matchadd('ColorColumn', '\%' . l:col_no . 'v', 100)
 endfunction
 
 " Set font when using gui version
@@ -932,9 +932,9 @@ let s:hide_exts += ['deb', 'pdf']
 let s:wild_regex = ''
 let s:netrw_regex = ''
 
-for ext in s:hide_exts
-  let s:wild_regex .= '*.' . ext . ','
-  let s:netrw_regex .= ext . '\|'
+for s:ext in s:hide_exts
+  let s:wild_regex .= '*.' . s:ext . ','
+  let s:netrw_regex .= s:ext . '\|'
 endfor
 
 " Don't leave trailing separator
@@ -959,8 +959,8 @@ let s:sort_exts += ['sql', 'html', 'css', 'js', 'json', 'csv']
 let s:sort_exts += ['ini', 'toml', 'xml', 'yaml']
 
 let g:netrw_sort_sequence = '[\/]$,\<core\%(\.\d\+\)\=\>,'
-for ext in s:sort_exts
-  let g:netrw_sort_sequence .= '\.' . ext . '$,'
+for s:ext in s:sort_exts
+  let g:netrw_sort_sequence .= '\.' . s:ext . '$,'
 endfor
 let g:netrw_sort_sequence .= '*,\.info$,\.swp$,\.bak$,\~$'
 let g:NERDTreeSortOrder = split(g:netrw_sort_sequence, ',')
@@ -1031,71 +1031,71 @@ command! -nargs=0 SchemeBack call Color.Prev()
 command! -nargs=0 SchemePick call Color.Pick()
 
 let g:Color = {}
-function! Color.Init(remDefaults)
+function! g:Color.Init(remDefaults)
   " Populate list
-  let schemes = split(globpath(&rtp, 'colors/*.vim'), '\n')
+  let l:schemes = split(globpath(&runtimepath, 'colors/*.vim'), '\n')
   if a:remDefaults == 1
-    let pattern = g:win_shell ? 'vim7.4withLua' : 'share/vim'
-    let schemes = filter(schemes, "v:val !~ pattern")
+    let l:pattern = g:win_shell ? 'vim7.4withLua' : 'share/vim'
+    let l:schemes = filter(l:schemes, 'v:val !~ l:pattern')
   endif
-  let self.list = sort(map(schemes, "fnamemodify(v:val, ':t')[0:-5]"))
+  let l:self.list = sort(map(l:schemes, 'fnamemodify(v:val, ":t")[0:-5]'))
 
   " Find current index
-  let self.cur = 0
-  for scheme in schemes
-    if scheme ==? g:colors_name
+  let l:self.cur = 0
+  for l:scheme in l:schemes
+    if l:scheme ==? g:colors_name
       break
     endif
-    let self.cur += 1
+    let l:self.cur += 1
   endfor
-  let self.default = self.cur + 1
+  let l:self.default = l:self.cur + 1
 
-  if (len(self.list) > 26)
+  if (len(l:self.list) > 26)
     echomsg 'too many schemes, listing first 26'
     return
   endif
 endfunction
 
 " Returns a string with anchors for confirm dialog
-function! Color.Choices()
-  let msg = ""
-  let char = "A"
-  for s in self.list
-    let msg .= "&" . char . s . "\n"
-    let char = nr2char(char2nr(char) + 1)
+function! g:Color.Choices()
+  let l:msg = ''
+  let l:char = 'A'
+  for l:s in l:self.list
+    let l:msg .= '&' . l:char . l:s . "\n"
+    let l:char = nr2char(char2nr(l:char) + 1)
     " Stop at 26th
-    if char == "["
+    if l:char ==? '['
       break
     endif
   endfor
-  return msg[0:-2]
+  return l:msg[0:-2]
 endfunction
 
-function! Color.Set()
+function! g:Color.Set()
   " Set new scheme
   syntax off
   set background=dark
-  execute 'colorscheme ' . self.list[self.cur]
+  execute 'colorscheme ' . l:self.list[l:self.cur]
   syntax on
   echomsg 'colorscheme is now: ' . g:colors_name
 endfunction
 
-function! Color.Next()
-  let self.cur = (self.cur + 1) % len(self.list)
-  call self.Set()
+function! g:Color.Next()
+  let l:self.cur = (l:self.cur + 1) % len(l:self.list)
+  call l:self.Set()
 endfunction
 
-function! Color.Prev()
-  let self.cur = (self.cur - 1) % len(self.list)
-  call self.Set()
+function! g:Color.Prev()
+  let l:self.cur = (l:self.cur - 1) % len(l:self.list)
+  call l:self.Set()
 endfunction
 
-function! Color.Pick()
+function! g:Color.Pick()
   " Returns cur of 1 - n choices
-  let self.cur = confirm("Pick Scheme From:", self.Choices(), self.default) - 1
-  call self.Set()
+  let l:self.cur = confirm('Pick Scheme From:', l:self.Choices(), l:self.default) - 1
+  call l:self.Set()
 endfunction
-call Color.Init(1)
+call g:Color.Init(1)
 
 " For a block of lines change spacing from old tab size to new tab size
 
@@ -1114,7 +1114,7 @@ endfunction
 " Open the ftplugin file for current buffer
 command! -nargs=0 FTOpen call s:FTOpen()
 function! s:FTOpen()
-  let l:file = printf('%s/ftplugin/%s.vim', g:vim_dir, &ft)
+  let l:file = printf('%s/ftplugin/%s.vim', g:vim_dir, &filetype)
   execute 'sp ' . l:file
 endfunction
 
@@ -1158,27 +1158,27 @@ endfunction
 
 command! -nargs=0 Bootstrap call s:bootstrap()
 function! s:bootstrap()
-  let plug_src = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  let plug_dst = s:path_join(g:vim_dir, 'autoload', 'plug.vim')
-  call g:FileFetch(plug_src, plug_dst)
+  let l:plug_src = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  let l:plug_dst = s:path_join(g:vim_dir, 'autoload', 'plug.vim')
+  call g:FileFetch(l:plug_src, l:plug_dst)
   echo 'Restart and run `PlugInstall`.'
 endfunction
 
 command! -nargs=0 VimrcUpdate call s:vimrc_update()
 function! s:vimrc_update()
-  let src = 'https://raw.githubusercontent.com/starcraftman/dot/master/files/vimrc'
-  call g:FileFetch(src, $MYVIMRC)
-  echo "$MYVIMRC is up to date."
+  let l:src = 'https://raw.githubusercontent.com/starcraftman/dot/master/files/vimrc'
+  call g:FileFetch(l:src, $MYVIMRC)
+  echo '$MYVIMRC is up to date.'
 endfunction
 
 " Bundle env variables, vimrc & .vim folders for remote deploy
 command! -nargs=0 BundleVim call s:bundle_vim()
 function! s:bundle_vim()
-  let src = 'https://raw.githubusercontent.com/junegunn/myvim/master/myvim'
-  let dst = 'myvim'
-  call g:FileFetch(src, dst)
-  execute '!bash ' . dst
-  call delete(dst)
+  let l:src = 'https://raw.githubusercontent.com/junegunn/myvim/master/myvim'
+  let l:dst = 'myvim'
+  call g:FileFetch(l:src, l:dst)
+  execute '!bash ' . l:dst
+  call delete(l:dst)
 endfunction
 
 command! -nargs=0 Spell call s:tog_spell()
