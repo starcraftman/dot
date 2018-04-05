@@ -320,14 +320,18 @@ if executable('ag')
       \ --hidden --follow --smart-case
       \ --ignore .bazaar
       \ --ignore .bzr
+      \ --ignore .cache
+      \ --ignore .ccache
       \ --ignore .git
       \ --ignore .hg
       \ --ignore .svn
       \ --ignore .ccache
       \ --ignore .DS_Store
-      \ --ignore .opt1
+      \ --ignore .opt
+      \ --ignore .pytest_cache
       \ --ignore .pylint.d
       \ --ignore .shell
+      \ --ignore .tox
       \ --ignore .wine
       \ --ignore .wine-pipelight
       \ --ignore "**/*.pyc"
@@ -524,14 +528,12 @@ let g:airline_powerline_fonts = 1
 
 " Regular Status Line
 """""""""""""""""""""
-" Syntastic modification to line, only if installed
-let s:syn_status = ''
+" Simple fallback, normally use airline
+" Missing ALE fallback ...
+let &statusline  = '%<%1* %F%m%r%h %y || %{&fenc?&fenc:&enc}[%{&ff}]'
 if exists(':SyntasticInfo')
-  let s:syn_status .= ' || %{SyntasticStatuslineFlag()}'
+  let &statusline .= ' || %{SyntasticStatuslineFlag()}'
 endif
-
-" Simple fallback, see :h statusline
-let &statusline  = '%<%1* %F%m%r%h %y || %{&fenc?&fenc:&enc}[%{&ff}] ' . s:syn_status
 let &statusline .= '%= %b(0x%B) || T%{tabpagenr()} W%{winnr()} B%{bufnr("%")} '
 let &statusline .= '|| %p%% %l/%L : %c %0*'
 set laststatus=2
@@ -546,7 +548,8 @@ set laststatus=2
 let mapleader = ","
 
 " Apparently used for buffer/filetype specific bindings
-let maplocalleader = '\\'
+" I feel like I should use this sometime .....
+"let maplocalleader = '\\'
 
 " Never use ex mode
 nnoremap Q <Nop>
