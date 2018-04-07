@@ -5,7 +5,7 @@ scriptencoding utf8
 " Relies on no plugins and has my preferred core settings
 " For neovim do: ln -s ~/.vimrc ~/.config/nvim/init.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Prelude
+" => Paths & Statusline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " {{{
 
@@ -56,19 +56,15 @@ let g:mapleader = ','
 " Never use ex mode
 nnoremap Q <Nop>
 
-" Save your left pinky
-"nnoremap ; :
-
 " Faster binding to escape insert/visual
 inoremap jk <Esc>
 vnoremap i  <Esc>
-"inoremap <esc> <nop>
 
 " Arrow keys to move through buffers/tabs
-nnoremap <Right> :bnext<CR>
-nnoremap <Left>  :bprevious<CR>
-nnoremap <Up>    :tabn<CR>
-nnoremap <Down>  :tabp<CR>
+nnoremap <silent> <Right> :bnext<CR>
+nnoremap <silent> <Left>  :bprevious<CR>
+nnoremap <silent> <Up>    :tabn<CR>
+nnoremap <silent> <Down>  :tabp<CR>
 
 " Remap Space + direction to move between split windows
 nnoremap <silent> <Space>k :wincmd k<CR>
@@ -172,13 +168,6 @@ if has('gui_running')
   set lines=80 columns=140
 endif
 
-" Enable the mouse in all modes of operation
-"set mouse=a
-
-" Show end of line and tabs on screen
-"set list
-set listchars=eol:$,tab:→→,trail:✘
-
 " Set line numbering on left
 set number
 
@@ -202,6 +191,7 @@ set incsearch
 
 " Show matching brackets when text indicator is over them
 set showmatch
+
 " How many tenths of a second to blink when matching brackets
 set matchtime=1
 
@@ -216,37 +206,6 @@ set smartcase
 " More intiutive when new splits at right and bottom
 set splitbelow
 set splitright
-
-" }}}
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors & Fonts
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" {{{
-
-syntax off
-
-set background=dark
-try
-  if &diff && (has('gui_running') || &t_Co > 255)
-    colorscheme jellybeans
-  elseif has('gui_running') || &t_Co > 255
-    colorscheme molokai
-    " Molokai CursorLine isn't bright enough
-    hi CursorLine  ctermbg=236
-  else
-    colorscheme gruvbox
-  endif
-catch
-  colorscheme desert
-endtry
-
-syntax on
-
-highlight ColorColumn ctermbg=238
-function! s:match_col_no()
-  let l:col_no = exists('b:match_column_no') ? b:match_column_no : 100
-  call matchadd('ColorColumn', '\%' . l:col_no . 'v', 100)
-endfunction
 
 " }}}
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -286,6 +245,41 @@ set linebreak
 " Set to 0 to disable
 "set textwidth=150
 set textwidth=0
+
+" Show end of line and tabs on screen
+"set list
+set listchars=eol:$,tab:→→,trail:✘
+
+" }}}
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors & Fonts
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" {{{
+
+syntax off
+
+set background=dark
+try
+  if &diff && (has('gui_running') || &t_Co > 255)
+    colorscheme jellybeans
+  elseif has('gui_running') || &t_Co > 255
+    colorscheme molokai
+    " Molokai CursorLine isn't bright enough
+    hi CursorLine  ctermbg=236
+  else
+    colorscheme gruvbox
+  endif
+catch
+  colorscheme desert
+endtry
+
+syntax on
+
+highlight ColorColumn ctermbg=238
+function! s:match_col_no()
+  let l:col_no = exists('b:match_column_no') ? b:match_column_no : 100
+  call matchadd('ColorColumn', '\%' . l:col_no . 'v', 100)
+endfunction
 
 " }}}
 " vim: set foldmethod=marker filetype=vim:
