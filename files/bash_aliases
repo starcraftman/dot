@@ -14,6 +14,7 @@
 #{{{
 # .software is for any precompiled programs & libraries I install.
 # .opt is for programs compiled from src, sources stay in OPT/src while bins to OPT/bin
+export V=~/.vimrc
 export SOFT=~/.software
 export OPTDIR=~/.opt
 export SHELLD=~/.shell
