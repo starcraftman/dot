@@ -26,6 +26,7 @@ export DFILES=~/.shell/dot/files
 export CABAL=~/.cabal
 export CARGO_HOME=~/.cargo
 export GOPATH=~/.go
+export RVMPATH=~/.rvm
 
 # Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
@@ -36,6 +37,7 @@ export PATH=~/.local/bin:$PATH
 export PATH=$CABAL/bin:$PATH
 export PATH=$CARGO_HOME/bin:$PATH
 export PATH=$GOPATH/bin:$PATH
+export PATH=$RVMPATH/bin:$PATH
 export PATH=/usr/lib/ccache:$PATH
 
 if [ -d "$SHELLD/pyenv" ]; then
@@ -54,6 +56,11 @@ export ACTIVE_INTELLI=$INTELLI_J
 export PATH=$JAVA_HOME/bin:$PATH
 export PATH=$PATH:$ACTIVE_INTELLI
 # Prefer jdk to local, deprioritize anything in intellij
+
+# RVM -> https://rvm.io/
+if [ -s "$RVMPATH/scripts/rvm" ]; then
+   . "$RVMPATH/scripts/rvm"
+fi
 
 # Old Java paths, archived
 #ANDR=$HOME/.android/
