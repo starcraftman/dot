@@ -22,21 +22,26 @@ export SHELLD=~/.shell
 export SCRIPTS=~/.my_scripts
 export DFILES=~/.shell/dot/files
 
-# Dir to locally install cabal for haskell.
-HASKELL_BIN=~/.cabal/bin
+# Local language packages.
+export CABAL=~/.cabal
+export CARGO_HOME=~/.cargo
+export GOPATH=~/.go
 
-export GOPATH=$HOME/.go
-export CARGO_HOME=$HOME/.cargo
-
-# Base path
+# Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
-export PATH=/usr/lib/ccache:$SCRIPTS:$OPTDIR/bin:~/.local/bin:$SOFT/bin:$PATH
-export PATH=$HASKELL_BIN:$GOPATH/bin:$CARGO_HOME/bin:$PATH
+export PATH=$SOFT/bin:$PATH
+export PATH=$SCRIPTS:$PATH
+export PATH=$OPTDIR/bin:$PATH
+export PATH=~/.local/bin:$PATH
+export PATH=$CABAL/bin:$PATH
+export PATH=$CARGO_HOME/bin:$PATH
+export PATH=$GOPATH/bin:$PATH
+export PATH=/usr/lib/ccache:$PATH
 
 if [ -d "$SHELLD/pyenv" ]; then
-   export PYENV_ROOT="$SHELLD/pyenv"
-   export PATH="$PYENV_ROOT/bin:$PATH"
-   export PYTHON_CONFIGURE_OPTS="--enable-shared"
+   export PYENV_ROOT=$SHELLD/pyenv
+   export PATH=$PYENV_ROOT/bin:$PATH
+   export PYTHON_CONFIGURE_OPTS=--enable-shared
    eval "$(pyenv init -)"
    #eval "$(pyenv virtualenv-init -)"
 fi
@@ -46,8 +51,9 @@ export JAVA_HOME=$SOFT/jdk
 export INTELLI_ANDROID=$SOFT/android-studio/bin
 export INTELLI_J=$SOFT/intelliJ/bin
 export ACTIVE_INTELLI=$INTELLI_J
-export PATH=$JAVA_HOME/bin:$PATH:$ACTIVE_INTELLI
-# Prefer custom java to local, deprioritize anything in intellij
+export PATH=$JAVA_HOME/bin:$PATH
+export PATH=$PATH:$ACTIVE_INTELLI
+# Prefer jdk to local, deprioritize anything in intellij
 
 # Old Java paths, archived
 #ANDR=$HOME/.android/
@@ -322,7 +328,7 @@ if valid_name rsync; then
 fi
 
 if [ -d "$SHELLD/bfg" ]; then
-   alias bfg="java -jar $SHELLD/bfg/bfg.jar"
+   alias bfg="java -jar \$SHELLD/bfg/bfg.jar"
 fi
 
 #}}}
