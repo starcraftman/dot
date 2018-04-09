@@ -41,12 +41,12 @@ endfunction
 
 function! myutil#run()
   let l:cmd = exists('b:amake_run') ? b:amake_run : g:amake_run
-  execute 'AsyncRun ' . l:cmd
+  execute 'AsyncRun ' . expand(l:cmd)
 endfunction
 
 function! myutil#test()
   let l:cmd = exists('b:amake_test') ? b:amake_test : g:amake_test
-  execute 'AsyncRun ' . l:cmd
+  execute 'AsyncRun ' . expand(l:cmd)
 endfunction
 
 " Get last visual selection as text.
