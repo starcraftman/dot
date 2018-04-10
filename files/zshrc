@@ -443,9 +443,7 @@ function conTest() {
 
 # Check if term supports 256 -> http://www.robmeerman.co.uk/unix/256colours
 function termColor() {
-    curl http://www.robmeerman.co.uk/_media/unix/256colors2.pl > c.pl 2>/dev/null
-    perl ./c.pl
-    \rm c.pl
+   wget -O - http://www.robmeerman.co.uk/_media/unix/256colors2.pl | perl
 }
 
 # Format a json file to be pretty
