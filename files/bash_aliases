@@ -31,21 +31,29 @@ export DFILES=~/.shell/dot/files
 export CABAL=~/.cabal
 export CARGO_HOME=~/.cargo
 export GOPATH=~/.go
+export PERLBREW_ROOT=~/.perlbrew
 export RVMPATH=~/.rvm
 
 # Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
-export PATH=$SOFT/bin:$PATH
-export PATH=$SCRIPTS:$PATH
-export PATH=$OPTDIR/bin:$PATH
-export PATH=~/.local/bin:$PATH
-export PATH=$CABAL/bin:$PATH
-export PATH=$CARGO_HOME/bin:$PATH
-export PATH=$GOPATH/bin:$PATH
-export PATH=$RVMPATH/bin:$PATH
-export PATH=/usr/lib/ccache:$PATH
+[ -d "$SOFT/bin" ]          && export PATH=$SOFT/bin:$PATH
+[ -d "$SCRIPTS" ]           && export PATH=$SCRIPTS:$PATH
+[ -d "$OPTDIR/bin" ]        && export PATH=$OPTDIR/bin:$PATH
+[ -d "$HOME/.local/bin" ]   && export PATH=~/.local/bin:$PATH
+[ -d "$CABAL" ]             && export PATH=$CABAL/bin:$PATH
+[ -d "$CARGO_HOME" ]        && export PATH=$CARGO_HOME/bin:$PATH
+[ -d "$GOPATH" ]            && export PATH=$GOPATH/bin:$PATH
+[ -d "$PERLBREW_ROOT" ]     && export PATH=$PERLBREW_ROOT/bin:$PATH
+[ -d "$RVMPATH" ]           && export PATH=$RVMPATH/bin:$PATH
+[ -d "/usr/lib/ccache" ]    && export PATH=/usr/lib/ccache:$PATH
 
-if [ -d "$SHELLD/pyenv" ]; then
+# \curl -L https://install.perlbrew.pl | bash
+if [ -s "$PERLBREW_ROOT/etc/bashrc" ]; then
+   . "$PERLBREW_ROOT/etc/bashrc"
+fi
+
+# git clone https://github.com/pyenv/pyenv $SHELLD/pyenv
+if [ -s "$SHELLD/pyenv/bin/pyenv" ]; then
    export PYENV_ROOT=$SHELLD/pyenv
    export PATH=$PYENV_ROOT/bin:$PATH
    export PYTHON_CONFIGURE_OPTS=--enable-shared
@@ -53,14 +61,20 @@ if [ -d "$SHELLD/pyenv" ]; then
    #eval "$(pyenv virtualenv-init -)"
 fi
 
-# Java junk
-export JAVA_HOME=$SOFT/jdk
-export INTELLI_ANDROID=$SOFT/android-studio/bin
-export INTELLI_J=$SOFT/intelliJ/bin
-export ACTIVE_INTELLI=$INTELLI_J
-export PATH=$JAVA_HOME/bin:$PATH
-export PATH=$PATH:$ACTIVE_INTELLI
-# Prefer jdk to local, deprioritize anything in intellij
+# http://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html
+if [ -s "$SOFT/jdk/bin/java" ]; then
+   export JAVA_HOME=$SOFT/jdk
+   export PATH=$JAVA_HOME/bin:$PATH
+fi
+# https://www.jetbrains.com/idea/download/#section=linux
+# https://developer.android.com/studio/index.html#linux-bundle
+if [ -d "$SOFT/intelliJ" ] && [ -d "$SOFT/android-studio" ]; then
+   export INTELLI_J=$SOFT/intelliJ/bin
+   export INTELLI_ANDROID=$SOFT/android-studio/bin
+   export ACTIVE_INTELLI=$INTELLI_J
+   export PATH=$PATH:$ACTIVE_INTELLI
+   # Deprioritize anything in intellij
+fi
 
 # RVM -> https://rvm.io/
 if [ -s "$RVMPATH/scripts/rvm" ]; then
