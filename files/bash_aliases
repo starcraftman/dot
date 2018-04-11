@@ -23,8 +23,8 @@ export SOFT=~/.software
 export OPTDIR=~/.opt
 export SHELLD=~/.shell
 
-# Personal scripts go here to stay outside of root.
-export SCRIPTS=~/.my_scripts
+# Personal scripts/tools
+export SCRIPTS=~/.shell/my_scripts
 export DFILES=~/.shell/dot/files
 
 # Local language packages.
@@ -37,7 +37,7 @@ export RVMPATH=~/.rvm
 # Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
 [ -d "$SOFT/bin" ]          && export PATH=$SOFT/bin:$PATH
-[ -d "$SCRIPTS" ]           && export PATH=$SCRIPTS:$PATH
+[ -d "$SCRIPTS/bin" ]       && export PATH=$SCRIPTS/bin:$PATH
 [ -d "$OPTDIR/bin" ]        && export PATH=$OPTDIR/bin:$PATH
 [ -d "$HOME/.local/bin" ]   && export PATH=~/.local/bin:$PATH
 [ -d "$CABAL" ]             && export PATH=$CABAL/bin:$PATH
@@ -669,7 +669,6 @@ unset MAILCHECK
 
 # KDE 5.8 issue, they use an X11 hack to intercept key.
 # Fix written at: https://zren.github.io/projects/kde/#cfg-21
-## RUN CONSOLE
 if grep 'Meta=' ~/.config/kwinrc >/dev/null 2>&1; then
     :
 elif valid_name kwriteconfig && valid_name kwin_x11; then
@@ -745,12 +744,12 @@ prompt_callback() {
 # See ~/.git-prompt-colors.sh for scheme
 . ~/.shell/bash-git-prompt/gitprompt.sh
 
-############################################################################
+# }}}
+
 # Local Bash Config Sourced (~/.lbashrc)
-############################################################################
+# Put any server specific changes or overrides here
 if [ -s ~/.lbashrc ]; then
    . ~/.lbashrc
 fi
 
-#}}}
 # vim:set ft=sh foldmethod=marker:
