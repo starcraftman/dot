@@ -72,11 +72,6 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# Local mods staying out of version control
-if [ -f ~/.lbashrc ]; then
-    . ~/.lbashrc
-fi
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
