@@ -847,4 +847,11 @@ WATCHFMT="%n from %M has %a tty%l at %T %W"
 # Activate the prompt hooks for git/hg
 save_hooks 0
 #}}}
+
+# Local config override (~/.lzshrc)
+# Put any server specific changes or overrides here
+if [ -s ~/.lzshrc ]; then
+   . ~/.lzshrc
+fi
+
 # vim: set foldmethod=marker:

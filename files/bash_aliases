@@ -746,7 +746,7 @@ prompt_callback() {
 
 # }}}
 
-# Local Bash Config Sourced (~/.lbashrc)
+# Local config override (~/.lbashrc)
 # Put any server specific changes or overrides here
 if [ -s ~/.lbashrc ]; then
    . ~/.lbashrc
