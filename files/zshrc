@@ -269,7 +269,8 @@ function rrm() {
     echo -e "Execute: ${fg_bold[cyan]}rm -rf $@${reset_color}"
     echo "y/n?"
     read
-    local go="$(echo "$REPLY" | tr [[:upper:]] [[:lower:]])"
+    local go
+    go="$(echo "$REPLY" | tr '[:upper:]' '[:lower:]')"
     if [[ "$go" == y* ]]; then
         command rm -rf "$@"
     fi
