@@ -71,4 +71,4 @@ if [ -s "$RVMPATH/scripts/rvm" ]; then
     . "$RVMPATH/scripts/rvm"
 fi
 
-# vim: set foldmethod=marker:
+# vim: set filetype=sh:
