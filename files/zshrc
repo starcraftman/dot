@@ -476,7 +476,7 @@ source ~/.shell/hhighlighter/h.sh
 ############################################################################
 #{{{
 # Enable the windows key on Ubuntu as F13
-if valid_name xmodmap; then
+if valid_name xmodmap && [ -n "$DISPLAY" ]; then
     xmodmap -e 'keycode 133 = F13'
 fi
 
