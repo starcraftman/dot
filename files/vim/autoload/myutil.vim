@@ -26,17 +26,14 @@ function! myutil#ycm_hook(info)
       let l:opts .= '--java-completer'
     endif
   endif
+
   let l:line = printf('%s %s', expand(g:vim_dir . '/plugged/YouCompleteMe/install.py'), l:opts)
-  echomsg l:line
+  let l:suffix = ''
   if has('nvim')
-    new
-    call termopen(l:line)
-  elseif exists(':terminal')
-    execute 'terminal ' . l:line
-  else
-    execute '! ' . l:line . ' >/tmp/YCMBuild 2>&1 &'
+    let l:suffix = 'Neovim'
   endif
-  redraw!
+  silent execute printf('! echo %s >/tmp/YCMBuild%s &', l:line, l:suffix)
+  silent execute printf('! %s >>/tmp/YCMBuild%s 2>&1 &', l:line, l:suffix)
 endfunction
 
 function! myutil#run()
