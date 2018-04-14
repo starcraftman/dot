@@ -38,12 +38,14 @@ endfunction
 
 function! myutil#run()
   let l:cmd = exists('b:amake_run') ? b:amake_run : g:amake_run
-  execute 'AsyncRun ' . expand(l:cmd)
+  let l:file = expand('%:p')
+  execute 'AsyncRun ' . substitute(l:cmd, '%f', l:file, '')
 endfunction
 
 function! myutil#test()
   let l:cmd = exists('b:amake_test') ? b:amake_test : g:amake_test
-  execute 'AsyncRun ' . expand(l:cmd)
+  let l:file = expand('%:p')
+  execute 'AsyncRun ' . substitute(l:cmd, '%f', l:file, '')
 endfunction
 
 " Get last visual selection as text.

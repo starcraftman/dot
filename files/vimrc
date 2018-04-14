@@ -308,7 +308,7 @@ let g:NERDTreeBookmarksFile = s:path_join(g:vim_dir, '.nerd_marks')
 " See myutil#run in /autoload
 " Set project wide run/test commands with ".lvimrc" files
 " Override temporarily with buffer equivalents.
-" Variable expanded for file name at runtime: %:p
+" To run a command on current file: cmd %f
 "let g:amake_run = 'tox'
 "let g:amake_test = 'tox'
 
