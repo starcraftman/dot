@@ -1,11 +1,19 @@
 # All common $PATH modifications go here
 # This file gets sourced from ~/.zshrc and ~/.bash_aliases only if not already done
 
+# Guard against resourcing, many path changes onetime or costly.
+if [ -n "$P" ]; then
+    return
+fi
+############################################################################
+# Path Settings
+############################################################################
+# {{{
 # Shortcuts to main configs
 export B=~/.bash_aliases
-export P=~/.path
 export V=~/.vimrc
 export Z=~/.zshrc
+export P=~/.shell_conf/path
 
 # .software is for any precompiled programs & libraries I install.
 # .opt is for programs compiled from src, sources stay in OPT/src while bins to OPT/bin
@@ -70,5 +78,66 @@ fi
 if [ -s "$RVMPATH/scripts/rvm" ]; then
     . "$RVMPATH/scripts/rvm"
 fi
+# }}}
+############################################################################
+# Non $PATH Variables
+############################################################################
+# {{{
+# Default editor for things like sudoedit.
+if valid_name vim; then
+    export EDITOR=vim
+fi
 
-# vim: set filetype=sh:
+# If you want to have a fallback path lookup, use CDPAth.
+#export CDPATH=~/prog
+
+#CCache Directory
+#Info: https://ccache.samba.org/manual.html
+#export CCACHE_DISABLE=1
+export CCACHE_COMPRESS=1
+export CCACHE_DIR=~/.ccache
+
+# Ignore files with these suffixes for bash completion
+# NB: For dirs like .bzr, bzr line will ignore anything ending in bzr.
+export FIGNORE=bzr:git:hg:svn:.class:.o:.pyc
+
+# Change grep color to bold blue
+export GREP_COLORS='ms=01;34:mc=01;34:sl=:cx=:fn=35:ln=32:bn=32:se=36'
+
+# Merge tool for hg
+export HGMERGE=/usr/bin/kdiff3
+
+# Bash history options
+# Set large history file & line limit
+export HISTFILESIZE=100000
+export HISTSIZE=100000
+
+# Ignore some commands
+export HISTIGNORE='ls *:l *:bg:fg:history *'
+
+# Timestamps in history file
+export HISTTIMEFORMAT='%F %T '
+
+# Ignore duplicate commands in history
+export HISTCONTROL=ignoredups:erasedups
+
+# The number of EOF to ignore before terminating shell
+export IGNOREEOF=2
+
+# Default pager
+export PAGER=less
+
+# Make ps print useful info
+export PS_FORMAT=user,pid,ppid,tty,pcpu,pmem,stat,start_time,cmd
+
+# If we aren't sshed, set term to 256 color support
+if [ -n "$DISPLAY" ]; then
+    if [ "$TERM" = "xterm" ]; then
+        export TERM=xterm-256color
+    elif [ "$TERM" = "screen" ]; then
+        export TERM=screen-256color
+    fi
+fi
+# }}}
+
+# vim:set filetype=sh foldmethod=marker:
