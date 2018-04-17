@@ -31,6 +31,9 @@
 #{{{
 # Common variables defined at: ~/.shell_conf/path_env
 
+# Bash history file
+export HISTFILE=~/.bash_history
+
 # Color code explanation, end of -> http://jamiedubs.com/ps1-collection-customize-your-bash-prompt
 # Old code (might still see): \[\033[x;yy;zzm\]
 # General format: \[\e[x;yy;zzm\]

@@ -18,7 +18,10 @@ fpath=(~/.zsh_completions $fpath)
 ############################################################################
 #{{{
 # Common variables defined at: ~/.shell_conf/path_env
-#
+
+# ZSH history separate
+export HISTFILE=~/.zsh_history
+
 # No git state caching, prefer to always be accurate
 export ZSH_THEME_GIT_PROMPT_NOCACHE=1
 #}}}

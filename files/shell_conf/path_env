@@ -38,7 +38,8 @@ export RVMPATH=~/.rvm
 [ -d "$SOFT/bin" ]          && export PATH=$SOFT/bin:$PATH
 [ -d "$SCRIPTS" ]           && export PATH=$SCRIPTS/bin:$PATH
 [ -d "$OPTDIR/bin" ]        && export PATH=$OPTDIR/bin:$PATH
-[ -d "$HOME/.local/bin" ]   && export PATH=~/.local/bin:$PATH
+[ -d "$HOME/bin" ]          && export PATH=$HOME/bin:$PATH
+[ -d "$HOME/.local/bin" ]   && export PATH=$HOME/.local/bin:$PATH
 [ -d "$CABAL" ]             && export PATH=$CABAL/bin:$PATH
 [ -d "$CARGO_HOME" ]        && export PATH=$CARGO_HOME/bin:$PATH
 [ -d "$GOPATH" ]            && export PATH=$GOPATH/bin:$PATH
@@ -101,6 +102,9 @@ export CCACHE_DIR=~/.ccache
 # Ignore files with these suffixes for bash completion
 # NB: For dirs like .bzr, bzr line will ignore anything ending in bzr.
 export FIGNORE=bzr:git:hg:svn:.class:.o:.pyc
+
+# Colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # Change grep color to bold blue
 export GREP_COLORS='ms=01;34:mc=01;34:sl=:cx=:fn=35:ln=32:bn=32:se=36'

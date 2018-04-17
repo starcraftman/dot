@@ -13,8 +13,16 @@ fi
 # Keep home configs when switching to root
 alias su='su --preserve-environment'
 
+# ls doesn't like TERM=konsole-256color
+case "$TERM" in
+   *256*|*color)
+      alias l='TERM=xterm-256color \ls --color=auto -F --group-directories-first'
+      ;;
+   *)
+      alias l='\ls --color=auto -F --group-directories-first'
+      ;;
+esac
 # Make ls more convenient
-alias l='\ls --color=auto -F --group-directories-first'
 alias ls='l --sort=extension'
 alias ll='ls -Alh'
 alias la='l -A'
