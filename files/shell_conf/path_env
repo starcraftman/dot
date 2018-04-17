@@ -135,19 +135,6 @@ export PAGER=less
 # Make ps print useful info
 export PS_FORMAT=user,pid,ppid,tty,pcpu,pmem,stat,start_time,cmd
 
-# Fetch terminal information
-if [ ! -d ~/.terminfo ]; then
-    if ! valid_name curl || ! valid_name gunzip || ! valid_name tic; then
-        echo "No terminfo, missing one of: curl, gunzip, tic"
-    fi
-
-    echo "Getting terminfo."
-    # Taken from nvim | :h $TERM
-    curl -L http://invisible-island.net/datafiles/current/terminfo.src.gz | gunzip > /tmp/term.src
-    tic /tmp/term.src
-    command rm /tmp/term.src
-fi
-
 # Set term to 256 color support
 if [ -n "$KONSOLE_PROFILE_NAME" ]; then
     export TERM=konsole-256color
