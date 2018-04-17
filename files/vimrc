@@ -24,11 +24,6 @@ let g:vim_dir = expand(g:win_shell ? '$USERPROFILE/AppData/Local/vim' : '~/.vim'
 if has('nvim')
   let g:vim_dir = expand(g:win_shell ? '$USERPROFILE/AppData/Local/nvim' : '~/.config/nvim')
 
-  " Note: Issue affects konsole terminals (i.e. yakuake)
-  if exists('$SSH_CONNECTION')
-    set guicursor=
-  endif
-
   if exists('$DISPLAY') && !executable('xclip')
     echomsg 'WARNING: No xclip == No neovim clipboard'
   endif

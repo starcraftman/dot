@@ -14,6 +14,7 @@ export B=~/.bash_aliases
 export V=~/.vimrc
 export Z=~/.zshrc
 export P=~/.shell_conf/path_env
+export F=~/.shell_conf/funcs_alias
 
 # .software is for any precompiled programs & libraries I install.
 # .opt is for programs compiled from src, sources stay in OPT/src while bins to OPT/bin
@@ -130,13 +131,21 @@ export PAGER=less
 # Make ps print useful info
 export PS_FORMAT=user,pid,ppid,tty,pcpu,pmem,stat,start_time,cmd
 
-# If we aren't sshed, set term to 256 color support
-if [ -n "$DISPLAY" ]; then
-    if [ "$TERM" = "xterm" ]; then
-        export TERM=xterm-256color
-    elif [ "$TERM" = "screen" ]; then
-        export TERM=screen-256color
-    fi
+# Handle terminal colors
+if [ ! -d ~/.terminfo ]; then
+    echo "Getting terminfo."
+    curl -LO http://invisible-island.net/datafiles/current/terminfo.src.gz
+    gunzip terminfo.src.gz
+    tic terminfo.src
+fi
+
+# Set term to 256 color support
+if [ -n "$KONSOLE_PROFILE" ]; then
+    export TERM=konsole-256color
+elif [ "$TERM" = "xterm" ]; then
+    export TERM=xterm-256color
+elif [ "$TERM" = "screen" ]; then
+    export TERM=screen-256color
 fi
 # }}}
 
