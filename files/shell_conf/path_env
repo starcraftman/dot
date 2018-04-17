@@ -140,7 +140,7 @@ if [ ! -d ~/.terminfo ]; then
 fi
 
 # Set term to 256 color support
-if [ -n "$KONSOLE_PROFILE" ]; then
+if [ -n "$KONSOLE_PROFILE_NAME" ]; then
     export TERM=konsole-256color
 elif [ "$TERM" = "xterm" ]; then
     export TERM=xterm-256color
