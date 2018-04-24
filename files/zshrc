@@ -19,6 +19,9 @@ fpath=(~/.zsh_completions $fpath)
 #{{{
 # Common variables defined at: ~/.shell_conf/path_env
 
+# Ensure correct shell set.
+export SHELL=/bin/zsh
+
 # ZSH history separate
 export HISTFILE=~/.zsh_history
 

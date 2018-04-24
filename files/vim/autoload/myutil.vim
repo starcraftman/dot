@@ -9,29 +9,31 @@
 function! myutil#ycm_hook(info)
   let l:opts =  '--clang-completer '
   if executable('go')
-    let l:opts .= '--gocode-completer '
+    let l:opts .= '--go-completer '
   endif
-  "if executable('mono')
-    "let l:opts .= '--omnisharp-completer '
-  "endif
-  "if executable('nodejs') && executable('npm')
-    "let l:opts .= '--tern-completer '
-  "endif
   if executable('rustc')
-    let l:opts .= '--racer-completer '
+    let l:opts .= '--rust-completer '
   endif
   if executable('java')
     let l:java_version = split(system('java -version'), '\n')[0]
     if stridx(l:java_version, 'java version "10"') == 0
-      let l:opts .= '--java-completer'
+      let l:opts .= '--java-completer '
     endif
   endif
+  if executable('nodejs') && executable('npm')
+    let l:opts .= '--js-completer '
+  endif
+  "if executable('mono')
+    "let l:opts .= '-cs-completer '
+  "endif
 
   let l:line = printf('%s %s', expand(g:vim_dir . '/plugged/YouCompleteMe/install.py'), l:opts)
   let l:suffix = ''
   if has('nvim')
     let l:suffix = 'Neovim'
   endif
+  echomsg 'RUNNING:'
+  echomsg printf('%s >/tmp/YCMBuild%s &', l:line, l:suffix)
   silent execute printf('! echo %s >/tmp/YCMBuild%s &', l:line, l:suffix)
   silent execute printf('! %s >>/tmp/YCMBuild%s 2>&1 &', l:line, l:suffix)
 endfunction

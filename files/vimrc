@@ -37,11 +37,12 @@ try
   call plug#begin(s:path_join(g:vim_dir, 'plugged'))
 
   " Completion
-  if !g:win_shell && !g:cygwin_shell && (has('nvim') || (has('patch-7.3-584')))
+  " Min patch for YCM, Neovim has it
+  if !g:win_shell && !g:cygwin_shell && has('patch-7.3-584')
     Plug 'Valloric/YouCompleteMe', { 'do': function('myutil#ycm_hook') }
-  elseif has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   endif
+  " YCM Alternative, no compilation
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
   "Plug 'artur-shaik/vim-javacomplete2'  " Archived
 
@@ -128,6 +129,7 @@ try
   Plug 'rust-lang/rust.vim'
   "Plug 'Rykka/riv.vim'  " Note taking plugin
   "Plug 'tfnico/vim-gradle'
+  Plug 'tbastos/vim-lua' " Improved highlighting for lua
   Plug 'tomswartz07/vim-todo'
   Plug 'tpope/vim-markdown'
   "Plug 'vim-ruby/vim-ruby'
@@ -255,9 +257,9 @@ let g:syntastic_python_flake8_args = '--max-complexity 10'
 " ALE
 """""
 " Override active checkers by 'lang'
-"let g:ale_linters = {
-      "\'rust': ['rls']
-"\}
+" let g:ale_linters = {
+      " \'lua': ['luac']
+" \}
 
 " Prefer low complexity funcs
 let g:ale_python_flake8_args = '--max-complexity 10'
