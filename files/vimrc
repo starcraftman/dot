@@ -1133,6 +1133,8 @@ if has('autocmd')
     " s is sort in tagbar, use alternate
     autocmd FileType tagbar nmap <Leader>s <Plug>Sneak_s
     autocmd FileType tagbar nmap <Leader>S <Plug>Sneak_S
+    " easily escape quickfix/location buffer
+    autocmd FileType qf nnoremap <buffer> q :q<Enter>
   augroup END
 
   augroup netrw_cmds
