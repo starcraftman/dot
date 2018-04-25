@@ -261,6 +261,26 @@ let g:syntastic_python_flake8_args = '--max-complexity 10'
       " \'lua': ['luac']
 " \}
 
+" Linting Programs:
+" lang   | cmd        | install                         | notes/site
+" ==============================================================================================
+" bash   | shellcheck | sudo apt-get install shellcheck | https://github.com/koalaman/shellcheck
+" c/cpp  | cpplint    | git clone https://github.com/google/styleguide.git
+" c/cpp  | cppcheck   | sudo apt-get install cppcheck   | http://cppcheck.sourceforge.net/
+" c/cpp  | flawfinder | pip install flawfinder          | https://www.dwheeler.com/flawfinder/
+" cmake  | cmakelint  | pip install cmakelint           | https://github.com/richq/cmake-lint
+" go     | golint     |                                 | https://godoc.org/github.com/golang/lint
+" lua    | luacheck   | luarocks install luacheck       | https://github.com/mpeterv/luacheck
+" perl   | perlcritic | cpan -i perlcritic
+" perl   | perltidy   | cpan -i perltidy
+" python | flake8     | pip install flake8
+" python | pylint     | pip install pylint
+" ruby   | rubocop    | gem install rubocop
+" rust   | cargo      | Default Tool                    | Only works on written file
+" vim    | vim-vint   | pip install vim-vint
+" xml    | xmllint    | sudo apt-get install libxml2-utils
+" yaml   | yamllint   | sudo apt-get install yamllint
+
 " Prefer low complexity funcs
 let g:ale_python_flake8_args = '--max-complexity 10'
 " }}}
