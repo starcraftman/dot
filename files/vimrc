@@ -391,11 +391,11 @@ else
 endif
 
 let g:ctrlp_user_command = {
-    \ 'types': {
-      \ 1: ['.git', 'cd %s && git ls-files . --cached --others --exclude-standard'],
-      \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-    \ },
-    \ 'fallback': s:ctrlp_fallback
+  \ 'types': {
+    \ 1: ['.git', 'cd %s && git ls-files . --cached --others --exclude-standard'],
+    \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+  \ },
+  \ 'fallback': s:ctrlp_fallback
 \ }
 
 " Faster matcher
@@ -660,13 +660,13 @@ let g:airline_powerline_fonts = 1
 """"""""""
 " Preset for my tmux line
 let g:tmuxline_preset = {
-    \'a'       : '#h',
-    \'b'       : '#(curl icanhazip.com)',
-    \'win'     : '#I #W',
-    \'cwin'    : '#I #W',
-    \'y'       : ['#S', '#I', '#P'],
-    \'z'       : ['%d %b %Y', '%H:%M:%S'],
-    \'options' : {'status-justify': 'left'}
+  \'a'       : '#h',
+  \'b'       : '#(curl icanhazip.com)',
+  \'win'     : '#I #W',
+  \'cwin'    : '#I #W',
+  \'y'       : ['#S', '#I', '#P'],
+  \'z'       : ['%d %b %Y', '%H:%M:%S'],
+  \'options' : {'status-justify': 'left'}
 \ }
 
 " }}}
