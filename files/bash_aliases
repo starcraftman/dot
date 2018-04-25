@@ -101,16 +101,16 @@ export PS1_R="\[\e[0m\]"
 # Repeat a command n times, example:
   # repeat 10 echo foo
 # **RESERVED** in ZSH
-repeat() {
+repeatn() {
     if [ "$#" -lt 3 ]; then
-        echo "Repeat a command n times, example:\
+        echo -e "Repeat a command n times, example:
         repeat 10 echo foo"
         return 0
     fi
 
-    local count="$1" i
+    local count="$1"
     shift
-    for i in $(seq 1 "$count"); do
+    for _ in $(seq 1 "$count"); do
         eval "$@"
     done
 }
