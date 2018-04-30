@@ -29,7 +29,7 @@ alias la='l -A'
 
 # Different sorts
 alias lx='ll -XB'  # Extension
-alias lk='ll -Sr'  # File size
+alias lz='ll -Sr'  # File size
 alias lt='ll -tur' # Access time
 alias lc='ll -tcr' # CTime, last change to attributes (fperms, ownership)
 alias lm='ll -tr'  # Modification time
