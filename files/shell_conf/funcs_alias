@@ -236,6 +236,11 @@ color_test() {
     wget -O - http://www.robmeerman.co.uk/_media/unix/256colors2.pl | perl
 }
 
+# Run program without connection to current shell
+bak() {
+   "$@" >/dev/null 2>&1 &
+}
+
 # Secure delete a file
 secDel() {
     echo -e "Will Securely Delete: ${T_BCYAN}${T_RESET}"
