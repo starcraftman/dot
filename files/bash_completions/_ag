@@ -1,4 +1,4 @@
-have ag &&
+# have ag &&
 _ag() {
   local cur prev prog split=false
   cur=$(_get_cword "=")

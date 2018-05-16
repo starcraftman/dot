@@ -1,4 +1,3 @@
-have nvim &&
 _nvim() {
   local lngopt shtopt cur prev
   cur=$(_get_cword "=")
@@ -33,6 +32,6 @@ _nvim() {
       return 0
       ;;
   esac
-} &&
+}
 complete -F _nvim ${nospace} nvim
 # vim:set ft=sh:

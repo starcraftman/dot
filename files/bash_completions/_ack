@@ -20,7 +20,5 @@ _ack()
     fi
 }
 
-for i in "ack" "ack2" "ack-grep" "ack-standalone"; do
-  have "$i" && complete -F _ack ${nospace} "$i"
-done
+complete -F _ack ${nospace} ack
 # vim:set ft=sh ts=2 sts=2 sw=2:

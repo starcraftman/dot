@@ -78,11 +78,17 @@ fi
 if valid_name nvim; then
    alias n='nvim'
    alias ns='nvim -o'
+   if [ "$SHELL" = "/bin/bash" ]; then
+      complete -F _nvim ${nospace} n
+   fi
 fi
 
 if valid_name vim; then
    alias v='vim'
    alias vs='vim -o'
+   if [ "$SHELL" = "/bin/bash" ]; then
+      complete -F _vim ${nospace} v
+   fi
 fi
 
 # For vims java eclipse completion
