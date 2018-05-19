@@ -1,24 +1,34 @@
-# Bash completion for ack:
-# ack <tab>
-#
-# Github: https://github.com/jonasbn/bash_completion_ack
-# Copyright Jonas B. Nielsen (jonasbn) 2017
-# MIT License
+# simple diy ack complete
+_ack() {
+  local lngopt shtopt cur prev
+  cur=$(_get_cword "=")
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  COMPREPLY=()
 
-_ack()
-{
-    local cur prev opts
-    COMPREPLY=()
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
-    local opts=$(sed -n "s/--type-set=\([^']*\)=.*/--\1/p" $HOME/.ackrc )
+  _expand || return 0
 
-    if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
-    else
-        compopt -o default
-    fi
+  if [ "${__COMP_CACHE_ACK}x" = "x" ]; then
+    lngopt="$(ack --help | command grep -o '\-\-[a-z-]\+')"
+    shtopt="$(ack --help | command grep -o '^\s\+\-\w')"
+    __COMP_CACHE_ACK=( "$lngopt" "$shtopt" )
+    export __COMP_CACHE_ACK
+  else
+    lngopt="${__COMP_CACHE_ACK[0]}"
+    shtopt="${__COMP_CACHE_ACK[1]}"
+  fi
+
+  case "${cur}" in
+    -*)
+      COMPREPLY=( $(compgen -W \
+          "${lngopt} ${shtopt} " -- "${cur}") )
+      return 0
+      ;;
+    *)
+      _filedir
+      return 0
+      ;;
+  esac
 }
-
 complete -F _ack ${nospace} ack
+
 # vim:set ft=sh ts=2 sts=2 sw=2:
