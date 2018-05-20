@@ -57,7 +57,7 @@ if [ -s "$SHELLD/pyenv/bin/pyenv" ]; then
     export PYENV_ROOT=$SHELLD/pyenv
     export PATH=$PYENV_ROOT/bin:$PATH
     export PYTHON_CONFIGURE_OPTS=--enable-shared
-    eval "$(pyenv init -)"
+    # eval "$(pyenv init -)"
     #eval "$(pyenv virtualenv-init -)"
 fi
 
