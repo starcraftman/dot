@@ -172,6 +172,8 @@ unset MAILCHECK
 # Specific Completions
 ############################################################################
 # {{{
+# Core bash completions at: https://github.com/scop/bash-completion
+
 valid_name pip && eval "$(pip completion --bash)"
 valid_name pyenv && eval "$(pyenv init -)"
 [[ -f "$RVMPATH/scripts/completion" ]] && . "$RVMPATH/scripts/completion"
