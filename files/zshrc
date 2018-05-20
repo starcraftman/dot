@@ -22,6 +22,9 @@ fpath=(~/.zsh_completions $fpath)
 # Ensure correct shell set.
 export SHELL=/bin/zsh
 
+# Save every N cmds
+export SAVEHIST=10
+
 # ZSH history separate
 export HISTFILE=~/.zsh_history
 
@@ -212,20 +215,21 @@ setopt EXTENDED_HISTORY
 setopt HIST_FCNTL_LOCK
 
 # History lookup ignores duplicate commands
-setopt HIST_FIND_NO_DUPS
+# setopt HIST_FIND_NO_DUPS
 
 # Ignore duplicates if they are same as previous.
 setopt HIST_IGNORE_DUPS
 
 # Ignore the history command itself
-setopt HIST_NO_STORE
+# setopt HIST_NO_STORE
 
 # Reduce blanks when possible
 setopt HIST_REDUCE_BLANKS
 
 # If need to share history or write immediately
-# see SHARE_HISTORY, INC_APPEND_HISTORY
-setopt SHARE_HISTORY
+# see SHARE_HISTORY, INC_APPEND_HISTORY, INC_APPEND_HISTORY_TIME
+# setopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY_TIME
 
 # Allow braces to define character classes like: file{abcd1234}
 setopt BRACE_CCL
