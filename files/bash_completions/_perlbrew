@@ -1,0 +1,121 @@
+# Taken from: https://bitbucket.org/telemachus/perlbrew-bash-completion/raw/96581ddf436dd02fc05fb44fa51c06704c2ea3ca/perlbrew.bash
+
+_short_opts()
+{
+    local cur prev generic_opts alias_opts install_opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    generic_opts="-q -v"
+    alias_opts="-q -v -f"
+    install_opts="-f -j -n -q -v -D -U -A"
+
+    if [[ "${prev}" == install ]]; then
+        COMPREPLY=( $( compgen -W "${install_opts}" -- ${cur} ) )
+    elif [[ "${prev}" == alias ]]; then
+        COMPREPLY=( $( compgen -W "${alias_opts}" -- ${cur} ) )
+    else
+        COMPREPLY=( $( compgen -W "${generic_opts}" -- ${cur} ) )
+    fi
+}
+
+_long_opts()
+{
+    local cur prev generic_opts alias_opts install_opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    pre_prev="${COMP_WORDS[COMP_CWORD-2]}"
+    generic_opts="--quiet --verbose"
+    alias_opts="--quiet --verbose --force"
+    install_opts="--force --notest --as --force --notest --quiet --verbose\
+        --sitecustomize --switch"
+    exec_opts="--with"
+
+    if [[ "${prev}" == install || "${pre_prev}" == install ]]; then
+        COMPREPLY=( $( compgen -W "${install_opts}" -- ${cur} ) )
+    elif [[ "${prev}" == alias ]]; then
+        COMPREPLY=( $( compgen -W "${alias_opts}" -- ${cur} ) )
+    elif [[ "${prev}" == exec ]]; then
+        COMPREPLY=( $( compgen -W "${exec_opts}" -- ${cur} ) )
+    else
+        COMPREPLY=( $( compgen -W "${generic_opts}" -- ${cur} ) )
+    fi
+
+}
+
+_commands()
+{
+    local cur prev commands
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    commands="init install uninstall available lib alias upgrade-perl\
+        list use off switch switch-off exec self-install self-upgrade\
+        install-patchperl install-cpanm install-ack download mirror\
+        version help"
+
+    COMPREPLY=( $( compgen -W "${commands}" -- ${cur} ) )
+}
+
+_alias_subcommands()
+{
+    local cur alias_subcommands
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    alias_subcommands="create rename delete"
+
+    COMPREPLY=( $( compgen -W "${alias_subcommands}" -- ${cur} ) )
+}
+
+_perls()
+{
+    local cur perls
+    local ROOT="${PERLBREW_ROOT:-$HOME/perl5/perlbrew}"
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    perls=$(perlbrew list | cut -b3-)
+
+    COMPREPLY=( $( compgen -W "${perls}" -- ${cur} ) )
+}
+
+_available_perls()
+{
+    local cur available
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    available=$(perlbrew available | cut -b3-)
+    available="${available} perl-blead blead"
+
+    COMPREPLY=( $( compgen -W "${available}" -- ${cur} ) )
+}
+
+_perlbrew()
+{
+    local cur prev pre_prev
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    pre_prev="${COMP_WORDS[COMP_CWORD-2]}"
+    pre_pre_prev="${COMP_WORDS[COMP_CWORD-3]}"
+
+    if [[ "${cur}" == --* ]]; then
+        _long_opts
+    elif [[ "${cur}" == -* ]]; then
+        _short_opts
+    elif [[ "${prev}" == switch || "${prev}" == use ||
+          "${prev}" == uninstall || "${prev}" == --with ]]; then
+        _perls
+    elif [[ "${prev}" == install || "${pre_prev}" == install ||
+        "${pre_pre_prev}" == install ]]; then
+        _available_perls
+    elif [[ "${prev}" == perlbrew || "${prev}" == help || (
+        "${pre_prev}" == perlbrew && ( "${prev}" == --quiet ||
+            "${prev}" == --verbose ) ) ]]; then
+        _commands
+    elif [[ "${prev}" == alias || "${pre_prev}" == alias ]]; then
+        _alias_subcommands
+    fi
+}
+
+complete -F _perlbrew perlbrew

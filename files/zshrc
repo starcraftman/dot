@@ -196,8 +196,15 @@ zstyle ':vcs_info:*' formats "%{$fg[green]%}%c%{$reset_color%} %{$fg[red]%}%u%{$
 # }}}
 # Specific Extra Completions
 
-eval "$(pip completion --zsh)"
-eval "$(pyenv init -)"
+valid_name pip && eval "$(pip completion --zsh)"
+valid_name pyenv && eval "$(pyenv init -)"
+# TODO: Fails atm
+# [[ -f "$RVMPATH/scripts/completion" ]] && . "$RVMPATH/scripts/completion"
+# __rvm_sed() {
+   # sed "$@"
+# }
+
+
 # {{{ Options
 # History should append if multiple versions run
 setopt APPEND_HISTORY

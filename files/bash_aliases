@@ -169,6 +169,14 @@ shopt -u mailwarn
 unset MAILCHECK
 #}}}
 ############################################################################
+# Specific Completions
+############################################################################
+# {{{
+valid_name pip && eval "$(pip completion --bash)"
+[[ -f "$RVMPATH/scripts/completion" ]] && . "$RVMPATH/scripts/completion"
+[[ -d "$SHELLD/completion-ruby/" ]] && . "$SHELLD/completion-ruby/completion-ruby-all"
+# }}}
+############################################################################
 # PS1 Bash Propmt
 ############################################################################
 #{{{

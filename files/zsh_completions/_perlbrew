@@ -1,0 +1,93 @@
+#compdef perlbrew
+
+# origin: https://gist.githubusercontent.com/ywatase/4134733/raw/03c97da513ed118680cfe1b36abe09e2228ca5a6/_perlbrew
+typeset -A opt_args
+local context state line
+
+_arguments -C \
+  '(- 1 *)'{-h,--help}'[prints help]' \
+  '(-f --force)'{-f,--force}'[Force installation of a perl]' \
+  '(-q --quiet)'{-q,--quiet}'[Log output to a log file rather than STDOUT. This is the default.]' \
+  '(-v --verbose)'{-v,--verbose}'[Log output to STDOUT rather than a logfile]' \
+  '-D=-[pass through switches to the perl Configure script]' \
+  '(-as)'-as+'[Install a given perl under an alias.]:alias name' \
+  '1: :->cmds' \
+  ': :->args' \
+  '*:: :->args2' && ret=0
+
+
+case $state in
+  cmds)
+    local -a cmds
+    cmds=( init install uninstall available lib alias upgrade-perl list use off switch switch-off exec self-install self-upgrade \
+        install-patchperl install-cpanm install-ack download mirror version help)
+    _describe -t commands 'perlbrew command' cmds && ret=0
+    ;;
+  args)
+    case $line[1] in
+      switch | use)
+        local -a versions
+        versions=($(perlbrew list | perl -pe 's/^\*//m;s/\n/ /m'))
+        _wanted versions expl 'perl version' compadd $versions && ret=0
+        ;;
+      install)
+        local -a perl_versions
+        perl_versions=($(perlbrew available|perl -pe 's/^i//m;s/\n/ /m') perl-blead )
+        _wanted perl_versions expl 'perl-<version-number>' compadd $perl_versions && ret=0
+        ;;
+      uninstall)
+        local -a versions
+        versions=($(ls $PERLBREW_ROOT/perls/ | perl -pe 's/\n/ /m'))
+        _wanted versions expl 'perl version' compadd $versions && ret=0
+        ;;
+      lib)
+        local -a lib_cmds
+        lib_cmds=(create list delete)
+        _wanted lib_cmds expl 'lib command' compadd $lib_cmds && ret=0
+        ;;
+      exec)
+        # words=(perbrew exec),  CURRENT=2 が渡るのでwordsを空にして、カーソルを2戻す
+        shift 2 words
+        (( CURRENT-- ))
+        (( CURRENT-- ))
+        _normal && ret=0
+        ;;
+      *)
+        (( ret )) && _message 'no more arguments'
+        ;;
+    esac
+    ;;
+  args2)
+    case $line[1] in
+      lib)
+        case $line[2] in
+          create)
+            local -a localperls
+            localperls=($(perlbrew -q list  | grep -v @ | sed -e 's/\*/ /' | perl -pe 's/\n/ /m'))
+            _wanted locallibs expl 'perls' compadd $localperls && ret=0
+            ;;
+          delete)
+            local -a locallibs
+            locallibs=($(perlbrew lib list | perl -pe 's/\n/ /m'))
+            _wanted locallibs expl 'libs' compadd $locallibs && ret=0
+            ;;
+          *)
+            (( ret )) && _message 'no more arguments'
+            ;;
+        esac
+        ;;
+      exec)
+        # words に (exec command args...)と渡るので、execをwordsから抜いて、カーソル位置(CURRENT)を1戻す
+        # _normalにcommandの続きと認識させるため
+        shift 1 words
+        (( CURRENT-- ))
+        _normal && ret=0
+        ;;
+      *)
+        ret=0
+        ;;
+    esac
+    ;;
+esac
+
+return ret
