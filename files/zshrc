@@ -22,8 +22,8 @@ fpath=(~/.zsh_completions $fpath)
 # Ensure correct shell set.
 export SHELL=/bin/zsh
 
-# Save every N cmds
-export SAVEHIST=10
+# Save last N cmds
+export SAVEHIST=10000
 
 # ZSH history separate
 export HISTFILE=~/.zsh_history
