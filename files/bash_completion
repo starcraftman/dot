@@ -6,7 +6,8 @@ if [ -e ~/.bash_history ]; then
 fi
 
 # Source local completions
-for script in ~/.bash_completions/* ; do
-    source $script
+for bc_file in ~/.bash_completions.d/* ; do
+    . "$bc_file"
 done
+
 # vim:set ft=sh foldmethod=marker:

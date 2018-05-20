@@ -11,7 +11,7 @@
 
 # # Path to lookup functions
 fpath=(~/.shell/zsh-completions/src $fpath)
-fpath=(~/.zsh_completions $fpath)
+fpath=(~/.zsh_completions.d $fpath)
 # #}}}
 # ############################################################################
 # Environment Variables
