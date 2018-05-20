@@ -114,8 +114,9 @@ export HGMERGE=/usr/bin/kdiff3
 
 # Bash history options
 # Set large history file & line limit
-export HISTFILESIZE=100000
-export HISTSIZE=100000
+export HISTFILESIZE=10000
+export HISTSIZE=$HISTFILESIZE
+export SAVEHIST=$HISTFILESIZE
 
 # Ignore some commands
 export HISTIGNORE='ls *:l *:bg:fg:history *'
