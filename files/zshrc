@@ -237,6 +237,8 @@ setopt EXTENDED_GLOB
 # Use ksh globing, brings leading @, +() etc...
 setopt KSH_GLOB
 
+# WRT above, see: http://zsh.sourceforge.net/Doc/Release/Expansion.html#Filename-Generation
+
 # Enable rematch (=~) to use pcre instead of shell regex.
 #setopt REMATCH_PCRE
 
@@ -268,8 +270,6 @@ setopt VI
 # Zero index arrays, like normal people
 #setopt KSH_ARRAYS
 
-# Set compatible globbing.
-#setopt KSH_GLOB
 #}}}
 ############################################################################
 # Vim Key Bindings
