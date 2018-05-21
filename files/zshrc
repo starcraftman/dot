@@ -354,21 +354,6 @@ function prompt_precmd() {
     vcs_info
 }
 
-# Save hooks if arge is 1, else restore them.
-# Needed for debug function above, or if I just want to disabe.
-function save_hooks {
-    if [ "$1" = "1" ]; then
-        chpwd_functions=
-        precmd_functions=
-        preexec_functions=
-    else
-        add-zsh-hook precmd prompt_precmd
-        source ~/.shell/zsh-git-prompt/zshrc.sh
-        # Shell highlighting
-        source ~/.shell/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-    fi
-}
-
 # Just aliases for common colors used later.
 PS1_DIR=%B%F{red}%~%f%b
 PS1_USER=%F{cyan}%n%f
@@ -387,12 +372,8 @@ fi
 if [ "x" = "x$TMUX" ]; then
     PS1_STD='$LAST { ${PS1_DIR} } $(hg_prompt)$(git_super_status)${vcs_info_msg_0_}
 ${PS1_USER}@${PS1_HOST}%# '
-    PS1_DEBUG='%B%F{red} >>DEBUG<< %f%b$LAST { ${PS1_DIR} }
-${PS1_USER}@${PS1_HOST}%# '
 else
     PS1_STD='$LAST { ${PS1_DIR} } $(hg_prompt)$(git_super_status)${vcs_info_msg_0_}
-${PS1_USER}%# '
-    PS1_DEBUG='%B%F{red} >>DEBUG<< %f%b$LAST { ${PS1_DIR} }
 ${PS1_USER}%# '
 fi
 PS1="$PS1_STD"
@@ -403,8 +384,38 @@ watch=all                # watch all logins
 logcheck=30              # every 30 seconds
 WATCHFMT="%n from %M has %a tty%l at %T %W"
 
-# Activate the prompt hooks for git/hg
-save_hooks 0
+# setup precmd hook for laststatus
+add-zsh-hook precmd prompt_precmd
+
+# Source required files
+. ~/.shell/zsh-git-prompt/zshrc.sh
+. ~/.shell/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# {{{ Archived
+    # PS1_DEBUG='%B%F{red} >>DEBUG<< %f%b$LAST { ${PS1_DIR} }
+# ${PS1_USER}@${PS1_HOST}%# '
+
+    # PS1_DEBUG='%B%F{red} >>DEBUG<< %f%b$LAST { ${PS1_DIR} }
+# ${PS1_USER}%# '
+
+# # Save hooks if arge is 1, else restore them.
+# # Needed for debug function above, or if I just want to disabe.
+# function save_hooks {
+    # if [ "$1" = "1" ]; then
+        # chpwd_functions=
+        # precmd_functions=
+        # preexec_functions=
+    # else
+        # add-zsh-hook precmd prompt_precmd
+        # source ~/.shell/zsh-git-prompt/zshrc.sh
+        # # Shell highlighting
+        # source ~/.shell/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    # fi
+# }
+# # Activate the prompt hooks for git/hg
+
+# save_hooks 0
+# }}}
 #}}}
 
 # Local config override (~/.lzshrc)
