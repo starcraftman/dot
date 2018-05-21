@@ -390,8 +390,15 @@ add-zsh-hook precmd prompt_precmd
 # Source required files
 . ~/.shell/zsh-git-prompt/zshrc.sh
 . ~/.shell/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#}}}
 
-# {{{ Archived
+# Local config override (~/.lzshrc)
+# Put any server specific changes or overrides here
+if [ -s ~/.lzshrc ]; then
+   . ~/.lzshrc
+fi
+
+#{{{ Archived
     # PS1_DEBUG='%B%F{red} >>DEBUG<< %f%b$LAST { ${PS1_DIR} }
 # ${PS1_USER}@${PS1_HOST}%# '
 
@@ -415,13 +422,6 @@ add-zsh-hook precmd prompt_precmd
 # # Activate the prompt hooks for git/hg
 
 # save_hooks 0
-# }}}
 #}}}
-
-# Local config override (~/.lzshrc)
-# Put any server specific changes or overrides here
-if [ -s ~/.lzshrc ]; then
-   . ~/.lzshrc
-fi
 
 # vim:set filetype=zsh foldmethod=marker:
