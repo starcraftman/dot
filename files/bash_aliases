@@ -178,6 +178,8 @@ valid_name pip && eval "$(pip completion --bash)"
 valid_name pyenv && eval "$(pyenv init -)"
 [[ -f "$RVMPATH/scripts/completion" ]] && . "$RVMPATH/scripts/completion"
 [[ -d "$SHELLD/completion-ruby/" ]] && . "$SHELLD/completion-ruby/completion-ruby-all"
+valid_name stack && eval "$(stack --bash-completion-script stack)"
+
 # }}}
 ############################################################################
 # PS1 Bash Propmt
