@@ -285,7 +285,7 @@ let g:syntastic_python_flake8_args = '--max-complexity 10'
 " yaml   | yamllint   | sudo apt-get install yamllint
 
 " Prefer low complexity funcs
-let g:ale_python_flake8_args = '--max-complexity 10'
+let g:ale_python_flake8_options = '--max-complexity 10'
 " }}}
 "{{{ Nerdcommenter / Nerdtree
 " Nerdcommenter
