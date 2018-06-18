@@ -9,21 +9,31 @@ import ycm_core
 # These are the compilation flags that will be used by YCM to check c files.
 FLAGS = [
     # C Flags
+    # Debug options: https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html
     '-ggdb',
+    '-Og',  # Alternatives 02, 0s (size)
     '-Wall',
     '-Wextra',
-    #'-Werror',
+    '-Werror=format-security',
+    '-Wundef',
     '-Winline',
-    '-pedantic',
+    '-Wshadow',
+    '-Wunused',
+    '-Winit-self',
+    '-pedantic',  # Warn if violating std, pedantic-errors makes it an error
+    '-pipe',
     '-fexceptions',
     # C++ Flags
     '-Weffc++',
     # Defines
+    '-D_FORTIFY_SOURCE=2',
+    '-D_GLIBCXX_ASSERTIONS',
     '-D_REENTRANT',
     # Important for clang, choose a standard below.
-    # C++: c/gnu++98, c++03, c/gnu++11,
-    # C: c/gnu90, c/gnu99, c/gnu11
-    '-std=c++11',
+    #   gnu extensions enabled if: c | c++ -> gnu
+    # C++: c++98, c++03, c++11, c++14, c++17, c++2a,
+    # C: c90, c99, c11, c17
+    '-std=c++17',
     # Need to tell clang language of headers.
     # For a C project set to 'c' instead of 'c++'.
     '-x',
@@ -31,6 +41,8 @@ FLAGS = [
     # Includes.
     '-isystem',
     '/usr/include',
+    '-isystem',
+    '/usr/include/c++/5',
     '-isystem',
     '/usr/local/include',
 ]
