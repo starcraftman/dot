@@ -57,7 +57,7 @@ FLAGS = [
 COMPILATION_DB_FOLDER = ''
 
 if os.path.exists(COMPILATION_DB_FOLDER):
-    DB = ycm_core.CompilationDB(COMPILATION_DB_FOLDER)
+    DB = ycm_core.CompilationDatabase(COMPILATION_DB_FOLDER)
 else:
     DB = None
 
