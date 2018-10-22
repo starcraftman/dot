@@ -102,7 +102,7 @@ export PS1_R="\[\e[0m\]"
   # repeat 10 echo foo
 # **RESERVED** in ZSH
 repeatn() {
-    if [ "$#" -lt 3 ]; then
+    if [ "$#" -lt 2 ]; then
         echo -e "Repeat a command n times, example:
         repeat 10 echo foo"
         return 0

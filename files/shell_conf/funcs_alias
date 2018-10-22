@@ -433,11 +433,6 @@ swap_intelli() {
 # Misc Options
 ############################################################################
 #{{{
-# Enable the windows key on Ubuntu as F13
-if valid_name xmodmap && [ -n "$DISPLAY" ]; then
-    xmodmap -e 'keycode 133 = F13'
-fi
-
 # Disable the Ctrl+s/q button that freezes terminal output.
 if valid_name stty; then
     stty -ixon
