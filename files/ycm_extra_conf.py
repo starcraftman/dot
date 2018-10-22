@@ -1,10 +1,14 @@
-""" This file should be .ycm_extra_conf.py at top of a c/c++ dir.
+"""
+    This file should be .ycm_extra_conf.py at top of a c/c++ dir.
     It is based on  ~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py
     Basically just put compilation flags/include dirs in flags.
 """
-
 import os
 import ycm_core
+
+ROOT = os.path.abspath(os.path.dirname(__file__))
+if os.path.dirname(__file__) == '':
+    ROOT = os.getcwd()
 
 # These are the compilation flags that will be used by YCM to check c files.
 FLAGS = [
@@ -42,7 +46,7 @@ FLAGS = [
     '-isystem',
     '/usr/include',
     '-isystem',
-    '/usr/include/c++/5',
+    '/usr/include/c++/8',
     '-isystem',
     '/usr/local/include',
 ]
@@ -54,7 +58,7 @@ FLAGS = [
 #
 # Most projects will NOT need to set this to anything; you can just change the
 # 'flags' list of compilation flags. Notice that YCM itself uses that approach.
-COMPILATION_DB_FOLDER = ''
+COMPILATION_DB_FOLDER = os.path.join(ROOT, 'build')
 
 if os.path.exists(COMPILATION_DB_FOLDER):
     DB = ycm_core.CompilationDatabase(COMPILATION_DB_FOLDER)
