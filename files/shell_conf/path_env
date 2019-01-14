@@ -1,6 +1,12 @@
 # All common $PATH modifications go here
 # This file gets sourced from ~/.zshrc and ~/.bash_aliases only if not already done
 
+# Must always be sourced
+if [ -d "$RVMPATH/scripts" ]; then
+    # shellcheck source=/home/starcraftman/.rvm/scripts/rvm
+    . "$RVMPATH/scripts/rvm"
+fi
+
 # Guard against resourcing, many path changes onetime or costly.
 if [ -n "$P" ]; then
     return
@@ -51,6 +57,7 @@ export ANDROID_TOOLS=~/.android/platform-tools/
 
 # \curl -L https://install.perlbrew.pl | bash
 if [ -s "$PERLBREW_ROOT/etc/bashrc" ]; then
+    # shellcheck source=/home/starcraftman/.perlbrew/etc/bashrc
     . "$PERLBREW_ROOT/etc/bashrc"
 fi
 
@@ -79,7 +86,8 @@ if [ -d "$SOFT/intelliJ" ] && [ -d "$SOFT/android-studio" ]; then
 fi
 
 # RVM -> https://rvm.io/
-if [ -s "$RVMPATH/scripts/rvm" ]; then
+if [ -d "$RVMPATH/scripts" ]; then
+    # shellcheck source=/home/starcraftman/.rvm/scripts/rvm
     . "$RVMPATH/scripts/rvm"
 fi
 # }}}
@@ -88,7 +96,9 @@ fi
 ############################################################################
 # {{{
 # Default editor for things like sudoedit.
-if valid_name vim; then
+if valid_name nvim; then
+    export EDITOR=nvim
+elif valid_name vim; then
     export EDITOR=vim
 fi
 
