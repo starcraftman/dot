@@ -35,6 +35,8 @@ endif
 
 try
   call plug#begin(s:path_join(g:vim_dir, 'plugged'))
+  " Generate documentation skeletons. Early add, also uses <tab>.
+  Plug 'kkoomen/vim-doge'
 
   " Completion
   " Min patch for YCM, Neovim has it
