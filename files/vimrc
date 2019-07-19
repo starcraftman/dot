@@ -194,7 +194,8 @@ let g:ycm_complete_in_comments = 1
 " Use the following to whitelist dirs for .ycm_extra_conf.py
 let g:ycm_extra_conf_globlist = [
     \ '~/prog/*',
-    \ '~/.shell/zsh-git-prompt/*']
+    \ '~/.shell/zsh-git-prompt/cxx/.ycm_extra_conf.py',
+    \ ]
 
 " Force python 3 completion rather than default 2.
 "let g:ycm_python_binary_path = g:python3_host_prog
@@ -834,6 +835,7 @@ inoremap <silent> <F5> <Esc>:call feedkeys("\<F5>i")<CR>
 nnoremap <F12> mzgg=G'z
 
 " See " AsyncRun section, build in background
+" Set b:amake_run/test for per buffer, otherwise g for global
 nnoremap <silent> <Leader>m :call myutil#test()<CR>
 nnoremap <silent> <Leader>mr :call myutil#run()<CR>
 nnoremap <silent> <Leader>ms :AsyncStop<CR>
