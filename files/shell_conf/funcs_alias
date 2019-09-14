@@ -119,11 +119,11 @@ fi
 if valid_name apt; then
     alias apti='sudo apt install'
     alias aptr='sudo apt remove'
-    alias aptu='sudo apt update && sudo apt dist-upgrade && sudo apt autoremove'
+    alias aptu='sudo apt update && sudo apt -y dist-upgrade && sudo apt -y autoremove'
 elif valid_name apt-get; then
     alias apti='sudo apt-get -y install'
     alias aptr='sudo apt-get -y remove'
-    alias aptu='sudo apt-get update && sudo apt-get -y dist-upgrade && sudo apt-get autoremove'
+    alias aptu='sudo apt-get update && sudo apt-get -y dist-upgrade && sudo apt-get -y autoremove'
 fi
 
 # Colored cat output
