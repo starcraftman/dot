@@ -116,8 +116,7 @@ try
   Plug 'tpope/vim-sleuth'
   Plug 'tyru/open-browser.vim'
   Plug 'starcraftman/cmdalias.vim'
-  " Plug 'luochen1990/rainbow'
-  "     Disabled for now, breaks vim-ags
+  Plug 'junegunn/rainbow_parentheses.vim'
 
   " Syntax / File Specific
   "Plug 'alfredodeza/coveragepy.vim'
