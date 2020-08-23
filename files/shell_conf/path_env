@@ -158,6 +158,9 @@ elif [ "$TERM" = "xterm" ]; then
 elif [ "$TERM" = "screen" ]; then
     export TERM=screen-256color
 fi
+
+# Cache the secrethub credential for an hour
+export SECRETHUB_CREDENTIAL_PASSPHRASE_CACHE_TTL=1h
 # }}}
 
 # vim:set filetype=sh foldmethod=marker:
