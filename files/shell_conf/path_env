@@ -39,6 +39,8 @@ export GOPATH=~/.go
 export PERLBREW_ROOT=~/.perlbrew
 export RVMPATH=~/.rvm
 export ANDROID_TOOLS=~/.android/platform-tools/
+export GROOVY="$SOFT/groovy"
+export KOTLINC="$SOFT/kotlinc"
 
 # Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
@@ -47,6 +49,8 @@ export ANDROID_TOOLS=~/.android/platform-tools/
 [ -d "$OPTDIR/bin" ]        && export PATH=$OPTDIR/bin:$PATH
 [ -d "$HOME/bin" ]          && export PATH=$HOME/bin:$PATH
 [ -d "$HOME/.local/bin" ]   && export PATH=$HOME/.local/bin:$PATH
+[ -d "$GROOVY" ]            && export PATH=$GROOVY/bin:$PATH
+[ -d "$KOTLINC" ]           && export PATH=$KOTLINC/bin:$PATH
 [ -d "$CABAL" ]             && export PATH=$CABAL/bin:$PATH
 [ -d "$CARGO_HOME" ]        && export PATH=$CARGO_HOME/bin:$PATH
 [ -d "$ANDROID_TOOLS" ]     && export PATH=$ANDROID_TOOLS:$PATH
