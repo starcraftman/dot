@@ -39,7 +39,7 @@ export GOPATH=~/.go
 export PERLBREW_ROOT=~/.perlbrew
 export RVMPATH=~/.rvm
 export ANDROID_TOOLS=~/.android/platform-tools/
-export SDKMAN="$HOME/.sdkman"
+export SDKMAN_DIR="$HOME/.sdkman"
 
 # Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
@@ -94,8 +94,8 @@ fi
 
 # SDKMan used to manage JDK and other toolkits like gradle.
 # Install: curl -s "https://get.sdkman.io" | bash
-if [ -s "$SDKMAN/bin/sdkman-init.sh" ]; then
-    . "$SDKMAN/bin/sdkman-init.sh"
+if [ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
+    . "$SDKMAN_DIR/bin/sdkman-init.sh"
 fi
 
 # }}}
