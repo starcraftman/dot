@@ -15,17 +15,14 @@ function! myutil#ycm_hook(info)
     let l:opts .= '--rust-completer '
   endif
   if executable('java')
-    let l:java_version = split(system('java -version'), '\n')[0]
-    if stridx(l:java_version, 'java version "10"') == 0
-      let l:opts .= '--java-completer '
-    endif
+    let l:opts .= '--java-completer '
   endif
   if executable('nodejs') && executable('npm')
-    let l:opts .= '--js-completer '
+    let l:opts .= '--ts-completer '
   endif
-  "if executable('mono')
-    "let l:opts .= '-cs-completer '
-  "endif
+  " if executable('mono')
+    " let l:opts .= '--cs-completer '
+  " endif
 
   let l:line = printf('%s %s', expand(g:vim_dir . '/plugged/YouCompleteMe/install.py'), l:opts)
   let l:suffix = ''

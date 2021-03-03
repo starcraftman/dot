@@ -146,9 +146,10 @@ try
   Plug 'ap/vim-css-color'
   Plug 'hail2u/vim-css3-syntax'
   "Plug 'kchmck/vim-coffee-script'
+  " Plug 'ternjs/tern_for_vim', { 'do' : 'npm install' }
   Plug 'pangloss/vim-javascript'
-  "Plug 'vim-scripts/jQuery'
-  "Plug 'Shutnik/jshint2.vim'
+  Plug 'vim-scripts/jQuery'
+  Plug 'Shutnik/jshint2.vim'
   "Plug 'StanAngeloff/php.vim'
 
   " Color Schemes I like
