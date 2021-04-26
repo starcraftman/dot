@@ -43,6 +43,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
+[ -d "/opt/bin" ]           && export PATH=/opt/bin:$PATH
 [ -d "$SOFT/bin" ]          && export PATH=$SOFT/bin:$PATH
 [ -d "$SCRIPTS" ]           && export PATH=$SCRIPTS/bin:$PATH
 [ -d "$OPTDIR/bin" ]        && export PATH=$OPTDIR/bin:$PATH
