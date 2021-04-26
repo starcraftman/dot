@@ -40,6 +40,8 @@ export PERLBREW_ROOT=~/.perlbrew
 export RVMPATH=~/.rvm
 export ANDROID_TOOLS=~/.android/platform-tools/
 export SDKMAN_DIR="$HOME/.sdkman"
+export NVM_DIR="$HOME/.nvm"
+export NPM_PACKS="$HOME/.npm"
 
 # Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
@@ -55,6 +57,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [ -d "$PERLBREW_ROOT" ]     && export PATH=$PERLBREW_ROOT/bin:$PATH
 [ -d "$RVMPATH" ]           && export PATH=$RVMPATH/bin:$PATH
 [ -d "/usr/lib/ccache" ]    && export PATH=/usr/lib/ccache:$PATH
+[ -d "$NPM_PACKS" ]         && export PATH=$NPM_PACKS/bin:$PATH
 
 # \curl -L https://install.perlbrew.pl | bash
 if [ -s "$PERLBREW_ROOT/etc/bashrc" ]; then
@@ -91,6 +94,10 @@ if [ -d "$RVMPATH/scripts" ]; then
     # shellcheck source=/home/starcraftman/.rvm/scripts/rvm
     . "$RVMPATH/scripts/rvm"
 fi
+
+# NVM for node install.
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # SDKMan used to manage JDK and other toolkits like gradle.
 # Install: curl -s "https://get.sdkman.io" | bash

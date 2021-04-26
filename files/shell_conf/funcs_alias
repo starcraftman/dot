@@ -202,6 +202,10 @@ if valid_name rsync; then
     alias xcp='rsync --progress -rv'
 fi
 
+if type sdk > /dev/null 2>&1; then
+    alias sdk='unset rm && sdk'
+fi
+
 if [ -d "$SHELLD/bfg" ]; then
    alias bfg="java -jar \$SHELLD/bfg/bfg.jar"
 fi
