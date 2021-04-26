@@ -37,6 +37,9 @@ alias lm='ll -tr'  # Modification time
 # Recursive cp
 alias cpr='cp -r'
 
+# Find largest files of x size, +1G, +100M, +2400K
+alias find_size='sudo find / -xdev -type f -size'
+
 # Always create non-existing parent dirs
 alias mkdir='mkdir -vp'
 
