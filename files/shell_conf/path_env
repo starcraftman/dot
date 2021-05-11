@@ -69,10 +69,11 @@ fi
 # git clone https://github.com/pyenv/pyenv $SHELLD/pyenv
 if [ -s "$SHELLD/pyenv/bin/pyenv" ]; then
     export PYENV_ROOT=$SHELLD/pyenv
-    export PATH=$PYENV_ROOT/bin:$PATH
+    export PATH=$PYENV_ROOT/bin:$PYENV_ROOT/shims:$PATH
     export PYTHON_CONFIGURE_OPTS=--enable-shared
-    # eval "$(pyenv init -)"
-    #eval "$(pyenv virtualenv-init -)"
+    __init=init.sh
+    echo "$(pyenv init -)" > $__init && . $__init && command rm $__init
+    unset __init
 fi
 
 # http://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html
