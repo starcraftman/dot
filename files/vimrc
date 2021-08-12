@@ -119,6 +119,7 @@ try
   Plug 'junegunn/rainbow_parentheses.vim'
 
   " Syntax / File Specific
+  Plug 'udalov/kotlin-vim'
   "Plug 'alfredodeza/coveragepy.vim'
   Plug 'chrisbra/csv.vim'
   Plug 'clones/vim-zsh'
@@ -371,7 +372,7 @@ let g:sneak#map_netrw = 1
 if executable('ag')
   let &grepprg = 'ag --nogroup --nocolor'
   let s:ctrlp_fallback = 'ag %s
-      \ --nocolor --nogroup --depth 5
+      \ --nocolor --nogroup --depth 8
       \ --hidden --follow --smart-case
       \ --ignore .bazaar
       \ --ignore .bzr

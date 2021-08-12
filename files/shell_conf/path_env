@@ -71,9 +71,7 @@ if [ -s "$SHELLD/pyenv/bin/pyenv" ]; then
     export PYENV_ROOT=$SHELLD/pyenv
     export PATH=$PYENV_ROOT/bin:$PYENV_ROOT/shims:$PATH
     export PYTHON_CONFIGURE_OPTS=--enable-shared
-    __init=init.sh
-    echo "$(pyenv init -)" > $__init && . $__init && command rm $__init
-    unset __init
+    eval "$(pyenv init --path)"
 fi
 
 # http://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html
