@@ -36,7 +36,8 @@ endif
 try
   call plug#begin(s:path_join(g:vim_dir, 'plugged'))
   " Generate documentation skeletons. Early add, also uses <tab>.
-  Plug 'kkoomen/vim-doge'
+  Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
+
 
   " Completion
   " Min patch for YCM, Neovim has it
@@ -352,6 +353,11 @@ let g:UltiSnipsSnippetsDir = s:path_join(g:vim_dir, 'snippets')
 
 " Force a version of python
 "let g:UltiSnipsUsePythonVersion = 2
+" }}}
+" {{{ Doge
+"""""""""""
+let g:doge_doc_standard_python = 'google'
+
 " }}}
 " {{{ vim-sneak
 """""""""""""""
