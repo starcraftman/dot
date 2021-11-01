@@ -52,8 +52,8 @@ try
 
   " Prefer async checks when available
   if has('nvim') || v:version >= 800
-    Plug 'w0rp/ale'
-    " Supported linters: https://github.com/w0rp/ale#supported-languages
+    Plug 'dense-analysis/ale'
+    " More info: https://github.com/dense-analysis/ale/wiki
   else
     Plug 'vim-syntastic/syntastic' | Plug 'myint/syntastic-extras'
   endif
