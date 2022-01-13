@@ -228,40 +228,40 @@ let g:deoplete#enable_auto_select = 1
 " {{{ Syntastic / ALE
 " Syntastic
 """""""""""
-" Set what chechers are active or passive
-let g:syntastic_mode_map = {
-    \ 'mode': 'active',
-    \ 'active_filetypes': ['c', 'cpp', 'java', 'lisp', 'python', 'perl', 'ruby',
-    \                      'sh', 'xml', 'json', 'xhtml', 'html', 'css', 'javascript']
-\ }
+" " Set what chechers are active or passive
+" let g:syntastic_mode_map = {
+    " \ 'mode': 'active',
+    " \ 'active_filetypes': ['c', 'cpp', 'java', 'lisp', 'python', 'perl', 'ruby',
+    " \                      'sh', 'xml', 'json', 'xhtml', 'html', 'css', 'javascript']
+" \ }
 
-" Check syntax on file open
-"let g:syntastic_check_on_open = 1
+" " Check syntax on file open
+" "let g:syntastic_check_on_open = 1
 
-" Show errors in the line numbers to left
-let g:syntastic_enable_signs = 1
+" " Show errors in the line numbers to left
+" let g:syntastic_enable_signs = 1
 
-" Format the syntastic message
-let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
+" " Format the syntastic message
+" let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 
-" List of files to ignore checking, may be useful later
-let g:syntastic_ignore_files = [ '\m^/usr/include/' ]
+" " List of files to ignore checking, may be useful later
+" let g:syntastic_ignore_files = [ '\m^/usr/include/' ]
 
-" Always use location list
-let g:syntastic_always_populate_loc_list = 1
+" " Always use location list
+" let g:syntastic_always_populate_loc_list = 1
 
-" Override, don't think I'll run any unsecure perl files
-let g:syntastic_enable_perl_checker = 1
+" " Override, don't think I'll run any unsecure perl files
+" let g:syntastic_enable_perl_checker = 1
 
-" Manually set important checkers:
-let g:syntastic_python_checkers = ['python', 'pylint', 'flake8']
-let g:syntastic_perl_checkers = ['perl', 'perlcritic']
-let g:syntastic_rst_checkers = ['sphinx']
+" " Manually set important checkers:
+" let g:syntastic_python_checkers = ['python', 'pylint', 'flake8']
+" let g:syntastic_perl_checkers = ['perl', 'perlcritic']
+" let g:syntastic_rst_checkers = ['sphinx']
 
-" Options to pass to above checkers take form:
-" syntastic_filetype_checker_argtype = ''
-" Command Run: <exe> <args> <fname> <post_args> <tail>
-let g:syntastic_python_flake8_args = '--max-complexity 10'
+" " Options to pass to above checkers take form:
+" " syntastic_filetype_checker_argtype = ''
+" " Command Run: <exe> <args> <fname> <post_args> <tail>
+" let g:syntastic_python_flake8_args = '--max-complexity 10'
 
 " ALE
 """""
