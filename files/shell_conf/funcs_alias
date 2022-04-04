@@ -1,7 +1,7 @@
 # Should be sourced after path changes
 if ! valid_name >/dev/null 2>&1; then
-   echo "Cannot find valid_name, check the \$PATH";
-   return
+    echo "Cannot find valid_name, check the \$PATH";
+    return
 fi
 
 ############################################################################
@@ -15,12 +15,12 @@ alias su='su --preserve-environment'
 
 # ls doesn't like TERM=konsole-256color
 case "$TERM" in
-   *256*|*color)
-      alias l='TERM=xterm-256color \ls --color=auto -F --group-directories-first'
-      ;;
-   *)
-      alias l='\ls --color=auto -F --group-directories-first'
-      ;;
+    *256*|*color)
+       alias l='TERM=xterm-256color \ls --color=auto -F --group-directories-first'
+       ;;
+    *)
+       alias l='\ls --color=auto -F --group-directories-first'
+       ;;
 esac
 # Make ls more convenient
 alias ls='l --sort=extension'
@@ -28,14 +28,15 @@ alias ll='ls -Alh'
 alias la='l -A'
 
 # Different sorts
-alias lx='ll -XB'  # Extension
-alias lz='ll -Sr'  # File size
+alias lx='ll -XB'    # Extension
+alias lz='ll -Sr'    # File size
 alias lt='ll -tur' # Access time
 alias lc='ll -tcr' # CTime, last change to attributes (fperms, ownership)
-alias lm='ll -tr'  # Modification time
+alias lm='ll -tr'    # Modification time
 
 # Recursive cp
 alias cpr='cp -r'
+complete -F _complete_alias cpr
 
 # Find largest files of x size, +1G, +100M, +2400K
 alias find_size='sudo find / -xdev -type f -size'
@@ -56,47 +57,56 @@ alias grep='grep --color=auto -n --exclude-dir=.git --exclude-dir=.hg --exclude-
 alias egrep='grep -E'
 alias fgrep='grep -F'
 alias rgrep='grep -r'
+complete -F _complete_alias egrep
+complete -F _complete_alias fgrep
+complete -F _complete_alias rgrep
 
 # Default ack options, use smart case, sort output by file and follow symlinks.
 # Filter by type with --type, supported types `ack --help-types`
 if valid_name ack; then
-    alias ack='ack --smart-case --sort-files --follow --color-match="bold blue"'
-    # Alias for ack find file by name
-    alias ackf='ack -g'
-    # Alias for ack find file by contents
-    alias ackl='ack -il'
+     alias ack='ack --smart-case --sort-files --follow --color-match="bold blue"'
+     # Alias for ack find file by name
+     alias ackf='ack -g'
+     # Alias for ack find file by contents
+     alias ackl='ack -il'
+     complete -F _complete_alias ackf
+     complete -F _complete_alias ackl
 fi
 
 # Alias for silver search
 # For type use --type, i.e. --cpp. supported types -> 'ag --list-file-types
 if valid_name ag; then
-    alias ag='ag --smart-case --follow --color-match="1;34"'
-    # Alias for ag find file by name
-    alias agf='ag -g'
-    # Alias for ag find file by contents
-    alias agl='ag -il'
+     alias ag='ag --smart-case --follow --color-match="1;34"'
+     # Alias for ag find file by name
+     alias agf='ag -g'
+     # Alias for ag find file by contents
+     alias agl='ag -il'
+     complete -F _complete_alias agf
+     complete -F _complete_alias agl
 fi
 
 # Always open with splits
 if valid_name nvim; then
-   alias n='nvim'
-   alias ns='nvim -o'
-   if [ "$SHELL" = "/bin/bash" ]; then
-      complete -F _nvim ${nospace} n
-   fi
+    alias n='nvim'
+    alias ns='nvim -o'
+    if [ "$SHELL" = "/bin/bash" ]; then
+     complete -F _complete_alias n
+     complete -F _complete_alias ns
+    fi
 fi
 
 if valid_name vim; then
-   alias v='vim'
-   alias vs='vim -o'
-   if [ "$SHELL" = "/bin/bash" ]; then
-      complete -F _vim ${nospace} v
-   fi
+    alias v='vim'
+    alias vs='vim -o'
+    if [ "$SHELL" = "/bin/bash" ]; then
+       complete -F _complete_alias v
+       complete -F _complete_alias vs
+    fi
 fi
 
 # For vims java eclipse completion
 if valid_name eclimd; then
-    alias eclimd='eclimd -b -Xss4m -Xms1024m -Xmx2048m'
+     alias eclimd='eclimd -b -Xss4m -Xms1024m -Xmx2048m'
 fi
 
 # Alias for ps, sorts like pstree
@@ -109,108 +119,113 @@ alias types='type -a'
 alias df='df -hT'
 alias du='du -h'
 if valid_name dfc; then
-    alias dfc='dfc -T'
+     alias dfc='dfc -T'
 fi
 
 # Add an "alert" alias for long running commands. Example:
-#   sleep 10; alert
+#    sleep 10; alert
 if valid_name notify-send; then
-    alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+     alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 fi
 
 # Apt aliases
 if valid_name apt; then
-    alias apti='sudo apt install'
-    alias aptr='sudo apt remove'
-    alias aptu='sudo apt update && sudo apt -y dist-upgrade && sudo apt -y autoremove'
+     alias apti='sudo apt install'
+     alias aptr='sudo apt remove'
+     alias aptu='sudo apt update && sudo apt -y dist-upgrade && sudo apt -y autoremove'
+     complete -F _complete_alias apti
+     complete -F _complete_alias aptr
 elif valid_name apt-get; then
-    alias apti='sudo apt-get -y install'
-    alias aptr='sudo apt-get -y remove'
-    alias aptu='sudo apt-get update && sudo apt-get -y dist-upgrade && sudo apt-get -y autoremove'
+     alias apti='sudo apt-get -y install'
+     alias aptr='sudo apt-get -y remove'
+     alias aptu='sudo apt-get update && sudo apt-get -y dist-upgrade && sudo apt-get -y autoremove'
+     complete -F _complete_alias apti
+     complete -F _complete_alias aptr
 fi
 
 # Colored cat output
 if valid_name pygmentize; then
-    alias ccat='pygmentize -g'
+     alias ccat='pygmentize -g'
 fi
 
 # Alias for color tools.
 if valid_name colordiff; then
-    alias cod='colordiff'
+     alias cod='colordiff'
 fi
 if valid_name colorgcc; then
-    alias cog='colorgcc'
+     alias cog='colorgcc'
 fi
 if valid_name colormake; then
-    alias com='colormake'
+     alias com='colormake'
 fi
 
 # Silence parallel
 if valid_name parallel; then
-    alias parallel='parallel --no-notice'
+     alias parallel='parallel --no-notice'
 fi
 
 # Useful pstree highlight current parents
 if valid_name pstree; then
-    alias pstree='pstree -hn'
+     alias pstree='pstree -hn'
 fi
 
 # Shutdown the current machine immediately
 if valid_name shutdown; then
-    alias off='sudo shutdown now'
-    alias restart='sudo shutdown -r now'
+     alias off='sudo shutdown now'
+     alias restart='sudo shutdown -r now'
 fi
 
 # Force 256 colors, woe is me without
 if valid_name tmux; then
-    alias tmux='tmux -2'
+     alias tmux='tmux -2'
 fi
 
 # Use trash instead of RM, have had bad accidents. Need trash-cli library for python.
 if valid_name trash-put; then
-    alias trash-restore='restore-trash'
-    alias tre='restore-trash'
-    alias tp='trash-put'
-    alias tl='trash-list'
-    alias te='trash-empty'
+     alias trash-restore='restore-trash'
+     alias tre='restore-trash'
+     alias tp='trash-put'
+     alias tl='trash-list'
+     alias te='trash-empty'
 fi
 
 # Tree program, use instead of recursive ls. Very pretty.
 if valid_name tree; then
-    alias tree='tree -Csuh'
+     alias tree='tree -Csuh'
 fi
 
 # Aliases for vimpager
 if valid_name vimpager; then
-    alias vcat='vimcat'
-    alias vpager='vimpager'
+     alias vcat='vimcat'
+     alias vpager='vimpager'
 fi
 
 if valid_name sed; then
-    alias strip_colors='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
+     alias strip_colors='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
 fi
 
 if valid_name vagrant; then
-    alias revagrant='vagrant destroy -f && vagrant up && vagrant ssh'
+     alias revagrant='vagrant destroy -f && vagrant up && vagrant ssh'
 fi
 
 # KDE < 4 it is plasma-desktop, >=5 plasmashell
 if valid_name plasma-desktop; then
-    alias krestart='killall plasma-desktop || kstart5 plasma-desktop >/dev/null 2>&1 &'
+     alias krestart='killall plasma-desktop || kstart5 plasma-desktop >/dev/null 2>&1 &'
 elif valid_name plasmashell; then
-    alias krestart='killall plasmashell || kstart5 plasmashell >/dev/null 2>&1 &'
+     alias krestart='killall plasmashell || kstart5 plasmashell >/dev/null 2>&1 &'
 fi
 
 if valid_name rsync; then
-    alias xcp='rsync --progress -rv'
+     alias xcp='rsync --progress -rv'
+     complete -F _complete_alias xcp
 fi
 
 if type sdk > /dev/null 2>&1; then
-    alias sdk='unset rm && sdk'
+     alias sdk='unset rm && sdk'
 fi
 
 if [ -d "$SHELLD/bfg" ]; then
-   alias bfg="java -jar \$SHELLD/bfg/bfg.jar"
+    alias bfg="java -jar \$SHELLD/bfg/bfg.jar"
 fi
 #}}}
 ############################################################################
@@ -219,217 +234,217 @@ fi
 # {{{
 # # Discourage using darngerouns rm.
 rm() {
-    echo 'Do not use.'
-    echo 'If essential: rrm file'
-    false
+     echo 'Do not use.'
+     echo 'If essential: rrm file'
+     false
 }
 
 # See what will be deleted, then confirm
 rrm() {
-    echo -e "Execute: ${T_BCYAN}rm -rf $@ ${T_RESET}"
-    echo "y/n?"
-    read
-    local go
-    go="$(echo "$REPLY" | tr '[:upper:]' '[:lower:]')"
-    if [[ "$go" == y* ]]; then
-        command rm -rf "$@"
-    fi
+     echo -e "Execute: ${T_BCYAN}rm -rf $@ ${T_RESET}"
+     echo "y/n?"
+     read
+     local go
+     go="$(echo "$REPLY" | tr '[:upper:]' '[:lower:]')"
+     if [[ "$go" == y* ]]; then
+         command rm -rf "$@"
+     fi
 }
 
 # Help selecting colors
 # Check if term supports 256 -> http://www.robmeerman.co.uk/unix/256colours
 color_test() {
-    echo -e "${T_RED}T_RED\t\t${T_BRED}T_BRED"
-    echo -e "${T_YELLOW}T_YELLOW\t${T_BYELLOW}T_BYELLOW"
-    echo -e "${T_CYAN}T_CYAN\t\t${T_BCYAN}T_BCYAN"
-    echo -e "${T_BLUE}T_BLUE\t\t${T_BBLUE}T_BBLUE"
-    echo -e "${T_MAGENTA}T_MAGENTA\t${T_BMAGENTA}T_BMAGENTA"
-    echo -e "${T_WHITE}T_WHITE\t\t${T_BWHITE}T_BWHITE"
-    echo -e "${T_RESET}"
-    wget -O - http://www.robmeerman.co.uk/_media/unix/256colors2.pl | perl
+     echo -e "${T_RED}T_RED\t\t${T_BRED}T_BRED"
+     echo -e "${T_YELLOW}T_YELLOW\t${T_BYELLOW}T_BYELLOW"
+     echo -e "${T_CYAN}T_CYAN\t\t${T_BCYAN}T_BCYAN"
+     echo -e "${T_BLUE}T_BLUE\t\t${T_BBLUE}T_BBLUE"
+     echo -e "${T_MAGENTA}T_MAGENTA\t${T_BMAGENTA}T_BMAGENTA"
+     echo -e "${T_WHITE}T_WHITE\t\t${T_BWHITE}T_BWHITE"
+     echo -e "${T_RESET}"
+     wget -O - http://www.robmeerman.co.uk/_media/unix/256colors2.pl | perl
 }
 
 # Run program without connection to current shell
 bak() {
-   "$@" >/dev/null 2>&1 &
+    "$@" >/dev/null 2>&1 &
 }
 
 # Secure delete a file
 secDel() {
-    echo -e "Will Securely Delete: ${T_BCYAN}${T_RESET}"
-    echo "y/n?"
-    read
-    local go
-    go="$(echo "$REPLY" | tr '[:upper:]' '[:lower:]')"
-    if [[ "$go" == y* ]]; then
-        shred -vzn 3 "$@"
-        command rm -rf "$@"
-    fi
+     echo -e "Will Securely Delete: ${T_BCYAN}${T_RESET}"
+     echo "y/n?"
+     read
+     local go
+     go="$(echo "$REPLY" | tr '[:upper:]' '[:lower:]')"
+     if [[ "$go" == y* ]]; then
+         shred -vzn 3 "$@"
+         command rm -rf "$@"
+     fi
 }
 
 # Shorthand for tee
 t() {
-    if [ $# -lt 1 ]; then
-        echo 'Give me a command!'
-        return
-    fi
+     if [ $# -lt 1 ]; then
+         echo 'Give me a command!'
+         return
+     fi
 
-    local log
-    log=tee.log
-    if [ -e "$log" ]; then
-        echo "Deleting log before run."
-        command rm "$log"
-    fi
+     local log
+     log=tee.log
+     if [ -e "$log" ]; then
+         echo "Deleting log before run."
+         command rm "$log"
+     fi
 
-   "$@" 2>&1 | tee "$log"
+    "$@" 2>&1 | tee "$log"
 }
 
 # Reruns the last command with sudo.
 please() {
-    local cmd
-    cmd="$(fc -l -n -2 | head -n 1 | sed -e "s/^[ \t]*//")"
-    echo -e "Execute with sudo: ${T_BCYAN}${cmd}${T_RESET}";
-    echo "y/n?"
-    read
-    local go
-    go="$(echo "$REPLY" | tr '[:upper:]' '[:lower:]')"
-    if [[ "$go" == y* ]]; then
-        sudo "$cmd"
-    fi
+     local cmd
+     cmd="$(fc -l -n -2 | head -n 1 | sed -e "s/^[ \t]*//")"
+     echo -e "Execute with sudo: ${T_BCYAN}${cmd}${T_RESET}";
+     echo "y/n?"
+     read
+     local go
+     go="$(echo "$REPLY" | tr '[:upper:]' '[:lower:]')"
+     if [[ "$go" == y* ]]; then
+         sudo "$cmd"
+     fi
 }
 
 # Take a directory. If it doesn't exist, make it.
 take() {
-    local dir="$1"
-    mkdir "$dir"
-    cd "$dir"
+     local dir="$1"
+     mkdir "$dir"
+     cd "$dir"
 }
 
 # Function to go back up when deep in directories.
 # Example: .. 3 == cd ../../..
 ..() {
-    if [ "$1" -ge 0 ] 2> /dev/null; then
-        x=$1
-    else
-        x=1
-    fi
+     if [ "$1" -ge 0 ] 2> /dev/null; then
+         x=$1
+     else
+         x=1
+     fi
 
-    for (( i = 0; i < x; i++ )); do
-        cd ..
-    done
+     for (( i = 0; i < x; i++ )); do
+         cd ..
+     done
 }
 
 
 batCheck() {
-    if valid_name upower; then
-        upower -i /org/freedesktop/UPower/devices/battery_BAT0
-    elif valid_name acpi; then
-        acpi -i -b
-    else
-        echo 'Install acpi or upower commands.'
-    fi
+     if valid_name upower; then
+         upower -i /org/freedesktop/UPower/devices/battery_BAT0
+     elif valid_name acpi; then
+         acpi -i -b
+     else
+         echo 'Install acpi or upower commands.'
+     fi
 }
 
 # Check if connection up at all by pinging google dns
 conTest() {
-    for url in "8.8.8.8" "1.1.1.1"; do
-        ping -c 3 $url
-    done
+     for url in "8.8.8.8" "1.1.1.1"; do
+         ping -c 3 $url
+     done
 }
 
 # Format a json file to be pretty
 jsonFix() {
-    for file ; do
-        python -m json.tool < "$file" > "fix_$file"
-    done
+     for file ; do
+         python -m json.tool < "$file" > "fix_$file"
+     done
 }
 
 # Useful functions inspired by:
 #http://www.tldp.org/LDP/abs/html/sample-bashrc.html
 # Get info on all network interfaces
 listNics() {
-    local INTS=($(ifconfig -s | awk ' /^wlan.*|eth.*/ { print $1 }'))
-    # Ample use of awk/sed for field extraction.
-    local MAC IP BCAST MASK IP6
-    for INT in "${INTS[@]}" ; do
-          MAC=$(ifconfig "$INT" | awk '/Waddr/ { print $5 } ')
-           IP=$(ifconfig "$INT" | awk '/inet / { print $2 } ' | sed -e s/addr://)
-        BCAST=$(ifconfig "$INT" | awk '/inet / { print $3 } ' | sed -e s/Bcast://)
-         MASK=$(ifconfig "$INT" | awk '/inet / { print $4 } ' | sed -e s/Mask://)
-          IP6=$(ifconfig "$INT" | awk '/inet6/ { print $3 } ')
+     local INTS=($(ifconfig -s | awk ' /^wlan.*|eth.*/ { print $1 }'))
+     # Ample use of awk/sed for field extraction.
+     local MAC IP BCAST MASK IP6
+     for INT in "${INTS[@]}" ; do
+           MAC=$(ifconfig "$INT" | awk '/Waddr/ { print $5 } ')
+            IP=$(ifconfig "$INT" | awk '/inet / { print $2 } ' | sed -e s/addr://)
+         BCAST=$(ifconfig "$INT" | awk '/inet / { print $3 } ' | sed -e s/Bcast://)
+          MASK=$(ifconfig "$INT" | awk '/inet / { print $4 } ' | sed -e s/Mask://)
+           IP6=$(ifconfig "$INT" | awk '/inet6/ { print $3 } ')
 
-        echo -e "Interface: ${T_BGREEN}$INT${T_RESET}"
-        echo -e "\tMac:   ${MAC}"
-        echo -e "\tIPv4:  ${IP:-"Not connected"}"
-        if [[ -n ${IP} ]]; then
-            echo -e "\tBCast: ${BCAST}"
-            echo -e "\tMask:  ${MASK}"
-            echo -e "\tIPv6:  ${IP6:-"N/A."}"
-        fi
-    done
+         echo -e "Interface: ${T_BGREEN}$INT${T_RESET}"
+         echo -e "\tMac:   ${MAC}"
+         echo -e "\tIPv4:  ${IP:-"Not connected"}"
+         if [[ -n ${IP} ]]; then
+             echo -e "\tBCast: ${BCAST}"
+             echo -e "\tMask:  ${MASK}"
+             echo -e "\tIPv6:  ${IP6:-"N/A."}"
+         fi
+     done
 }
 
 # Pretty print of df, like dfc.
 prettyDf() {
-    for fs ; do
+     for fs ; do
 
-        if [ ! -d $fs ]; then
-            echo -e $fs" :No such file or directory"
-            continue
-        fi
+         if [ ! -d $fs ]; then
+             echo -e $fs" :No such file or directory"
+             continue
+         fi
 
-        local info free nbstars out
-        info=( $(command df -P "$fs" | awk 'END{ print $2,$3,$5 }') )
-        free=$(command df -Pkh "$fs" | awk 'END{ print $4 }')
-        nbstars=$(( 20 * info[1] / info[0] ))
-        out="["
-        for ((j=0;j<20;j++)); do
-            if [ ${j} -lt ${nbstars} ]; then
-               out="${out}*"
-            else
-               out="${out}-"
-            fi
-        done
-        out="${info[2]} $out] ($free free on $fs)"
-        echo -e "$out"
-    done
+         local info free nbstars out
+         info=( $(command df -P "$fs" | awk 'END{ print $2,$3,$5 }') )
+         free=$(command df -Pkh "$fs" | awk 'END{ print $4 }')
+         nbstars=$(( 20 * info[1] / info[0] ))
+         out="["
+         for ((j=0;j<20;j++)); do
+             if [ ${j} -lt ${nbstars} ]; then
+                out="${out}*"
+             else
+                out="${out}-"
+             fi
+         done
+         out="${info[2]} $out] ($free free on $fs)"
+         echo -e "$out"
+     done
 }
 
 # Get information on current system
 ii() {
-    local TOP mounts
-    TOP=$(top -n 1 -o %CPU | sed '/^$/d' | head -n 12 | tail -n 11)
-    echo
-    echo -e "${T_BBLUE}$USER${T_RESET} is logged on ${T_BBLUE}$HOSTNAME${T_RESET}"
-    echo -e "${T_BBLUE}Additionnal information :${T_RESET} " ; uname -a
-    echo -e "${T_BBLUE}Users logged on :${T_RESET} " ;
-        who | cut -d " " -f1 | sort | uniq
-    echo -e "${T_BBLUE}Current date :${T_RESET} " ; date
-    echo -e "${T_BBLUE}Machine stats :${T_RESET} " ; uptime
-    echo -e "${T_BBLUE}Diskspace :${T_RESET} "
-    #if valid_name dfc; then
-        #dfc
-    #else
-        mounts=$(mount -v | awk '/\/dev\/s/ { print $3 }')
-        prettyDf "$mounts"
-    #fi
-    echo -e "${T_BBLUE}Memory stats :${T_RESET} " ; free -h
-    echo -e "${T_BBLUE}Top 5 CPU% :${T_RESET} " ; echo -e "$TOP" | head -n 2 ; echo -e "$TOP" | tail -n 6
-    echo -e "${T_BBLUE}Top 5 MEM% :${T_RESET} " ; top -n 1 -o %MEM | sed '/^$/d' | head -n 12 | tail -n 5
-    echo -e "${T_BBLUE}Network Interfaces :${T_RESET}" ; listNics
-    echo -e "${T_BBLUE}Open connections :${T_RESET} "; netstat -pan --inet;
-    echo
+     local TOP mounts
+     TOP=$(top -n 1 -o %CPU | sed '/^$/d' | head -n 12 | tail -n 11)
+     echo
+     echo -e "${T_BBLUE}$USER${T_RESET} is logged on ${T_BBLUE}$HOSTNAME${T_RESET}"
+     echo -e "${T_BBLUE}Additionnal information :${T_RESET} " ; uname -a
+     echo -e "${T_BBLUE}Users logged on :${T_RESET} " ;
+         who | cut -d " " -f1 | sort | uniq
+     echo -e "${T_BBLUE}Current date :${T_RESET} " ; date
+     echo -e "${T_BBLUE}Machine stats :${T_RESET} " ; uptime
+     echo -e "${T_BBLUE}Diskspace :${T_RESET} "
+     #if valid_name dfc; then
+         #dfc
+     #else
+         mounts=$(mount -v | awk '/\/dev\/s/ { print $3 }')
+         prettyDf "$mounts"
+     #fi
+     echo -e "${T_BBLUE}Memory stats :${T_RESET} " ; free -h
+     echo -e "${T_BBLUE}Top 5 CPU% :${T_RESET} " ; echo -e "$TOP" | head -n 2 ; echo -e "$TOP" | tail -n 6
+     echo -e "${T_BBLUE}Top 5 MEM% :${T_RESET} " ; top -n 1 -o %MEM | sed '/^$/d' | head -n 12 | tail -n 5
+     echo -e "${T_BBLUE}Network Interfaces :${T_RESET}" ; listNics
+     echo -e "${T_BBLUE}Open connections :${T_RESET} "; netstat -pan --inet;
+     echo
 }
 
 # Use to swap active IntelliJ install
 swap_intelli() {
-    if [ "$ACTIVE_INTELLI" = "$INTELLI_ANDROID" ]; then
-        export ACTIVE_INTELLI=$INTELLI_J
-        export PATH="${PATH//$INTELLI_ANDROID/$INTELLI_J}"
-    elif [ "$ACTIVE_INTELLI" = "$INTELLI_J" ]; then
-        export ACTIVE_INTELLI=$INTELLI_ANDROID
-        export PATH="${PATH//$INTELLI_J/$INTELLI_ANDROID}"
-    fi
+     if [ "$ACTIVE_INTELLI" = "$INTELLI_ANDROID" ]; then
+         export ACTIVE_INTELLI=$INTELLI_J
+         export PATH="${PATH//$INTELLI_ANDROID/$INTELLI_J}"
+     elif [ "$ACTIVE_INTELLI" = "$INTELLI_J" ]; then
+         export ACTIVE_INTELLI=$INTELLI_ANDROID
+         export PATH="${PATH//$INTELLI_J/$INTELLI_ANDROID}"
+     fi
 }
 
 # Highlight many terms with different colors
@@ -442,25 +457,25 @@ swap_intelli() {
 #{{{
 # Disable the Ctrl+s/q button that freezes terminal output.
 if valid_name stty; then
-    stty -ixon
+     stty -ixon
 fi
 
 # Set bash tabstop to 4 spaces, default is 8 too wide
 if valid_name tabs; then
-    tabs 4
+     tabs 4
 fi
 
 # Fetch terminal information
 if [ ! -d ~/.terminfo ]; then
-    if ! valid_name curl || ! valid_name gunzip || ! valid_name tic; then
-        echo "No terminfo, missing one of: curl, gunzip, tic"
-    fi
+     if ! valid_name curl || ! valid_name gunzip || ! valid_name tic; then
+         echo "No terminfo, missing one of: curl, gunzip, tic"
+     fi
 
-    echo "Getting terminfo."
-    # Taken from nvim | :h $TERM
-    curl -L http://invisible-island.net/datafiles/current/terminfo.src.gz | gunzip > /tmp/term.src
-    tic /tmp/term.src
-    command rm /tmp/term.src
+     echo "Getting terminfo."
+     # Taken from nvim | :h $TERM
+     curl -L http://invisible-island.net/datafiles/current/terminfo.src.gz | gunzip > /tmp/term.src
+     tic /tmp/term.src
+     command rm /tmp/term.src
 fi
 
 #}}}

@@ -105,6 +105,11 @@ if [ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
     . "$SDKMAN_DIR/bin/sdkman-init.sh"
 fi
 
+# Complete aliases in bash
+if [ -s "$SHELLD/complete-alias" ]; then
+    . "$SHELLD/complete-alias/complete_alias"
+fi
+
 # }}}
 ############################################################################
 # Non $PATH Variables
