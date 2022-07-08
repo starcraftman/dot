@@ -85,6 +85,12 @@ if valid_name ag; then
      complete -F _complete_alias agl
 fi
 
+# Make it work like ag alias.
+if valid_name rg; then
+    alias rg='rg --colors "path:style:bold" --colors "path:fg:green" --colors "line:style:bold"\
+                 --colors "line:fg:yellow" --colors "match:fg:blue" --smart-case --follow'
+fi
+
 # Always open with splits
 if valid_name nvim; then
     alias n='nvim'
