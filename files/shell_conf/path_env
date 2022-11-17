@@ -42,6 +42,7 @@ export ANDROID_TOOLS=~/.android/SDK/platform-tools
 export SDKMAN_DIR="$HOME/.sdkman"
 export NVM_DIR="$HOME/.nvm"
 export NPM_PACKS="$HOME/.npm"
+export LANG="en_GB.utf8"  # For perl locale issue
 
 # Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
