@@ -41,7 +41,7 @@ try
 
   " Completion
   " Min patch for YCM, Neovim has it
-  if !g:win_shell && !g:cygwin_shell && has('patch-7.3-584')
+  if !g:win_shell && !g:cygwin_shell && v:version >= 800
     Plug 'Valloric/YouCompleteMe', { 'do': function('myutil#ycm_hook') }
   endif
   " YCM Alternative, no compilation
@@ -356,7 +356,7 @@ let g:UltiSnipsSnippetsDir = s:path_join(g:vim_dir, 'snippets')
 " }}}
 " {{{ Doge
 """""""""""
-let g:doge_doc_standard_python = 'google'
+let g:doge_doc_standard_python = 'reST'
 
 " }}}
 " {{{ vim-sneak

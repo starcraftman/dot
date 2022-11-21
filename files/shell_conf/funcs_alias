@@ -233,6 +233,10 @@ fi
 if [ -d "$SHELLD/bfg" ]; then
     alias bfg="java -jar \$SHELLD/bfg/bfg.jar"
 fi
+
+if valid_name aws; then
+    complete -C '/usr/local/bin/aws_completer' aws
+fi
 #}}}
 ############################################################################
 # Functions

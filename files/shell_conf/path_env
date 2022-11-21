@@ -60,6 +60,7 @@ export LANG="en_GB.utf8"  # For perl locale issue
 [ -d "$RVMPATH" ]           && export PATH=$RVMPATH/bin:$PATH
 [ -d "/usr/lib/ccache" ]    && export PATH=/usr/lib/ccache:$PATH
 [ -d "$NPM_PACKS" ]         && export PATH=$NPM_PACKS/bin:$PATH
+[ -d "$SPARK_PATH" ]        && export PATH=$SPARK_PATH/bin:$PATH
 
 # \curl -L https://install.perlbrew.pl | bash
 if [ -s "$PERLBREW_ROOT/etc/bashrc" ]; then
@@ -97,8 +98,10 @@ if [ -d "$RVMPATH/scripts" ]; then
 fi
 
 # NVM for node install.
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+    . "$NVM_DIR/nvm.sh"  # This loads nvm
+    . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
 
 # SDKMan used to manage JDK and other toolkits like gradle.
 # Install: curl -s "https://get.sdkman.io" | bash
