@@ -41,7 +41,7 @@ try
 
   " Completion
   " Min patch for YCM, Neovim has it
-  if !g:win_shell && !g:cygwin_shell && v:version >= 800
+  if !g:win_shell && !g:cygwin_shell && v:version >= 750
     Plug 'Valloric/YouCompleteMe', { 'do': function('myutil#ycm_hook') }
   endif
   " YCM Alternative, no compilation
