@@ -785,6 +785,7 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-K>'
 nnoremap <Leader>ft :FTOpen<CR>
 
 " Binding for extra search modes
+nnoremap <C-P>i :CtrlPCurWD<CR>
 nnoremap <C-P>m :CtrlPMRUFiles<CR>
 nnoremap <C-P>b :CtrlPBuffer<CR>
 nnoremap <C-P>c :CtrlPCmdPalette<CR>
