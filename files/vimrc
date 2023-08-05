@@ -120,6 +120,10 @@ try
   Plug 'junegunn/rainbow_parentheses.vim'
 
   " Syntax / File Specific
+  if has('nvim')
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'scalameta/nvim-metals'
+  endif
   Plug 'udalov/kotlin-vim'
   "Plug 'alfredodeza/coveragepy.vim'
   Plug 'chrisbra/csv.vim'
