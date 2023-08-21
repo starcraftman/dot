@@ -138,6 +138,7 @@ try
   "Plug 'plasticboy/vim-markdown' | Plug 'godlygeek/tabular'
   Plug 'rust-lang/rust.vim'
   "Plug 'Rykka/riv.vim'  " Note taking plugin
+  Plug 'sbdchd/neoformat'
   "Plug 'tfnico/vim-gradle'
   Plug 'tbastos/vim-lua' " Improved highlighting for lua
   Plug 'tomswartz07/vim-todo'
@@ -631,6 +632,10 @@ let g:DeleteTrailingWhitespace_Action = 'delete'
   " autocmd  User GoyoLeave nested call <SID>goyo_leave()
 " augroup END
 
+" vim-prettier
+""""""""""
+let g:neoformat_try_node_exe = 1
+
 " LocalVimrc
 """"""""""""
 " Allow non-sandbox
@@ -733,6 +738,9 @@ try
   call cmdalias#add('pu', 'PlugUpdate')
   call cmdalias#add('puu', 'PlugUpdate <bar> PlugUpgrade')
   call cmdalias#add('pc', 'PlugClean')
+
+  " Neorformat
+  call cmdalias#add('nf', 'Neoformat')
 catch
 endtry
 
