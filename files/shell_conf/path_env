@@ -87,7 +87,7 @@ fi
 if [ -d "$SOFT/intelliJ" ] && [ -d "$SOFT/android-studio" ]; then
     export INTELLI_J=$SOFT/intelliJ/bin
     export INTELLI_ANDROID=$SOFT/android-studio/bin
-    export ACTIVE_INTELLI=$INTELLI_J
+    export ACTIVE_INTELLI=$INTELLI_ANDROID
     export PATH=$PATH:$ACTIVE_INTELLI
     # Deprioritize anything in intellij
 fi
