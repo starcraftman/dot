@@ -44,6 +44,8 @@ export NVM_DIR="$HOME/.nvm"
 export NPM_PACKS="$HOME/.npm"
 export LANG="en_CA.utf8"  # For perl locale issue
 export LC_ALL="$LANG"
+export GHCUP="$HOME/.ghcup"
+export BUN_INSTALL="$HOME/.bun"
 
 # Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
@@ -62,6 +64,8 @@ export LC_ALL="$LANG"
 [ -d "/usr/lib/ccache" ]    && export PATH=/usr/lib/ccache:$PATH
 [ -d "$NPM_PACKS" ]         && export PATH=$NPM_PACKS/bin:$PATH
 [ -d "$SPARK_PATH" ]        && export PATH=$SPARK_PATH/bin:$PATH
+[ -d "$GHCUP" ]             && export PATH=$GHCUP/bin:$PATH
+[ -d "$BUN_INSTALL" ]       && export PATH=$BUN_INSTALL/bin:$PATH
 
 # \curl -L https://install.perlbrew.pl | bash
 if [ -s "$PERLBREW_ROOT/etc/bashrc" ]; then
@@ -113,6 +117,11 @@ fi
 # Complete aliases in bash
 if [ -s "$SHELLD/complete-alias" ]; then
     . "$SHELLD/complete-alias/complete_alias"
+fi
+
+# Add GHC if found from GHCUP
+if [ -d "$GHCUP" ]; then
+    . "$GHCUP/env"
 fi
 
 # }}}
