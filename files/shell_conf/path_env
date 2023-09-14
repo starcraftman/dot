@@ -46,26 +46,28 @@ export LANG="en_CA.utf8"  # For perl locale issue
 export LC_ALL="$LANG"
 export GHCUP="$HOME/.ghcup"
 export BUN_INSTALL="$HOME/.bun"
+export DENO_INSTALL="$HOME/.deno"
 
 # Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
-[ -d "/opt/bin" ]           && export PATH=/opt/bin:$PATH
-[ -d "$SOFT/bin" ]          && export PATH=$SOFT/bin:$PATH
-[ -d "$SCRIPTS" ]           && export PATH=$SCRIPTS/bin:$PATH
-[ -d "$OPTDIR/bin" ]        && export PATH=$OPTDIR/bin:$PATH
-[ -d "$HOME/bin" ]          && export PATH=$HOME/bin:$PATH
-[ -d "$HOME/.local/bin" ]   && export PATH=$HOME/.local/bin:$PATH
-[ -d "$CABAL" ]             && export PATH=$CABAL/bin:$PATH
-[ -d "$CARGO_HOME" ]        && export PATH=$CARGO_HOME/bin:$PATH
-[ -d "$ANDROID_TOOLS" ]     && export PATH=$ANDROID_TOOLS:$PATH
-[ -d "$GOPATH" ]            && export PATH=$GOPATH/bin:$PATH
-[ -d "$PERLBREW_ROOT" ]     && export PATH=$PERLBREW_ROOT/bin:$PATH
-[ -d "$RVMPATH" ]           && export PATH=$RVMPATH/bin:$PATH
-[ -d "/usr/lib/ccache" ]    && export PATH=/usr/lib/ccache:$PATH
-[ -d "$NPM_PACKS" ]         && export PATH=$NPM_PACKS/bin:$PATH
-[ -d "$SPARK_PATH" ]        && export PATH=$SPARK_PATH/bin:$PATH
-[ -d "$GHCUP" ]             && export PATH=$GHCUP/bin:$PATH
-[ -d "$BUN_INSTALL" ]       && export PATH=$BUN_INSTALL/bin:$PATH
+[ -d "/opt/bin" ]           && export PATH="/opt/bin:$PATH"
+[ -d "$SOFT/bin" ]          && export PATH="SOFT/bin:$PATH"
+[ -d "$SCRIPTS" ]           && export PATH="SCRIPTS/bin:$PATH"
+[ -d "$OPTDIR/bin" ]        && export PATH="OPTDIR/bin:$PATH"
+[ -d "$HOME/bin" ]          && export PATH="HOME/bin:$PATH"
+[ -d "$HOME/.local/bin" ]   && export PATH="HOME/.local/bin:$PATH"
+[ -d "/usr/lib/ccache" ]    && export PATH="/usr/lib/ccache:$PATH"
+[ -d "$CABAL" ]             && export PATH="CABAL/bin:$PATH"
+[ -d "$CARGO_HOME" ]        && export PATH="CARGO_HOME/bin:$PATH"
+[ -d "$ANDROID_TOOLS" ]     && export PATH="ANDROID_TOOLS:$PATH"
+[ -d "$GOPATH" ]            && export PATH="GOPATH/bin:$PATH"
+[ -d "$PERLBREW_ROOT" ]     && export PATH="PERLBREW_ROOT/bin:$PATH"
+[ -d "$RVMPATH" ]           && export PATH="RVMPATH/bin:$PATH"
+[ -d "$NPM_PACKS" ]         && export PATH="NPM_PACKS/bin:$PATH"
+[ -d "$SPARK_PATH" ]        && export PATH="SPARK_PATH/bin:$PATH"
+[ -d "$GHCUP" ]             && export PATH="GHCUP/bin:$PATH"
+[ -d "$BUN_INSTALL" ]       && export PATH="BUN_INSTALL/bin:$PATH"
+[ -d "$DENO_INSTALL" ]      && export PATH="DENO_INSTALL/bin:$PATH"
 
 # \curl -L https://install.perlbrew.pl | bash
 if [ -s "$PERLBREW_ROOT/etc/bashrc" ]; then
