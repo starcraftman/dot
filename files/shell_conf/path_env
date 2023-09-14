@@ -47,6 +47,7 @@ export LC_ALL="$LANG"
 export GHCUP="$HOME/.ghcup"
 export BUN_INSTALL="$HOME/.bun"
 export DENO_INSTALL="$HOME/.deno"
+export FLUTTER_PUB="$HOME/.pub-cache"
 
 # Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
@@ -68,6 +69,7 @@ export DENO_INSTALL="$HOME/.deno"
 [ -d "$GHCUP" ]             && export PATH="$GHCUP/bin:$PATH"
 [ -d "$BUN_INSTALL" ]       && export PATH="$BUN_INSTALL/bin:$PATH"
 [ -d "$DENO_INSTALL" ]      && export PATH="$DENO_INSTALL/bin:$PATH"
+[ -d "$FLUTTER_PUB" ]       && export PATH="$FLUTTER_PUB/bin:$PATH"
 
 # \curl -L https://install.perlbrew.pl | bash
 if [ -s "$PERLBREW_ROOT/etc/bashrc" ]; then
