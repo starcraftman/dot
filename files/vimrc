@@ -177,6 +177,7 @@ try
   "Plug 'vim-scripts/desert256.vim'
   " Large Selection to sample
   "Plug 'flazz/vim-colorschemes'
+  Plug 'fabius/molokai.nvim' | Plug 'rktjmp/lush.nvim'
 
   call plug#end()
 catch

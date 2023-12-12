@@ -17,7 +17,7 @@ function! myutil#ycm_hook(info)
   if executable('java')
     let l:opts .= '--java-completer '
   endif
-  if executable('nodejs') && executable('npm')
+  if ( executable('node') || executable('nodejs') )&& executable('npm')
     let l:opts .= '--ts-completer '
   endif
   " if executable('mono')
