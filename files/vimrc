@@ -60,8 +60,8 @@ try
 
   " Allows easy use of async jobs with unified interface
   Plug 'skywind3000/asyncrun.vim'
-  if !has('nvim') && !has('patch-7.4-1829')
-    echomsg 'Warning: AsyncRun will be synchronous.'
+  if !has('nvim') && v:version < 7.5
+    echomsg 'vim AsyncRun will run sync. Requires patch : 7.4-1829'
   endif
 
   " UI
@@ -177,7 +177,9 @@ try
   "Plug 'vim-scripts/desert256.vim'
   " Large Selection to sample
   "Plug 'flazz/vim-colorschemes'
-  Plug 'fabius/molokai.nvim' | Plug 'rktjmp/lush.nvim'
+  if has('nvim')
+    Plug 'fabius/molokai.nvim' | Plug 'rktjmp/lush.nvim'
+  endif
 
   call plug#end()
 catch
