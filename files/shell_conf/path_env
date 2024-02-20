@@ -77,10 +77,17 @@ if [ -s "$PERLBREW_ROOT/etc/bashrc" ]; then
     . "$PERLBREW_ROOT/etc/bashrc"
 fi
 
+# fnm, alternative to nvm for installing node.
+if valid_name fnm; then
+    export PATH="/home/starcraftman/.fnm:$PATH"
+    eval "$(fnm env)"
+fi
+
+
 # git clone https://github.com/pyenv/pyenv $SHELLD/pyenv
 if [ -s "$SHELLD/pyenv/bin/pyenv" ]; then
     export PYENV_ROOT=$SHELLD/pyenv
-    export PATH=$PYENV_ROOT/bin:$PYENV_ROOT/shims:$PATH
+    export PATH="$PYENV_ROOT/bin:$PYENV_ROOT/shims:$PATH"
     export PYTHON_CONFIGURE_OPTS=--enable-shared
     eval "$(pyenv init --path)"
 fi
@@ -88,7 +95,7 @@ fi
 # http://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html
 if [ -s "$SOFT/jdk/bin/java" ]; then
     export JAVA_HOME=$SOFT/jdk
-    export PATH=$JAVA_HOME/bin:$PATH
+    export PATH="$JAVA_HOME/bin:$PATH"
 fi
 # https://www.jetbrains.com/idea/download/#section=linux
 # https://developer.android.com/studio/index.html#linux-bundle
@@ -96,7 +103,7 @@ if [ -d "$SOFT/intelliJ" ] && [ -d "$SOFT/android-studio" ]; then
     export INTELLI_J=$SOFT/intelliJ/bin
     export INTELLI_ANDROID=$SOFT/android-studio/bin
     export ACTIVE_INTELLI=$INTELLI_ANDROID
-    export PATH=$PATH:$ACTIVE_INTELLI
+    export PATH="$PATH:$ACTIVE_INTELLI"
     # Deprioritize anything in intellij
 fi
 
