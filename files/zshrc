@@ -42,6 +42,9 @@ alias help='run-help'
 # Functions
 ############################################################################
 #{{{
+# Move initial loading of completion early as needed.
+autoload -U +X bashcompinit && bashcompinit
+autoload -U +X compinit && compinit
 . ~/.shell_conf/funcs_alias
 
 # # Toggles bash debug mode, when on:
