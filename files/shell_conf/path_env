@@ -49,6 +49,7 @@ export BUN_INSTALL="$HOME/.bun"
 export DENO_INSTALL="$HOME/.deno"
 export FLUTTER_PUB="$HOME/.pub-cache"
 export CHROME_EXECUTABLE="flatpak run com.google.Chrome"
+export RUST_SRC_PATH="$HOME/.rustup/toolchains/stable-x86_64-unknown-linux-gnu"
 
 # Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.
