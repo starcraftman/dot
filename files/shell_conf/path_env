@@ -48,6 +48,7 @@ export GHCUP="$HOME/.ghcup"
 export BUN_INSTALL="$HOME/.bun"
 export DENO_INSTALL="$HOME/.deno"
 export FLUTTER_PUB="$HOME/.pub-cache"
+export CHROME_EXECUTABLE="flatpak run com.google.Chrome"
 
 # Build $PATH here, last thing on front is first
 # /usr/lib/ccache on path -> links gcc, g++ to ccache aliases, put at front.

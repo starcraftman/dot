@@ -296,8 +296,8 @@ let g:deoplete#enable_auto_select = 1
 " c/cpp  | cppcheck   | sudo apt-get install cppcheck
 " c/cpp  | flawfinder | pip install flawfinder
 " cmake  | cmakelint  | pip install cmakelint
-" go     | golint     | go get -u golang.org/x/lint/golint
-" lua    | luacheck   | luarocks install luacheck
+" go     | golint     | go install  golang.org/x/lint/golint@latest
+" lua    | luacheck   | luarocks install luacheck (alternative apt)
 " perl   | perlcritic | cpan -i perlcritic
 " perl   | perltidy   | cpan -i perltidy
 " python | flake8     | pip install flake8
