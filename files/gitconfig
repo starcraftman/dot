@@ -6,9 +6,7 @@
     dc = diff --cached
     df = diff
     di = diff
-    dv = "!f() { git difftool --tool=vimdiff --no-prompt $@; }; f"
-    ;Diff the last n commits with HEAD
-    din = "!f() { git diff HEAD~$@ HEAD; }; f"
+    dv = "!f() { git difftool --tool=vimdiff --no-prompt $@; }; f" ;Diff the last n commits with HEAD din = "!f() { git diff HEAD~$@ HEAD; }; f"
     r = reset
     rh = reset --hard
     s = status --short
@@ -74,5 +72,5 @@
 [url "git@git.kde.org:"]
     pushInsteadOf = kde:
 [user]
-    name = Jeremy Pallats/starcraft.man
-    email = unknown3000@gmail.com
+    name = starcraft.man
+    email = none@none.com
